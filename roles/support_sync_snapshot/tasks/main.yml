@@ -1,0 +1,60 @@
+---
+- meta: end_play
+  when: snapshot_url is undefined
+
+- name: Print snapshot_url
+  debug:
+    msg: 'Downloading {{ network }} snapshot {{ snapshot_url  }}'
+
+- name: Download snapshot
+  get_url:
+    url: '{{ snapshot_url }}'
+    dest: '{{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz'
+    mode: '0644'
+
+- name: Stop node process
+  become: true
+  systemd:
+    name: '{{ cosmovisor_service_name }}'
+    state: stopped
+    daemon_reload: yes
+    enabled: yes
+
+- name: Move priv_validator_state.json to a safe location
+  command: 'mv {{ user_dir }}/{{ folder }}/data/priv_validator_state.json {{ user_dir }}/{{ folder }}'
+
+- name: Unsafe reset
+  shell: '{{ user_dir }}/go/bin/{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/{{ folder }} --keep-addr-book'
+
+- name: Extract snapshot
+  shell: 'lz4 -c -d {{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz | tar -x -C {{ user_dir }}/{{ folder }}'
+
+- name: Move priv_validator_state.json back
+  command: 'mv {{ user_dir }}/{{ folder }}/priv_validator_state.json {{ user_dir }}/{{ folder }}/data/'
+
+- name: Pause for 5 seconds
+  pause:
+    seconds: 5
+
+- name: start node process
+  become: true
+  systemd:
+    name: '{{ cosmovisor_service_name }}'
+    state: started
+    daemon_reload: yes
+    enabled: yes
+
+- name: Pause for 10 seconds
+  pause:
+    seconds: 10
+
+- name: Delete the downloaded snapshot file
+  file:
+    path: '{{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz'
+    state: absent
+
+- name: Ensure it is running
+  uri:
+    url: 'http://localhost:{{ custom_port_prefix }}57/abci_info'
+    method: GET
+    status_code: 200

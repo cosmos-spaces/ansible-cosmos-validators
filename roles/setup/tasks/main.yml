@@ -1,0 +1,36 @@
+---
+- name: Update and upgrade the server
+  apt:
+    upgrade: dist
+    update_cache: true
+
+- name: configure server
+  import_tasks: configure_server.yml
+
+- name: ssh setup
+  import_tasks: ssh.yml
+
+- name: firewall setup
+  import_tasks: firewall.yml
+
+- name: install cosmos software
+  import_tasks: cosmos_software.yml
+  when: cosmos_software|default(true)|bool == true
+
+- name: install nginx
+  import_tasks: nginx.yml
+  when: 
+    - nginx|bool == true
+    - type != 'horcurx'
+
+- name: install node_exporter
+  import_tasks: node_exporter.yml
+  when: 
+    - node_exporter|bool == true
+    - type != 'horcurx'
+
+- name: install promtail
+  import_tasks: promtail.yml
+  when: 
+    - promtail|bool == true
+    - type != 'horcurx'

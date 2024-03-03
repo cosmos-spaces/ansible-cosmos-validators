@@ -1,0 +1,39 @@
+---
+- name: install apt packages
+  apt:
+    name: '{{item}}'
+    state: present
+    update_cache: yes
+  loop:
+    - make
+    - build-essential
+    - gcc
+    - git
+    - jq
+    - chrony
+    - lz4
+    - tree
+    - unzip
+    - wget
+    - curl
+    - netcat
+    - bash-completion
+    - fio
+
+- name: Change hostname
+  hostname:
+    name: '{{ server_hostname }}'
+
+- name: Deploy chrony.conf template
+  template:
+    src: 'chrony.conf.j2'
+    dest: /etc/chrony/chrony.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+
+- name: Restart chronyd
+  service:
+    name: chronyd
+    state: restarted

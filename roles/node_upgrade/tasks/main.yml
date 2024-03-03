@@ -1,0 +1,62 @@
+---
+- name: Clone node repo
+  git:
+    repo: '{{ repo }}'
+    dest: '{{ user_dir }}/{{ network }}'
+    version: '{{ node_version }}'
+    update: yes
+    force: yes
+    recursive: no
+
+- name: Install node
+  command: '{{ item }}'
+  args:
+    chdir: '{{ user_dir }}/{{ network }}'
+  with_items:
+    - 'make install'
+  environment:
+    PATH: '{{ path }}'
+    GOPATH: '{{ user_dir }}/go'
+
+- name: Create new directory
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin'
+  when: upgrade_folder is defined
+
+- name: copy binary file to cosmovisor upgrade folder
+  copy:
+    src: '{{ user_dir }}/go/bin/{{ daemon }}'
+    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin'
+    remote_src: true
+    mode: '0755'
+  when: upgrade_folder is defined
+
+- name: copy binary file to cosmovisor genesis folder
+  copy:
+    src: '{{ user_dir }}/go/bin/{{ daemon }}'
+    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/genesis/bin'
+    remote_src: true
+    mode: '0755'
+  when: upgrade_folder is not defined
+
+- name: start cosmovisor service
+  become: true
+  systemd:
+    name: '{{ network }}'
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
+- name: Pause for 10 seconds
+  pause:
+    seconds: 10
+
+- name: Ensure it is running
+  uri:
+    url: 'http://localhost:{{ custom_port_prefix }}57/abci_info'
+    method: GET
+    status_code: 200

@@ -1,0 +1,46 @@
+all:
+  vars:
+    ansible_user: ubuntu
+    ansible_port: <ssh_port>
+    ansible_ssh_private_key_file: "~/.ssh/id_test"
+    user_dir: "/home/ubuntu"
+    bastion_ip: "<bastion_ip>"
+    var_file: "group_vars/{{ target }}/{{ network }}.yml"
+    path: "/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/go/bin:{{ user_dir }}/go/bin"
+    node_name: "<Brand>"
+    
+# CometBFT
+
+# Testnet
+testnet:
+  hosts:
+    dev01:
+      ansible_host: <server_ip>
+      server_hostname: "cosmos-sentry-dev01"
+      type: relayer
+
+# Mainnet
+mainnet:
+  hosts:
+    prod01:
+      ansible_host: <server_ip>
+      server_hostname: "cosmos-sentry-prod01"
+      type: relayer
+
+# Horcrux
+horcrux_cluster:
+  hosts:
+    cosigner1:
+      ansible_host: 10.0.0.1
+    cosigner2:
+      ansible_host: 10.0.0.2
+    cosigner3:
+      ansible_host:  10.0.0.3
+  vars:
+    type: horcrux
+    restart_horcrux: true
+    nodes:
+      - tcp://0.0.0.0:1234
+      - tcp://0.0.0.1:1234
+      - tcp://0.0.0.2:1234
+      - tcp://0.0.0.3:1234

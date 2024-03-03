@@ -1,0 +1,44 @@
+---
+- name: Download go
+  get_url:
+    url: 'https://golang.org/dl/go{{ go_version }}.linux-amd64.tar.gz'
+    dest: '/tmp/go{{ go_version }}.linux-amd64.tar.gz'
+    mode: '0700'
+
+- name: unarchive go
+  unarchive:
+    src: '/tmp/go{{ go_version }}.linux-amd64.tar.gz'
+    remote_src: yes
+    dest: '/usr/local/'
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Go get cosmovisor
+  command: 'go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@{{ cosmovisor_version }}'
+  environment:
+    PATH: '{{ path }}'
+    GOPATH: '/home/{{ ansible_user }}/go'
+  tags:
+    - cosmovisor
+  when: type != 'horcurx'
+
+- name: Change go folder permission
+  file:
+    path: '/home/{{ ansible_user }}/go'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    recurse: true
+    mode: '0755'
+  tags:
+    - cosmovisor
+
+- name: copy .profile
+  template:
+    src: 'profile.j2'
+    dest: '{{ user_dir }}/.profile'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0600'
+  tags:
+    - cosmovisor

@@ -1,0 +1,116 @@
+---
+- name: import tasks for mainnet
+  import_tasks: mainnet.yml
+  when: partner is not defined and network_type == 'mainnet'
+
+- name: import tasks for testnet
+  import_tasks: testnet.yml
+  when: partner is not defined and network_type == 'testnet'
+
+- name: import tasks for skip
+  import_tasks: skip.yml
+  when: partner is defined and partner == 'skip'
+
+- name: import tasks for skip_extra
+  import_tasks: skip_extra.yml
+  when: partner is defined and partner == 'skip_extra'
+
+- name: import tasks for strd
+  import_tasks: strd.yml
+  when: partner is defined and partner == 'strd'
+
+- name: import tasks for comp
+  import_tasks: comp.yml
+  when: partner is defined and partner == 'comp'
+
+- name: import tasks for dydx
+  import_tasks: dydx.yml
+  when: partner is defined and partner == 'dydx'
+
+- name: import tasks for agor
+  import_tasks: agor.yml
+  when: partner is defined and partner == 'agor'
+
+- name: import tasks for zm
+  import_tasks: zm.yml
+  when: partner is defined and partner == 'zm'
+
+- name: install nginx package
+  become: true
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Copy nginx main config file
+  become: true
+  template:
+    src: 'nginx_conf.j2'
+    dest: '/etc/nginx/nginx.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: Copy nginx config file for rpc
+  become: true
+  template:
+    src: 'rpc_nginx_conf.j2'
+    dest: '/etc/nginx/sites-enabled/{{network}}-rpc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: Copy nginx config file for api
+  become: true
+  template:
+    src: 'api_nginx_conf.j2'
+    dest: '/etc/nginx/sites-enabled/{{network}}-api'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: restart nginx service
+  become: true
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false
+
+- name: open gPRC port
+  become: true
+  ufw:
+    rule: allow
+    port: '{{ custom_port_prefix }}90'
+    proto: tcp
+
+- name: Create rpc endpoint
+  cloudflare_dns:
+    zone: '{{ cloudflare_zone }}'
+    record: '{{ rpc }}'
+    type: A
+    value: '{{ ansible_host }}'
+    api_token: '{{ cloudflare_api_key }}'
+    proxied: true
+  register: record
+
+- name: Create api endpoint
+  cloudflare_dns:
+    zone: '{{ cloudflare_zone }}'
+    record: '{{ api }}'
+    type: A
+    value: '{{ ansible_host }}'
+    api_token: '{{ cloudflare_api_key }}'
+    proxied: true
+  register: record
+
+- name: Create grpc endpoint
+  cloudflare_dns:
+    zone: '{{ cloudflare_zone }}'
+    record: '{{ grpc }}'
+    type: A
+    value: '{{ ansible_host }}'
+    api_token: '{{ cloudflare_api_key }}'
+    proxied: false
+  register: record

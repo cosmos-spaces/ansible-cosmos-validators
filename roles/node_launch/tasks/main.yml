@@ -1,0 +1,45 @@
+---
+- name: Open p2p port
+  become: true
+  ufw:
+    rule: allow
+    port: '{{ custom_port_prefix }}56'
+    proto: tcp
+    comment: 'P2P port for {{ network }}'
+
+- name: Print allowing rpc port
+  debug:
+    msg: 'Allowing port [{{ custom_port_prefix }}57] on the fw since publicrpc is set to true'
+  when: publicrpc|default(false)|bool == true
+
+- name: Open rpc port
+  become: true
+  ufw:
+    rule: allow
+    port: '{{ custom_port_prefix }}57'
+    proto: tcp
+    comment: 'RPC port for {{ network }}'
+  when: publicrpc|default(false)|bool == true
+
+- name: copy service file mainnet
+  become: true
+  template:
+    src: 'cosmovisor.service.j2'
+    dest: '/etc/systemd/system/{{ cosmovisor_service_name }}.service'
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: start cosmovisor service
+  become: true
+  systemd:
+    name: '{{ cosmovisor_service_name }}'
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
+- name: Ensure it is running
+  uri:
+    url: 'http://localhost:{{ custom_port_prefix }}57/abci_info'
+    method: GET
+    status_code: 200

@@ -1,0 +1,23 @@
+---
+- name: Create directory
+  file:
+    path: '{{ user_dir }}/snapshot'
+    state: directory
+    mode: '0755'
+
+- name: Copy snapshot script
+  template:
+    src: 'snapshot.sh.j2'
+    dest: '{{ user_dir }}/snapshot/{{ network }}.sh'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0700'
+
+- name: Create cronjob
+  cron:
+    user: '{{ ansible_user }}'
+    name: '{{ network }} snapshot'
+    minute: '{{ snapshot_minute }}'
+    hour: '{{ snapshot_hour }}'
+    job: '/bin/bash {{ user_dir }}/snapshot/{{ network }}.sh'
+  when: type is defined and (type == 'backup' or type == 'test')

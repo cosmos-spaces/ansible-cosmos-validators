@@ -1,0 +1,7 @@
+---
+- name: Setup
+  hosts: '{{ target }}'
+  become: true
+  gather_facts: false
+  roles:
+    - setup

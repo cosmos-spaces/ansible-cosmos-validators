@@ -1,0 +1,60 @@
+---
+- name: Install from source
+  become: false
+  block:
+    - name: Clone horcrux repo
+      git:
+        repo: '{{ horcrux_repo }}'
+        dest: '{{ user_dir }}/src/horcrux'
+        version: '{{ horcrux_version }}'
+        update: yes
+        force: yes
+        recursive: no
+
+    - name: Install node
+      command: '{{ item }}'
+      args:
+        chdir: '{{ user_dir }}/src/horcrux'
+      with_items:
+        - 'make install'
+      environment:
+        PATH: '{{ path }}'
+        GOPATH: '{{ user_dir }}/go'
+
+- name: copy service
+  become: true
+  template:
+    src: 'horcurx.service.j2'
+    dest: '/etc/systemd/system/horcrux.service'
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: start horcrux service
+  become: true
+  systemd:
+    name: 'horcrux'
+    state: stopped
+    daemon_reload: yes
+    enabled: yes
+
+- name: Initialize config
+  command: 'horcrux config init --cosigner "tcp://{{ ansible_host }}:{{ horcrux_cosigner_port }}" --cosigner "tcp://{{ hostvars["cosigner2"].ansible_host }}:{{ horcrux_cosigner_port }}" --cosigner "tcp://{{ hostvars["cosigner3"].ansible_host }}:{{ horcrux_cosigner_port }}" --threshold 2 --grpc-timeout 1000ms --raft-timeout 1000ms'
+  environment:
+    PATH: '{{ path }}'
+    GOPATH: '/home/{{ ansible_user }}/go'
+
+- name: Open cosigner ports
+  become: true
+  ufw:
+    rule: allow
+    port: '{{ horcrux_cosigner_port }}'
+    proto: tcp
+    src: '{{ hostvars[item].ansible_host }}'
+    comment: 'Horcrux: {{ item }}'
+  loop: '{{ groups["horcrux_cluster"] }}'
+  when: hostvars[item].ansible_host != ansible_host
+
+- name: Print keys message
+  debug:
+    msg: 'Due to security reasons, please create the secp256k1 keys manually and copy them to each cosigner by running: horcrux create-ecies-shards --shards 3'

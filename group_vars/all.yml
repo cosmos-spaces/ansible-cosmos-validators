@@ -1,0 +1,25 @@
+# node_exporter
+node_exporter_version: '1.3.1'
+
+# promtail
+promtail_version: '2.6.1'
+
+# go
+go_version: '1.22.0'
+
+# cosmovisor
+cosmovisor_version: 'v1.5.0'
+cosmovisor_service_name: 'cosmovisor-{{ network }}'
+
+# config
+node_exporte: true
+promtail: false
+nginx: false
+enableapi: false
+enablegrpc: false
+publicrpc: false
+
+# horcrux
+horcrux_repo: 'https://github.com/strangelove-ventures/horcrux.git'
+horcrux_version: 'v3.2.3'
+horcrux_cosigner_port: 2222

@@ -1,0 +1,5 @@
+- name: Update Horcrux Config
+  hosts: horcrux_cluster
+  gather_facts: false
+  roles:
+    - support_horcrux_config

@@ -1,0 +1,5 @@
+- name: Horcrux Install
+  hosts: horcrux_cluster
+  gather_facts: false
+  roles:
+    - horcrux_install

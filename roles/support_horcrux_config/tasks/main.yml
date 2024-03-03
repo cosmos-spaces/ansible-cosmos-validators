@@ -1,0 +1,36 @@
+---
+- name: Ensure config file exists
+  file:
+    path: '{{ user_dir }}/.horcrux/config.yaml'
+    state: file
+
+- name: Remove chainNodes empty []
+  lineinfile:
+    path: '{{ user_dir }}/.horcrux/config.yaml'
+    regexp: '^chainNodes: \[\]$'
+    line: 'chainNodes: []'
+    state: absent
+
+- name: Update chainNodes
+  lineinfile:
+    path: '{{ user_dir }}/.horcrux/config.yaml'
+    regexp: 'chainNodes:'
+    line: 'chainNodes:'
+    state: present
+
+- name: Add nodes to config.yaml
+  lineinfile:
+    path: '{{ user_dir }}/.horcrux/config.yaml'
+    regexp: '^\- privValAddr: {{ item }}$'
+    line: '- privValAddr: {{ item }}'
+    insertafter: "chainNodes:"
+  loop: '{{ nodes }}'
+
+- name: restart horcrux service
+  become: true
+  systemd:
+    name: 'horcrux'
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  when: restart_horcrux == true

@@ -1,0 +1,137 @@
+---
+- name: Enforce cometbft namespace for consistency
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: 'namespace = "'
+    line: 'namespace = "cometbft"'
+    state: present
+
+- name: Set up external address
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: 'external_address = "'
+    line: 'external_address = "{{ external_address }}:{{ custom_port_prefix }}56"'
+    state: present
+  when: external_address is defined
+
+- name: Adjust config.toml port
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+  loop: '{{ config_port_changes | dict2items }}'
+
+- name: Adjust Inbound Peers
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: 'max_num_inbound_peers'
+    line: 'max_num_inbound_peers = 40'
+
+- name: Adjust Outbound Peers
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: 'max_num_outbound_peers'
+    line: 'max_num_outbound_peers = 10'
+
+- name: Update peers in config.toml file
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^persistent_peers ='
+    line: 'persistent_peers = "{{ peers }}"'
+    state: present
+  when: peers is defined
+
+- name: Update seeds in config.toml file
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^seeds ='
+    line: 'seeds = "{{ seeds }}"'
+    state: present
+  when: seeds is defined
+
+- name: Adjust app.toml ports
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+  loop: '{{ app_port_changes | dict2items }}'
+
+- name: Adjust pruning setting for validator
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+    insertafter: "These are applied if and only if the pruning strategy is custom."
+  loop: '{{ pruning_validator | dict2items }}'
+  when: type is defined and type == 'validator'
+
+- name: Adjust pruning setting for relayer
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+    insertafter: "These are applied if and only if the pruning strategy is custom."
+  loop: '{{ pruning_relayer | dict2items }}'
+  when: type is defined and type == 'relayer'
+
+- name: Adjust indexer setting for validator
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: 'indexer = "'
+    line: 'indexer = "null"'
+    state: present
+  when: type == 'validator'
+
+- name: Adjust pex setting for validator
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: 'pex = true'
+    line: 'pex = false'
+    state: present
+  when: type == 'validator'
+
+- name: Enable RPC port for relayer (Firewall will still manage the access to this port)
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '{{ custom_port_prefix }}57'
+    line: 'laddr = "tcp://0.0.0.0:{{ custom_port_prefix }}57"'
+    state: present
+  when: publicrpc|default(false)|bool == true
+
+- name: Enable API for relayer
+  replace:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: "# Enable defines if the API(.*)\\senable = (?:false|true)"
+    replace: "# Enable defines if the API server should be enabled.\\nenable = {{ enableapi|lower }}"
+  when: enableapi|default(false)|bool == false
+
+- name: Enable GRPC for relayer
+  replace:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: "# Enable defines if the gRPC server(.*)\\senable = (?:false|true)"
+    replace: "# Enable defines if the gRPC server should be enabled.\\nenable = {{ enablegrpc|lower }}"
+  when: enablegrpc|default(false)|bool == false
+
+- name: Enable prometheus on the config.toml file
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^prometheus ='
+    line: 'prometheus = true'
+    state: present
+  when: node_exporter|bool == true
+
+- name: Create cosmovisor directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ user_dir }}/{{ folder }}/cosmovisor/genesis/bin'
+    - '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades'
+
+- name: copy daemon file to cosmovisor
+  copy:
+    src: '{{ user_dir }}/go/bin/{{ daemon }}'
+    dest: '{{ user_dir }}/{{ folder }}/cosmovisor/genesis/bin'
+    remote_src: true
+    mode: '0755'

@@ -1,0 +1,40 @@
+---
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+    update_cache: yes
+
+- name: Restart fail2ban
+  service:
+    name: fail2ban
+    state: restarted
+  changed_when: false
+
+- name: Set incoming default
+  ufw:
+    default: deny
+    direction: incoming
+
+- name: Set outgoing default
+  ufw:
+    default: allow
+    direction: outgoing
+
+- name: Open ssh port
+  ufw:
+    rule: allow
+    port: '{{ ssh_port }}'
+    proto: tcp
+    src: '{{ bastion_ip }}'
+    comment: 'Bastion'
+
+- name: Enable firewall
+  ufw:
+    state: enabled
