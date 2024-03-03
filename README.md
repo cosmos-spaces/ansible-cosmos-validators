@@ -87,7 +87,7 @@ Look at the `inventory.sample.yml` file. You will see an example of how the stru
 1. `type`: Required. It can be `validator` or `relayer`. Each is opinionated in its configuration settings.
 1. `ansible_user`: The sample file assumes `ubuntu`, but feel free to use another username. This user needs sudo privilege.
 1. `ansible_port`: The sample file assumes `22`. If you ran the node setup playbook, it should match ssh_port.
-1. `ansible_ssh_private_key_file`: The sample file assumes `~/.ssh/id_rsa`, but you might have a different key location.
+1. `ansible_ssh_private_key_file`: path to ssh key file.
 1. `var_file`: It tells the program where to look for the variable file.
 1. `user_dir`: The user's home directory. In the sample inventory file this is a computed variable based on the ansible_user. It assumes that it is not a root user and its home directory is `/home/{{ansible_user}}`.
 1. `path`: This is to make sure that the ansible_user can access the `go` executable.
