@@ -1,0 +1,6 @@
+---
+- name: Create Admin user
+  hosts: '{{ target }}'
+  gather_facts: false
+  roles:
+    - support_admin_user
