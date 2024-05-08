@@ -28,9 +28,11 @@
   when: 
     - node_exporter|bool == true
     - type != 'horcurx'
+    - type != 'bastion'
 
 - name: install promtail
   import_tasks: promtail.yml
   when: 
     - promtail|bool == true
     - type != 'horcurx'
+    - type != 'bastion'

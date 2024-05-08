@@ -19,6 +19,7 @@
     - netcat
     - bash-completion
     - fio
+    - screen
 
 - name: Change hostname
   hostname:

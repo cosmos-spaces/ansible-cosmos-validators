@@ -34,6 +34,19 @@
     proto: tcp
     src: '{{ bastion_ip }}'
     comment: 'Bastion'
+  when:
+    - type != 'bastion'
+
+- name: Open ssh port
+  ufw:
+    rule: allow
+    port: '{{ ssh_port }}'
+    proto: tcp
+    src: '{{ item }}'
+    comment: 'Access to bastion from personal ip'
+  loop: '{{ allowed_ips }}'
+  when:
+    - type == 'bastion'
 
 - name: Enable firewall
   ufw:

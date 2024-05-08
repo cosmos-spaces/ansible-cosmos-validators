@@ -1,4 +1,4 @@
-- name: Disable port 22 on ssh config
+- name: Disable port 22 and enable custom ssh port on ssh config
   lineinfile:
     dest: '/etc/ssh/sshd_config'
     regex: '^Port 22'
@@ -26,6 +26,13 @@
     dest: '/etc/ssh/sshd_config'
     regexp: '^PubkeyAuthentication'
     line: 'PubkeyAuthentication yes'
+    state: present
+
+- name: Allow ansible_user user only
+  lineinfile:
+    dest: '/etc/ssh/sshd_config'
+    regexp: '^AllowUsers'
+    line: 'AllowUsers {{ ansible_user }}'
     state: present
 
 - name: Restart SSH
