@@ -5,6 +5,8 @@
     line: 'Port {{ ssh_port }}'
     state: present
     create: true
+  tags:
+    - ssh
 
 - name: Disable root login over SSH
   lineinfile:
@@ -13,6 +15,8 @@
     line: 'PermitRootLogin no'
     state: present
   when: disable_root|default(true)|bool == true
+  tags:
+    - ssh
 
 - name: Disable password login
   lineinfile:
@@ -20,6 +24,8 @@
     regexp: '^PasswordAuthentication'
     line: 'PasswordAuthentication no'
     state: present
+  tags:
+    - ssh
 
 - name: Enable public key authentication
   lineinfile:
@@ -27,6 +33,8 @@
     regexp: '^PubkeyAuthentication'
     line: 'PubkeyAuthentication yes'
     state: present
+  tags:
+    - ssh
 
 - name: Allow ansible_user user only
   lineinfile:
@@ -34,9 +42,13 @@
     regexp: '^AllowUsers'
     line: 'AllowUsers {{ ansible_user }}'
     state: present
+  tags:
+    - ssh
 
 - name: Restart SSH
   service:
     name: ssh
     state: restarted
   changed_when: false
+  tags:
+    - ssh

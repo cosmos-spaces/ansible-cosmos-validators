@@ -36,6 +36,8 @@
     comment: 'Bastion'
   when:
     - type != 'bastion'
+  tags:
+    - firewall
 
 - name: Open ssh port
   ufw:
@@ -47,6 +49,8 @@
   loop: '{{ allowed_ips }}'
   when:
     - type == 'bastion'
+  tags:
+    - firewall
 
 - name: Enable firewall
   ufw:
