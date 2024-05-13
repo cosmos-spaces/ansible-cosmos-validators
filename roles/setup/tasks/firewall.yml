@@ -39,7 +39,7 @@
   tags:
     - firewall
 
-- name: Open ssh port
+- name: Open bastion ssh ports
   ufw:
     rule: allow
     port: '{{ ssh_port }}'

@@ -1,5 +1,5 @@
 - name: Update Horcrux Config
-  hosts: horcrux_cluster
+  hosts: '{{ target }}'
   gather_facts: false
   roles:
     - support_horcrux_config

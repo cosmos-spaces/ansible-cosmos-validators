@@ -1,5 +1,5 @@
 - name: Horcrux Install
-  hosts: horcrux_cluster
+  hosts: '{{ target }}'
   gather_facts: false
   roles:
     - horcrux_install
