@@ -35,10 +35,13 @@ horcrux_cluster:
   hosts:
     cosigner1:
       ansible_host: 10.0.0.1
+      server_hostname: "cosmos-horcrux-prod01"
     cosigner2:
       ansible_host: 10.0.0.2
+      server_hostname: "cosmos-horcrux-prod02"
     cosigner3:
       ansible_host:  10.0.0.3
+      server_hostname: "cosmos-horcrux-prod03"
   vars:
     type: horcrux
     restart_horcrux: true
