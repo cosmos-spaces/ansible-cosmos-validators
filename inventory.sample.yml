@@ -8,6 +8,7 @@ all:
     var_file: "group_vars/{{ target }}/{{ network }}.yml"
     path: "/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/go/bin:{{ user_dir }}/go/bin"
     node_name: "<Brand>"
+    private_network_cidr: 10.1.0.0/16
     allowed_ips:
       - myip
       - yourip

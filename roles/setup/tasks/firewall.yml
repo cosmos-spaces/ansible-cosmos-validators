@@ -39,6 +39,19 @@
   tags:
     - firewall
 
+- name: Open horcrux priv_validator_laddr ports
+  ufw:
+    rule: allow
+    port: 22110:22130
+    proto: tcp
+    src: '{{ private_network_cidr }}'
+    comment: 'Bastion'
+  when:
+    - type == 'relayer'
+    - private_network_cidr is defined
+  tags:
+    - firewall
+
 - name: Open bastion ssh ports
   ufw:
     rule: allow
