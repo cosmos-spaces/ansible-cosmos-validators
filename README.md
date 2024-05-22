@@ -21,7 +21,7 @@ ansible-playbook setup.yml -e "target=<mainnet|testnet|horcrux_cluster>" -e "ssh
 ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "network=<chain>"
 
 # Install/Configure Horcrux
-ansible-playbook horcrux.yml
+ansible-playbook horcrux.yml -e "target=horcrux_cluster|horcrux_cluster_testnet>"
 ```
 
 ## Architecture

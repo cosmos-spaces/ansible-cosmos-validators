@@ -5,7 +5,7 @@
     - name: Clone node repo
       git:
         repo: '{{ repo }}'
-        dest: '{{ user_dir }}/{{ network }}'
+        dest: '{{ user_dir }}/{{ folder }}'
         version: '{{ node_version }}'
         update: yes
         force: yes
@@ -14,7 +14,7 @@
     - name: Install node
       command: '{{ item }}'
       args:
-        chdir: '{{ user_dir }}/{{ network }}'
+        chdir: '{{ user_dir }}/{{ folder }}'
       with_items:
         - 'make install'
       environment:
