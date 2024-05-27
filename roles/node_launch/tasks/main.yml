@@ -37,6 +37,7 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
+  when: snapshot_url is not defined
 
 - name: Ensure it is running
   uri:
