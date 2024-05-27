@@ -49,14 +49,6 @@
     state: present
   when: seeds is defined
 
-- name: Update priv_validator_laddr in config.toml file
-  lineinfile:
-    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
-    regexp: '^priv_validator_laddr ='
-    line: 'priv_validator_laddr = "tcp://0.0.0.0:22{{ custom_port_prefix }}"'
-    state: present
-  when: enable_priv_validator_laddr|bool == true
-
 - name: Adjust app.toml ports
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
@@ -127,6 +119,13 @@
     line: 'prometheus = true'
     state: present
   when: node_exporter|bool == true
+
+- name: Update node port on client.toml
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/client.toml'
+    regexp: '^node ='
+    line: 'node = "tcp://localhost:{{ custom_port_prefix }}57"'
+    state: present
 
 - name: Create cosmovisor directories
   file:

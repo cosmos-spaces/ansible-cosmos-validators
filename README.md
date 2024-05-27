@@ -170,13 +170,14 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `support_public_endpoints.yml` | Set up Nginx reverse proxy for public PRC/ API                                                   |
 | `support_seed.yml`             | Install seed node with Tenderseed. You need a node_key.json.j2 file so the node_id is consistent |
 | `support_tenderduty.yml`       | Install Tenderduty                                                                               |
-| `support_price_feeder.yml`     | Install price feeders for selected networks (such Umee, Kujira, etc.)                             |
+| `support_price_feeder.yml`     | Install price feeders for selected networks (such Umee, Kujira, etc.)                            |
 | `support_scripts.yml`          | Install scripts to make node operations easier                                                   |
 | `support_sync_snapshot.yml`    | Sync node from a snapshot                                                                        |
 | `support_remove_node.yml`      | Remove a node and clean up                                                                       |
 | `support_update_min_gas.yml`   | Update minimum gas price                                                                         |
 | `horcrux.yml`                  | Install horcrux cluster                                                                          |
 | `support_horcrux_config.yml`   | Add additional nodes to the horcrux config                                                       |
+| `support_chain_horcrux`        | Updates priv_validator_laddr with horcrux port                                                   |
 
 ### Selected playbook Usage Example
 

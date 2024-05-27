@@ -1,0 +1,28 @@
+---
+- meta: end_play
+  when: enable_priv_validator_laddr == false
+
+- name: Update priv_validator_laddr in config.toml file
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '^priv_validator_laddr ='
+    line: 'priv_validator_laddr = "tcp://0.0.0.0:22{{ custom_port_prefix }}"'
+    state: present
+
+- name: restart node process
+  become: true
+  systemd:
+    name: '{{ cosmovisor_service_name }}'
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
+- name: Pause for 10 seconds
+  pause:
+    seconds: 10
+
+- name: Ensure it is running
+  uri:
+    url: 'http://localhost:{{ custom_port_prefix }}57/abci_info'
+    method: GET
+    status_code: 200
