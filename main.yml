@@ -8,3 +8,5 @@
     - node_initialize
     - node_configure
     - node_launch
+    - role: support_sync_snapshot
+      when: snapshot_url is defined
