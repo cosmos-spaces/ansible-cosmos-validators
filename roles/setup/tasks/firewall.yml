@@ -45,7 +45,7 @@
     port: 22110:22130
     proto: tcp
     src: '{{ private_network_cidr }}'
-    comment: 'Bastion'
+    comment: 'Horcrux Ports'
   when:
     - type == 'relayer'
     - private_network_cidr is defined
