@@ -64,6 +64,7 @@
     - type == 'bastion'
   tags:
     - firewall
+    - firewall_bastion
 
 - name: Enable firewall
   ufw:
