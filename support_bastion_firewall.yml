@@ -1,6 +1,6 @@
 ---
 - name: Allow IPs to connect to bastion
-  hosts: 127.0.0.1
+  hosts: '{{ target }}'
   connection: local
   tasks:
     - meta: end_play
