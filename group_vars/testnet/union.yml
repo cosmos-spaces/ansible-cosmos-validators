@@ -8,7 +8,7 @@ binary_processing: default
 genesis: 'https://snapshots.kjnodes.com/union-testnet/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/union-testnet/addrbook.json'
 seeds: '3f472746f46493309650e5a033076689996c8881@union-testnet.rpc.kjnodes.com:17159'
-snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/celestia/celestia_1917538.tar.lz4'
+snapshot_url: 'https://snapshots.kjnodes.com/union-testnet/snapshot_latest.tar.lz4'
 custom_port_prefix: 112
 upgrade_folder: v0.22
 minimum_gas_price: '0muno'
