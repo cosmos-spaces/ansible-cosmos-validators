@@ -1,0 +1,15 @@
+---
+- name: Allow IPs to connect to bastion
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - meta: end_play
+      when: type != 'bastion'
+    - name: Open bastion ssh ports
+      ufw:
+        rule: allow
+        port: '{{ ssh_port }}'
+        proto: tcp
+        src: '{{ item }}'
+        comment: 'Access to bastion from personal ip'
+      loop: '{{ allowed_ips }}'
