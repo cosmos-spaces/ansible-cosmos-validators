@@ -52,13 +52,15 @@ Typically, a cloud server provides a machine with root access and insecure setup
 1. Disable password authentication.
 
 ### Variables
-Look at the `inventory.sample.yml` file. You will see an example of how the structure should be to configure your CometBFT clusters:
+Look at the `sample.inventory.yml` file. You will see an example of how the structure should be to configure your CometBFT clusters:
 
 1. `target`: Required. Whether `mainnet` or `tesnet`.
 1. `ansible_host`: Required. The IP address of the server(s).
 1. `ssh_port`: Required. Alternate ssh port to configure on the server. This can be different per host. By default, it will apply the same port for all servers.
 1. `server_hostname` Required. Sets the hostname to this value.
 1. `bastion_ip` Required. Bastion/Jumpbox IP to allow ssh access to the server. It can be an address range as well.
+
+Change the file name from sample.inventory.yml to `inventory.yml` and update the values accordingly.
 
 ### Run node setup playbook
 ```bash
