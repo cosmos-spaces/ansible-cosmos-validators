@@ -178,6 +178,7 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `horcrux.yml`                  | Install horcrux cluster                                                                          |
 | `support_horcrux_config.yml`   | Add additional nodes to the horcrux config                                                       |
 | `support_chain_horcrux`        | Updates priv_validator_laddr with horcrux port                                                   |
+| `support_bastion_firewall`     | Allow additional IPs to connect to bastion |
 
 ### Selected playbook Usage Example
 
