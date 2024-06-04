@@ -6,7 +6,7 @@
     port: '{{ custom_port_prefix }}56'
     proto: tcp
     comment: 'P2P port for {{ network }}'
-  when: type == relayer
+  when: type == 'relayer'
 
 - name: Print allowing rpc port
   debug:
