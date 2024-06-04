@@ -39,7 +39,7 @@
     enabled: yes
 
 - name: Initialize config
-  command: 'horcrux config init -o --cosigner "tcp://{{ ansible_host }}:{{ horcrux_cosigner_port }}" --cosigner "tcp://{{ hostvars["cosigner2"].ansible_host }}:{{ horcrux_cosigner_port }}" --cosigner "tcp://{{ hostvars["cosigner3"].ansible_host }}:{{ horcrux_cosigner_port }}" --threshold 2 --grpc-timeout 1000ms --raft-timeout 1000ms'
+  command: 'horcrux config init -o --cosigner "tcp://{{ hostvars["cosigner1"].ansible_host }}:{{ horcrux_cosigner_port }}" --cosigner "tcp://{{ hostvars["cosigner2"].ansible_host }}:{{ horcrux_cosigner_port }}" --cosigner "tcp://{{ hostvars["cosigner3"].ansible_host }}:{{ horcrux_cosigner_port }}" --threshold 2 --grpc-timeout 1000ms --raft-timeout 1000ms'
   environment:
     PATH: '{{ path }}'
     GOPATH: '/home/{{ ansible_user }}/go'
