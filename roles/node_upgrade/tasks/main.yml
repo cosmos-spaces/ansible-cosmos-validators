@@ -1,22 +1,45 @@
 ---
-- name: Clone node repo
-  git:
-    repo: '{{ repo }}'
-    dest: '{{ user_dir }}/{{ folder }}'
-    version: '{{ node_version }}'
-    update: yes
-    force: yes
-    recursive: no
+- name: Install from source
+  become: false
+  when: binary is undefined
+  block:
+    - name: Clone node repo
+      git:
+        repo: '{{ repo }}'
+        dest: '{{ user_dir }}/{{ folder }}'
+        version: '{{ node_version }}'
+        update: yes
+        force: yes
+        recursive: no
 
-- name: Install node
-  command: '{{ item }}'
-  args:
-    chdir: '{{ user_dir }}/{{ folder }}'
-  with_items:
-    - 'make install'
-  environment:
-    PATH: '{{ path }}'
-    GOPATH: '{{ user_dir }}/go'
+    - name: Install node
+      command: '{{ item }}'
+      args:
+        chdir: '{{ user_dir }}/{{ folder }}'
+      with_items:
+        - 'make install'
+      environment:
+        PATH: '{{ path }}'
+        GOPATH: '{{ user_dir }}/go'
+
+- name: set binary install exit condition
+  set_fact:
+    binary_installed: false
+
+- name: download pre-installed binary
+  when: binary is defined
+  block:
+    - name: Install from binary zipped
+      include_tasks: binary_zip.yml
+      when: binary_processing == "zip"
+
+    - name: Install from binary tar gz
+      include_tasks: binary_targz.yml
+      when: binary_processing == "targz"
+
+    - name: Install from binary
+      include_tasks: binary_default.yml
+      when: binary_processing == "default"
 
 - name: Create new directory
   file:
@@ -46,7 +69,7 @@
 - name: start cosmovisor service
   become: true
   systemd:
-    name: '{{ network }}'
+    name: '{{ cosmovisor_service_name }}'
     state: restarted
     daemon_reload: yes
     enabled: yes
