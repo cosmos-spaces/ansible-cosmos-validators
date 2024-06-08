@@ -73,10 +73,12 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
+  when: upgrade_folder is not defined
 
 - name: Pause for 10 seconds
   pause:
     seconds: 10
+  when: upgrade_folder is not defined
 
 - name: Ensure it is running
   uri:
