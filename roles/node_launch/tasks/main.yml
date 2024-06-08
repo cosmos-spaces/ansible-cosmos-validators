@@ -22,6 +22,36 @@
     comment: 'RPC port for {{ network }}'
   when: publicrpc|default(false)|bool == true
 
+- name: Open prometheus node-exporter port
+  ufw:
+    rule: allow
+    port: 9100
+    proto: tcp
+    src: '{{ hostvars[item].ansible_host }}'
+    comment: 'Prometheus node-exporter port'
+  loop: '{{ groups["telemetry"] }}'
+  when:
+    - groups["telemetry"] is defined
+    - node_exporter|bool == true
+  tags:
+    - firewall
+    - prometheus
+
+- name: Open prometheus cosmos port
+  ufw:
+    rule: allow
+    port: '{{ custom_port_prefix }}61'
+    proto: tcp
+    src: '{{ hostvars[item].ansible_host }}'
+    comment: 'Prometheus {{ network }} port'
+  loop: '{{ groups["telemetry"] }}'
+  when:
+    - groups["telemetry"] is defined
+    - node_exporter|bool == true
+  tags:
+    - firewall
+    - prometheus
+
 - name: copy service file mainnet
   become: true
   template:
