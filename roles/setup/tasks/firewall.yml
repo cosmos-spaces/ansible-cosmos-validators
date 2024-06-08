@@ -66,6 +66,21 @@
   tags:
     - firewall
 
+- name: Open prometheus node-exporter port
+  ufw:
+    rule: allow
+    port: 9100
+    proto: tcp
+    src: '{{ hostvars[item].ansible_host }}'
+    comment: 'Prometheus node-exporter port'
+  loop: '{{ groups["telemetry"] }}'
+  when:
+    - groups["telemetry"] is defined
+    - node_exporter|bool == true
+  tags:
+    - firewall
+    - prometheus
+
 - name: Enable firewall
   ufw:
     state: enabled
