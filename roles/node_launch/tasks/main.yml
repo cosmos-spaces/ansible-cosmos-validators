@@ -23,6 +23,7 @@
   when: publicrpc|default(false)|bool == true
 
 - name: Open prometheus cosmos port
+  become: true
   ufw:
     rule: allow
     port: '{{ custom_port_prefix }}61'
