@@ -8,6 +8,7 @@
         repo: '{{ repo }}'
         dest: '{{ user_dir }}/{{ folder }}'
         version: '{{ node_version }}'
+        clone: false
         update: yes
         force: yes
         recursive: no
