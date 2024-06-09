@@ -26,6 +26,11 @@
 - name: Unsafe reset
   shell: '{{ user_dir }}/go/bin/{{ daemon }} tendermint unsafe-reset-all --home {{ user_dir }}/{{ folder }} --keep-addr-book'
 
+- name: Remove wasm folder
+  file:
+    path: '{{ user_dir }}/{{ folder }}/wasm'
+    state: absent
+
 - name: Extract snapshot
   shell: 'lz4 -c -d {{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz | tar -x -C {{ user_dir }}/{{ folder }}'
 
