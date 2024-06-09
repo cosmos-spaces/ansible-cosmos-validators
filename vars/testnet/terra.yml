@@ -9,6 +9,6 @@ addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/terra/addrbook.j
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:11756'
 snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/terra/terra_11426486.tar.lz4'
 custom_port_prefix: 116
-#upgrade_folder: v1.9
+upgrade_folder: v2.11
 minimum_gas_price: '0.015uluna'
 enable_priv_validator_laddr: false
