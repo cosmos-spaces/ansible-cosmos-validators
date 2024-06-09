@@ -1,4 +1,9 @@
 ---
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+  tags: debug
+
 - name: Install from source
   become: false
   block:
