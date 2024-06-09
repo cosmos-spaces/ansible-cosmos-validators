@@ -1,6 +1,6 @@
 network: dymension
 folder: '.dymension'
-daemon: dymensiond
+daemon: dymd
 chain_id: froopyland_100-1
 node_version: 'v2.0.0-alpha.8'
 repo: https://github.com/dymensionxyz/dymension.git
