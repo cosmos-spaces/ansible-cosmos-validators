@@ -15,7 +15,7 @@
     - name: Install node
       command: '{{ item }}'
       args:
-        chdir: '{{ user_dir }}/{{ folder }}'
+        chdir: '{{ user_dir }}/src/{{ folder }}'
       with_items:
         - 'make install'
       environment:
