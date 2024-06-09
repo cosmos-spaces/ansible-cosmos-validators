@@ -78,7 +78,6 @@
 - name: Pause for 10 seconds
   pause:
     seconds: 10
-  when: upgrade_folder is not defined
 
 - name: Ensure it is running
   uri:
