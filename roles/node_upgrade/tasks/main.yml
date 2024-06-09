@@ -6,9 +6,8 @@
     - name: Clone node repo
       git:
         repo: '{{ repo }}'
-        dest: '{{ user_dir }}/{{ folder }}'
+        dest: '{{ user_dir }}/src/{{ folder }}'
         version: '{{ node_version }}'
-        clone: false
         update: yes
         force: yes
         recursive: no
