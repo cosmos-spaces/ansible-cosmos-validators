@@ -85,7 +85,7 @@ Look at the `inventory.sample.yml` file. You will see an example of how the stru
 
 1. `target`: Required. Whether mainnet or tesnet.
 1. `ansible_host`: Required. The IP address of the server.
-1. `network`: Required. The chain network name to install/configure (should match file under group_vars/<testnet/mainnet>).
+1. `network`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
 1. `type`: Required. It can be `validator` or `relayer`. Each is opinionated in its configuration settings.
 1. `ansible_user`: The sample file assumes `ubuntu`, but feel free to use another username. This user needs sudo privilege.
 1. `ansible_port`: The sample file assumes `22`. If you ran the node setup playbook, it should match ssh_port.
@@ -113,7 +113,7 @@ There are additional variables under `group_vars/all.yml` for global configurati
 1. `publicrpc`: Default is `false`. Set to `true` if you want to allow the rpc port on the server.
 1. `external_address`: IP address to set as an external address in config.toml.
 
-Look at `group_var/mainnet|testnet/<network>.yaml` for network (chain) specific variables.
+Look at `vars/mainnet|testnet/<network>.yaml` for network (chain) specific variables.
 
 ### Run install/configure playbook
 ```bash
