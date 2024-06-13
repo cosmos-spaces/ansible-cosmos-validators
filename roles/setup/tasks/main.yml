@@ -27,8 +27,9 @@
   import_tasks: node_exporter.yml
   when: 
     - node_exporter|bool == true
-    - type != 'horcrux'
     - type != 'bastion'
+  tags: 
+    - node_exporter
 
 - name: install promtail
   import_tasks: promtail.yml
