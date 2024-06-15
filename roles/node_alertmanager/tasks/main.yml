@@ -55,6 +55,8 @@
     dest: '/etc/alertmanager/alertmanager.yml'
     owner: prometheus
     group: prometheus
+  tags:
+    - alert_manager_config
 
 - name: Copy Alert Manager templates
   copy:
