@@ -22,16 +22,25 @@
     remote_src: true
     owner: prometheus
     group: prometheus
-    mode: 755
+    mode: '0755'
 
 - name: Creates alert manager directory
+  file:
+    path: '/etc/alertmanager'
+    state: directory
+    owner: prometheus
+    group: prometheus
+    recurse: true
+    mode: '0755'
+  changed_when: false
+
+- name: Creates alert manager templates directory
   file:
     path: '/etc/alertmanager/templates'
     state: directory
     owner: prometheus
     group: prometheus
-    recurse: true
-    mode: 0755
+    mode: '0755'
   changed_when: false
 
 - name: Creates prometheus alerts directory
@@ -41,7 +50,7 @@
     owner: prometheus
     group: prometheus
     recurse: true
-    mode: 0755
+    mode: '0755'
   changed_when: false
 
 - name: Telegram required variables are undefined
@@ -64,16 +73,16 @@
     dest: '/etc/alertmanager/templates'
     owner: prometheus
     group: prometheus
-    mode: 644
+    mode: '0644'
   with_fileglob: "*.tmpl"
 
 - name: Copy Alert rules file
   copy:
-    src: 'alerts.yml'
+    src: 'rules.yml'
     dest: '/etc/prometheus/alerts/'
     owner: prometheus
     group: prometheus
-    mode: 644
+    mode: '0644'
 
 - name: Copy Alert Manager service file
   copy:
@@ -81,7 +90,7 @@
     dest: '/etc/systemd/system/alertmanager.service'
     owner: root
     group: root
-    mode: 600
+    mode: '0600'
 
 - name: start Alert Manager service
   systemd:
