@@ -16,6 +16,6 @@ receivers:
     telegram_configs:
       - api_url: https://api.telegram.org
         parse_mode: "HTML"
-        message: '{{ template "telegram.default" .}}'
+        message: '{{ "{{ template \"telegram.default\" .}}" }}'
         chat_id: {{ telegram_chat_id }}       # your telegram user id
         bot_token: {{ telegram_bot_token }}   # your telegram bot token
