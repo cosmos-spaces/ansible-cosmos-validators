@@ -1,4 +1,8 @@
 ---
+- name: Print Alert Manager version
+  debug:
+    msg: 'Installing Alert Manager version {{ alert_manager_version }}'
+
 - name: download Alert Manager
   get_url:
     url: 'https://github.com/prometheus/alertmanager/releases/latest/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
