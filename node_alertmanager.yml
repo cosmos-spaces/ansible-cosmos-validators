@@ -1,0 +1,5 @@
+- name: Main
+  hosts: telemetry
+  gather_facts: false
+  roles:
+    - node_alertmanager

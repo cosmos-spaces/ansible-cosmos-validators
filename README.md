@@ -161,26 +161,27 @@ For more information, refer to the [documentation](https://github.com/strangelov
 
 | Playbook                       | Description                                                                                      |
 | ------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `main.yml`                     | The main playbook to set up a node                                                               |
-| `setup.yml`                    | Secure the server with ssh config changes and firewall rules, and install dependencies           |
-| `support_backup_node.yml`      | Install snapshot, state_sync, resync, genesis and prune script on backup node                    |
-| `support_snapshot.yml`         | Install snapshot script and a cron job                                                           |
-| `support_state_sync.yml`       | Install state-sync script                                                                        |
-| `support_resync.yml`           | Install weekly scheduled state-sync and recovery script                                          |
-| `support_genesis.yml`          | Install a script to upload genesis                                                               |
-| `support_prune.yml`            | Install a script to prune using cosmprund                                                        |
-| `support_public_endpoints.yml` | Set up Nginx reverse proxy for public PRC/ API                                                   |
-| `support_seed.yml`             | Install seed node with Tenderseed. You need a node_key.json.j2 file so the node_id is consistent |
-| `support_tenderduty.yml`       | Install Tenderduty                                                                               |
-| `support_price_feeder.yml`     | Install price feeders for selected networks (such Umee, Kujira, etc.)                            |
-| `support_scripts.yml`          | Install scripts to make node operations easier                                                   |
-| `support_sync_snapshot.yml`    | Sync node from a snapshot                                                                        |
-| `support_remove_node.yml`      | Remove a node and clean up                                                                       |
-| `support_update_min_gas.yml`   | Update minimum gas price                                                                         |
-| `horcrux.yml`                  | Install horcrux cluster                                                                          |
-| `support_horcrux_config.yml`   | Add additional nodes to the horcrux config                                                       |
-| `support_chain_horcrux`        | Updates priv_validator_laddr with horcrux port                                                   |
-| `support_bastion_firewall`     | Allow additional IPs to connect to bastion |
+| `main.yml`| The main playbook to set up a node |
+| `node_alertmanager.yml` | Installs and configures alert manager |
+| `setup.yml`| Secure the server with ssh config changes and firewall rules, and install dependencies |
+| `support_backup_node.yml` | Install snapshot, state_sync, resync, genesis and prune script on backup node |
+| `support_snapshot.yml` | Install snapshot script and a cron job |
+| `support_state_sync.yml` | Install state-sync script |
+| `support_resync.yml` | Install weekly scheduled state-sync and recovery script |
+| `support_genesis.yml` | Install a script to upload genesis |
+| `support_prune.yml` | Install a script to prune using cosmprund |
+| `support_public_endpoints.yml` | Set up Nginx reverse proxy for public RPC/API |
+| `support_seed.yml` | Install seed node with Tenderseed. You need a node_key.json.j2 file so the node_id is consistent |
+| `support_tenderduty.yml` | Install Tenderduty |
+| `support_price_feeder.yml` | Install price feeders for selected networks (such Umee, Kujira, etc.) |
+| `support_scripts.yml` | Install scripts to make node operations easier |
+| `support_sync_snapshot.yml` | Sync node from a snapshot |
+| `support_remove_node.yml` | Remove a node and clean up |
+| `support_update_min_gas.yml` | Update minimum gas price |
+| `horcrux.yml` | Install horcrux cluster |
+| `support_horcrux_config.yml` | Add additional nodes to the horcrux config |
+| `support_chain_horcrux` | Updates priv_validator_laddr with horcrux port |
+| `support_bastion_firewall` | Allow additional IPs to connect to bastion |
 
 ### Selected playbook Usage Example
 

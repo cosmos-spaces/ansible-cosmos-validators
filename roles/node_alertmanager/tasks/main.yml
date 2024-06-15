@@ -1,0 +1,101 @@
+---
+- name: download Alert Manager
+  get_url:
+    url: 'https://github.com/prometheus/alertmanager/releases/latest/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
+    dest: '/tmp/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
+    mode: '0700'
+
+- name: unarchive Alert Manager
+  unarchive:
+    src: '/tmp/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
+    remote_src: yes
+    dest: '/tmp'
+
+- name: Copy binary files
+  copy:
+    src: '/tmp/alertmanager-{{ alert_manager_version }}.linux-amd64/alertmanager'
+    dest: '/usr/local/bin/'
+    remote_src: true
+    owner: prometheus
+    group: prometheus
+    mode: 755
+
+- name: Creates alert manager directory
+  file:
+    path: '/etc/alertmanager/templates'
+    state: directory
+    owner: prometheus
+    group: prometheus
+    recurse: true
+    mode: 0755
+  changed_when: false
+
+- name: Creates prometheus alerts directory
+  file:
+    path: '/etc/prometheus/alerts'
+    state: directory
+    owner: prometheus
+    group: prometheus
+    recurse: true
+    mode: 0755
+  changed_when: false
+
+- name: Telegram required variables are undefined
+  debug:
+    msg: 'telegram_chat_id and telegram_bot_token variables are required. Pass them using -e when running this playbook.'
+  when: telegram_chat_id is undefined or telegram_bot_token is undefined
+
+- name: Copy Alert Manager config
+  template:
+    src: 'alertmanager.yml.j2'
+    dest: '/etc/alertmanager/alertmanager.yml'
+    owner: prometheus
+    group: prometheus
+
+- name: Copy Alert Manager templates
+  copy:
+    src: "{{ item }}"
+    dest: '/etc/alertmanager/templates'
+    owner: prometheus
+    group: prometheus
+    mode: 644
+  with_fileglob: "*.tmpl"
+
+- name: Copy Alert rules file
+  copy:
+    src: 'alerts.yml'
+    dest: '/etc/prometheus/alerts/'
+    owner: prometheus
+    group: prometheus
+    mode: 644
+
+- name: Copy Alert Manager service file
+  copy:
+    src: 'alertmanager.service'
+    dest: '/etc/systemd/system/alertmanager.service'
+    owner: root
+    group: root
+    mode: 600
+
+- name: start Alert Manager service
+  systemd:
+    name: alertmanager
+    state: restarted
+    daemon_reload: true
+    enabled: true
+  changed_when: false
+
+- name: Install Grafana plugin
+  shell: 'sudo grafana-cli plugins install camptocamp-prometheus-alertmanager-datasource'
+  changed_when: false
+
+- name: Restart Grafana
+  systemd:
+    name: grafana-server
+    state: restarted
+  changed_when: false
+
+- name: Delete the downloaded file
+  file:
+    path: '/tmp/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
+    state: absent

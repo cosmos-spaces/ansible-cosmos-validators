@@ -1,0 +1,21 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  group_wait: 1m
+  group_interval: 5m
+  repeat_interval: 1h
+  group_by: ['...']
+  receiver: telegram
+
+templates:
+  - "templates/*.tmpl"
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - api_url: https://api.telegram.org
+        parse_mode: "HTML"
+        message: '{{ template "telegram.default" .}}'
+        chat_id: {{ telegram_chat_id }}       # your telegram user id
+        bot_token: {{ telegram_bot_token }}   # your telegram bot token
