@@ -4,11 +4,11 @@ groups:
     - alert: InstanceDown
       # Condition for alerting
       expr: up == 0
-      for: 3m
+      for: 5m
       # Annotation - additional informational labels to store more information
       annotations:
         title: 'Instance {{ $labels.instance }} down'
-        description: '{{ $labels.job }} on {{ $labels.instance }} has been down for more than 3 minutes'
+        description: '{{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes'
       # Labels - additional labels to be attached to the alert
       labels:
         severity: 'critical'
@@ -131,7 +131,7 @@ groups:
         description: 'Node-exporter textfile collector scraping error on "{{ $labels.instance }}".'
 
     - alert: TooFewPeers
-      expr: cometbft_p2p_peers{job="cosmos"} < 2
+      expr: cometbft_p2p_peers{job="cosmos"} < 1
       for: 5m
       labels:
         severity: warning
