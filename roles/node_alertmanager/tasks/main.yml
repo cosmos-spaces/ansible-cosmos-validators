@@ -5,7 +5,7 @@
 
 - name: download Alert Manager
   get_url:
-    url: 'https://github.com/prometheus/alertmanager/releases/latest/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
+    url: 'https://github.com/prometheus/alertmanager/releases/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
     dest: '/tmp/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz'
     mode: '0700'
 
