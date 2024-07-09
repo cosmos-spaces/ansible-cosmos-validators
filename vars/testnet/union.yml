@@ -3,7 +3,7 @@ folder: '.union'
 daemon: uniond
 chain_id: union-testnet-8
 node_version: 'v0.23.0'
-binary: "https://snapshots.kjnodes.com/union-testnet/uniond-v0.23.0-linux-amd64"
+binary: "https://snapshots.kjnodes.com/union-testnet/uniond-v0.24.0-linux-amd64"
 binary_processing: default
 genesis: 'https://snapshots.kjnodes.com/union-testnet/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/union-testnet/addrbook.json'
