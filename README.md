@@ -163,6 +163,7 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | ------------------------------ | ------------------------------------------------------------------------------------------------ |
 | `main.yml`| The main playbook to set up a node |
 | `node_alertmanager.yml` | Installs and configures alert manager |
+| `node_tenderduty.yml` | Install Tenderduty |
 | `setup.yml`| Secure the server with ssh config changes and firewall rules, and install dependencies |
 | `support_backup_node.yml` | Install snapshot, state_sync, resync, genesis and prune script on backup node |
 | `support_snapshot.yml` | Install snapshot script and a cron job |
@@ -172,7 +173,6 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `support_prune.yml` | Install a script to prune using cosmprund |
 | `support_public_endpoints.yml` | Set up Nginx reverse proxy for public RPC/API |
 | `support_seed.yml` | Install seed node with Tenderseed. You need a node_key.json.j2 file so the node_id is consistent |
-| `support_tenderduty.yml` | Install Tenderduty |
 | `support_price_feeder.yml` | Install price feeders for selected networks (such Umee, Kujira, etc.) |
 | `support_scripts.yml` | Install scripts to make node operations easier |
 | `support_sync_snapshot.yml` | Sync node from a snapshot |
@@ -189,12 +189,6 @@ For more information, refer to the [documentation](https://github.com/strangelov
 
 ```bash
 ansible-playbook support_seed.yml -e "target=<mainnet|testnet>" -e "network=<chain>" -e "seed=190c4496f3b46d339306182fe6a507d5487eacb5@65.108.131.174:36656"
-```
-
-##### support_tenderduty
-
-```bash
-ansible-playbook support_tenderduty.yml -e "target=<mainnet|testnet>" -e "network=<chain>" -e "key=junovalcons1qyw2x2sjp40cqasdfyuiahsdfknasdkneafs"
 ```
 
 ##### support_scripts

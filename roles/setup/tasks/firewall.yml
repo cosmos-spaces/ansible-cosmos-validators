@@ -34,7 +34,19 @@
     port: '{{ ssh_port }}'
     proto: tcp
     src: '{{ bastion_ip }}'
-    comment: 'Bastion'
+    comment: 'SSH Bastion'
+  when:
+    - type != 'bastion'
+  tags:
+    - firewall
+
+- name: Open ssh port (backup)
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+    src: '{{ bastion_ip }}'
+    comment: 'SSH Bastion (backup)'
   when:
     - type != 'bastion'
   tags:
