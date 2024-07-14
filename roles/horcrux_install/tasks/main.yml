@@ -55,6 +55,14 @@
   loop: '{{ groups[target] }}'
   when: hostvars[item].ansible_host != ansible_host
 
+- name: Open prometheus horcrux port
+  become: true
+  ufw:
+    rule: allow
+    port: 6001
+    proto: tcp
+    comment: 'Prometheus horcrux port'
+
 - name: Print keys message
   debug:
     msg: 'Due to security reasons, please create the secp256k1 keys manually and copy them to each cosigner by running: horcrux create-ecies-shards --shards 3'

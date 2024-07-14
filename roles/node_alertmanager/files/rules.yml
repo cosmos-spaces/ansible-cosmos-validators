@@ -3,7 +3,7 @@ groups:
     rules:
     - alert: InstanceDown
       # Condition for alerting
-      expr: up == 0
+      expr: up{job=="node"} == 0
       for: 5m
       # Annotation - additional informational labels to store more information
       annotations:
