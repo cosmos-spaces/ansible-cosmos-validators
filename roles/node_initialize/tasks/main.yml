@@ -72,7 +72,7 @@
   lineinfile:
     path: '{{ user_dir }}/.bash_aliases'
     line: "alias sync_info_{{ network }}='curl -s http://localhost:{{ custom_port_prefix }}57/status | jq .result.sync_info'"
-    regexp: "^alias sync_info_{{ network }}='curl -s http://localhost:{{ custom_port_prefix }}57/status | jq .result.sync_info'$"
+    regexp: "^alias sync_info_{{ network }}='curl -s http://localhost:{{ custom_port_prefix }}57/status \\| jq .result.sync_info'$"
     state: present
     insertafter: EOF
     create: True
