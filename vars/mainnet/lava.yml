@@ -1,0 +1,15 @@
+network: lava
+folder: '.lava'
+daemon: lavad
+chain_id: lava-mainnet-1
+node_version: 'v2.2.0'
+binary: "https://github.com/lavanet/lava/releases/download/v2.2.0/lavad-v2.2.0-linux-amd64"
+binary_processing: default
+genesis: 'https://storage.googleapis.com/lavanet-public-asssets/tge/genesis.json'
+addrbook_file: 'https://snapshots.kjnodes.com/lava/addrbook.json'
+seeds: '400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@lava.rpc.kjnodes.com:14459'
+snapshot_url: 'https://snapshots.kjnodes.com/lava/snapshot_latest.tar.lz4'
+custom_port_prefix: 117
+upgrade_folder: v2.2.0
+minimum_gas_price: '0.000000001ulava'
+enable_priv_validator_laddr: false
