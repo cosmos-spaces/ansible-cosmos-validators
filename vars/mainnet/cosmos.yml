@@ -2,12 +2,12 @@ network: cosmos
 folder: '.gaia'
 daemon: gaiad
 chain_id: cosmoshub-4
-node_version: 'v17.3.0'
+node_version: 'v18.1.0'
 repo: https://github.com/cosmos/gaia
 genesis: 'https://snapshots.polkachu.com/genesis/cosmos/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/cosmos/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:14956'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/cosmos/cosmos_21297673.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/cosmos/cosmos_21657014.tar.lz4'
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
-enable_priv_validator_laddr: false
+enable_priv_validator_laddr: true
