@@ -2,7 +2,7 @@ network: union
 folder: '.union'
 daemon: uniond
 chain_id: union-testnet-8
-node_version: 'v0.23.0'
+node_version: 'v0.24.0'
 binary: "https://snapshots.kjnodes.com/union-testnet/uniond-v0.24.0-linux-amd64"
 binary_processing: default
 genesis: 'https://snapshots.kjnodes.com/union-testnet/genesis.json'
@@ -10,6 +10,6 @@ addrbook_file: 'https://snapshots.kjnodes.com/union-testnet/addrbook.json'
 seeds: '3f472746f46493309650e5a033076689996c8881@union-testnet.rpc.kjnodes.com:17159'
 snapshot_url: 'https://snapshots.kjnodes.com/union-testnet/snapshot_latest.tar.lz4'
 custom_port_prefix: 112
-upgrade_folder: v0.23.0
+upgrade_folder: v0.24.0
 minimum_gas_price: '0muno'
 enable_priv_validator_laddr: false
