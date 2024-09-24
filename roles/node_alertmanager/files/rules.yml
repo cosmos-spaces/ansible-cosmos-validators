@@ -138,9 +138,9 @@ groups:
         service: cosmos
       annotations:
         description: 'P2P Peers on `{{ $labels.instance }}` is lower than threshold (current value: {{ $value }})'
-
+   
     - alert: DegradedSyncing
-      expr: increase(cometbft_blocksync_latest_block_height[5m]) < 10
+      expr: increase(cometbft_consensus_latest_block_height[5m]) < 10
       for: 5m
       labels:
         severity: warning
