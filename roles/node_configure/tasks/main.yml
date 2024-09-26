@@ -78,9 +78,8 @@
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
     regexp: 'indexer = "'
-    line: 'indexer = "null"'
+    line: 'indexer = "{{ indexer }}"'
     state: present
-  when: type == 'validator'
 
 - name: Adjust pex setting for validator
   lineinfile:
