@@ -18,7 +18,7 @@ nginx: false
 enableapi: false
 enablegrpc: false
 publicrpc: false
-indexer: null
+indexer: "null"
 
 # horcrux
 horcrux_repo: 'https://github.com/strangelove-ventures/horcrux.git'
