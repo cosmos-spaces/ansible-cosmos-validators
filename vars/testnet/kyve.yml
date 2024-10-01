@@ -10,3 +10,4 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11056'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/kyve/kyve_8283276.tar.lz4'
 custom_port_prefix: 120
 # minimum_gas_price: '0.025ucmdx'
+make_install_params: "ENV=mainnet"
