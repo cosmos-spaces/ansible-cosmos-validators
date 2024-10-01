@@ -1,0 +1,12 @@
+network: kyve
+folder: '.kyve'
+daemon: kyve
+chain_id: kyve-1
+node_version: 'v1.5.0'
+repo: https://github.com/KYVENetwork/chain.git
+genesis: 'https://snapshots.polkachu.com/genesis/kyve/genesis.json'
+addrbook_file: 'https://snapshots.polkachu.com/addrbook/kyve/addrbook.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11056'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/kyve/kyve_8283276.tar.lz4'
+custom_port_prefix: 120
+# minimum_gas_price: '0.025ucmdx'
