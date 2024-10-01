@@ -1,4 +1,3 @@
----
 - name: Make sure folder exists
   file:
     path: '{{ user_dir }}/state_sync/resync'
@@ -8,7 +7,7 @@
 - name: Copy resync script
   template:
     src: 'resync.sh.j2'
-    dest: '{{ user_dir }}/state_sync/resync/{{ network }}_resync.sh'
+    dest: '{{ user_dir }}/state_sync/resync/{{ chain }}_resync.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'
@@ -16,7 +15,7 @@
 - name: Copy recover script
   template:
     src: 'recover.sh.j2'
-    dest: '{{ user_dir }}/state_sync/resync/{{ network }}_recover.sh'
+    dest: '{{ user_dir }}/state_sync/resync/{{ chain }}_recover.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'
@@ -24,8 +23,8 @@
 - name: Create cronjob
   cron:
     user: '{{ ansible_user }}'
-    name: '{{ network }} resync'
+    name: '{{ chain }} resync'
     hour: 12
     minute: 0
     weekday: 1
-    job: '/bin/bash {{ user_dir }}/state_sync/resync/{{ network }}_resync.sh'
+    job: '/bin/bash {{ user_dir }}/state_sync/resync/{{ chain }}_resync.sh'

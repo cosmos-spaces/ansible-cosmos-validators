@@ -1,4 +1,4 @@
-network: union
+chain: union
 folder: '.union'
 daemon: uniond
 chain_id: union-testnet-8

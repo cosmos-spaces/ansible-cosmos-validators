@@ -1,4 +1,4 @@
-network: picasso
+chain: picasso
 folder: '.banksy'
 daemon: picad
 chain_id: centauri-1

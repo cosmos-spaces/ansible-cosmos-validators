@@ -18,14 +18,14 @@ Run the desired playbook with the following arguments:
 ansible-playbook setup.yml -e "target=<mainnet|testnet|horcrux_cluster>" -e "ssh_port=<non_standard_ssh_port>"
 
 # Install/Configure Chain
-ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "network=<chain>"
+ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
 
 # Install/Configure Horcrux
 ansible-playbook horcrux.yml -e "target=horcrux_cluster|horcrux_cluster_testnet>"
 ```
 
 ## Architecture
-For every network where we run a validator on mainnet, we run 2 sentry (relayer) nodes connected to a 3/3 cosigner node horcrux cluster. 
+For every chain where we run a validator on mainnet, we run 2 sentry (relayer) nodes connected to a 3/3 cosigner node horcrux cluster. 
 
 Leveraging [Horcrux](https://github.com/strangelove-ventures/horcrux/tree/main) provides high-availability while maintaining high security and avoiding double signing via consensus and failover detection mechanisms. This allows to connect multiple sentry (relayer) nodes to cosigner nodes, which reduces downtime and block signing failures, and increases fault tolerance and resiliency of blockchain operations.
 
@@ -76,16 +76,16 @@ As mentioned above, we run 2 sentry (relayer) nodes connected to a 3/3 cosigner 
 
 We have 2 strong opinions about the node configuration:
 
-1. Each network will have its custom 3-digit port prefix. This is to prevent port collision if you run multiple nodes on the same server. For example, you can configure Babylon with the custom port prefix 109 and Osmosis with 110. It is up to you what port prefix to use.
+1. Each chain will have its custom 3-digit port prefix. This is to prevent port collision if you run multiple nodes on the same server. For example, you can configure Babylon with the custom port prefix 109 and Osmosis with 110. It is up to you what port prefix to use.
 1. Each type of node will have its setting based on our experience. For example, the main node (Validator) has null indexer, and 100/0/<prime number> pruning, and Sentry node has kv indexer and 1000/100/<prime number> pruning. We will force these settings on you unless you fork the code.
 
 ### Variables
 
-Look at the `inventory.sample.yml` file. You will see an example of how the structure should be to configure your CometBFT clusters. All these values can be set per mainnet/testnet, host, network or global.
+Look at the `inventory.sample.yml` file. You will see an example of how the structure should be to configure your CometBFT clusters. All these values can be set per mainnet/testnet, host, chain or global.
 
 1. `target`: Required. Whether mainnet or tesnet.
 1. `ansible_host`: Required. The IP address of the server.
-1. `network`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
+1. `chain`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
 1. `type`: Required. It can be `validator` or `relayer`. Each is opinionated in its configuration settings.
 1. `ansible_user`: The sample file assumes `ubuntu`, but feel free to use another username. This user needs sudo privilege.
 1. `ansible_port`: The sample file assumes `22`. If you ran the node setup playbook, it should match ssh_port.
@@ -95,13 +95,13 @@ Look at the `inventory.sample.yml` file. You will see an example of how the stru
 1. `path`: This is to make sure that the ansible_user can access the `go` executable.
 1. `node_name`: This is your node name or moniker for the config.toml file.
 
-There are additional variables under `group_vars/all.yml` for global configuration applied to all networks (chains).
+There are additional variables under `group_vars/all.yml` for global configuration applied to all chains.
 
 1. `node_exporter_version`: Node exporter version to install.
 1. `promtail_version`: Promtail version to install.
 1. `go_version`: Go version to install.
 1. `cosmovisor_version`: Cosmovisor version to install.
-1. `cosmovisor_service_name`: Systemctl prefix for the chain's (network) cosmovisor service.
+1. `cosmovisor_service_name`: Systemctl prefix for the chain's cosmovisor service.
 1. `node_exporter`: Default is `true`. Change it to `false` if you do not want to install node_exporter. If true, enables the prometheus port in config.toml.
 1. `promtail`: Default is `false`. Change it to `true` if you want to install promtail.
 1. `nginx`: Default is `false`. Change it to `true` if you want to install nginx.
@@ -113,12 +113,12 @@ There are additional variables under `group_vars/all.yml` for global configurati
 1. `publicrpc`: Default is `false`. Set to `true` if you want to allow the rpc port on the server.
 1. `external_address`: IP address to set as an external address in config.toml.
 
-Look at `vars/mainnet|testnet/<network>.yaml` for network (chain) specific variables.
+Look at `vars/mainnet|testnet/<chain>.yaml` for chain specific variables.
 
 ### Run install/configure playbook
 ```bash
 # Install/Configure Chain
-ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "network=<chain>"
+ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
 ```
 
 ## Install/Configure Horcrux
@@ -173,7 +173,7 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `support_prune.yml` | Install a script to prune using cosmprund |
 | `support_public_endpoints.yml` | Set up Nginx reverse proxy for public RPC/API |
 | `support_seed.yml` | Install seed node with Tenderseed. You need a node_key.json.j2 file so the node_id is consistent |
-| `support_price_feeder.yml` | Install price feeders for selected networks (such Umee, Kujira, etc.) |
+| `support_price_feeder.yml` | Install price feeders for selected chains (such Umee, Kujira, etc.) |
 | `support_scripts.yml` | Install scripts to make node operations easier |
 | `support_sync_snapshot.yml` | Sync node from a snapshot |
 | `support_remove_node.yml` | Remove a node and clean up |
@@ -188,7 +188,7 @@ For more information, refer to the [documentation](https://github.com/strangelov
 ##### support_seed
 
 ```bash
-ansible-playbook support_seed.yml -e "target=<mainnet|testnet>" -e "network=<chain>" -e "seed=190c4496f3b46d339306182fe6a507d5487eacb5@65.108.131.174:36656"
+ansible-playbook support_seed.yml -e "target=<mainnet|testnet>" -e "chain=<chain>" -e "seed=190c4496f3b46d339306182fe6a507d5487eacb5@65.108.131.174:36656"
 ```
 
 ##### support_scripts

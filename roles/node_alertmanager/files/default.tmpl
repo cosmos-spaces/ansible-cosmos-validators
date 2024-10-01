@@ -12,7 +12,7 @@
     - job: {{ .Labels.job }}
     - instance: {{ .Labels.instance }}
     - chain_id: {{ .Labels.chain_id }}
-    - network: {{ .Labels.network }}
+    - chain: {{ .Labels.chain }}
     - type: {{ .Labels.type }}
 {{ if eq .Status "firing"}}
 <b>Started at:</b> {{ .StartsAt }}

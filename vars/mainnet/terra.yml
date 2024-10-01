@@ -1,4 +1,4 @@
-network: terra
+chain: terra
 folder: '.terra'
 daemon: terrad
 chain_id: phoenix-1

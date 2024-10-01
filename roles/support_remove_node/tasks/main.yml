@@ -1,15 +1,14 @@
----
 - name: Stop node process
   become: true
   systemd:
-    name: '{{ network }}'
+    name: '{{ cosmovisor_service_name }}'
     state: stopped
     enabled: false
   ignore_errors: true
 
 - name: Remove project git folder
   file:
-    path: '{{ user_dir }}/{{ network }}'
+    path: '{{ user_dir }}/{{ folder }}'
     state: absent
 
 - name: Remove node data folder
@@ -20,7 +19,7 @@
 - name: remove systemd file
   become: true
   file:
-    path: '/etc/systemd/system/{{ network }}.service'
+    path: '/etc/systemd/system/{{ cosmovisor_service_name }}.service'
     state: absent
 
 - name: remove binary from go bin
@@ -33,11 +32,11 @@
     path: '{{ item }}'
     state: absent
   loop:
-    - '{{ user_dir }}/snapshot/{{ network }}.sh'
-    - '{{ user_dir }}/genesis/{{ network }}.sh'
-    - '{{ user_dir }}/state_sync/{{ network }}.sh'
-    - '{{ user_dir }}/state_sync/resync/{{ network }}_recover.sh'
-    - '{{ user_dir }}/state_sync/resync/{{ network }}_resync.sh'
+  - '{{ user_dir }}/snapshot/{{ chain }}.sh'
+  - '{{ user_dir }}/genesis/{{ chain }}.sh'
+  - '{{ user_dir }}/state_sync/{{ chain }}.sh'
+  - '{{ user_dir }}/state_sync/resync/{{ chain }}_recover.sh'
+  - '{{ user_dir }}/state_sync/resync/{{ chain }}_resync.sh'
 
 - name: remove nginx files
   become: true
@@ -45,17 +44,17 @@
     path: '{{ item }}'
     state: absent
   loop:
-    - '/etc/nginx/sites-enabled/{{ network }}-api'
-    - '/etc/nginx/sites-enabled/{{ network }}-rpc'
+  - '/etc/nginx/sites-enabled/{{ chain }}-api'
+  - '/etc/nginx/sites-enabled/{{ chain }}-rpc'
 
 - name: remove snapshot cronjob
   cron:
     user: '{{ ansible_user }}'
-    name: '{{ network }} snapshot'
+    name: '{{ chain }} snapshot'
     state: absent
 
 - name: remove resync cronjob
   cron:
     user: '{{ ansible_user }}'
-    name: '{{ network }} resync'
+    name: '{{ chain }} resync'
     state: absent

@@ -1,6 +1,5 @@
----
 - name: set dns_prefix for comp
   set_fact:
-    rpc: '{{ network }}-cmp-rpc'
-    api: '{{ network }}-cmp-api'
-    grpc: '{{ network }}-cmp-grpc'
+    rpc: '{{ chain }}-cmp-rpc'
+    api: '{{ chain }}-cmp-api'
+    grpc: '{{ chain }}-cmp-grpc'

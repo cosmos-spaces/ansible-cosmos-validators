@@ -1,4 +1,3 @@
----
 - name: Update minimum gas price on config file
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
@@ -10,7 +9,7 @@
 - name: Restart cosmovisor service
   become: true
   systemd:
-    name: '{{ network }}'
+    name: '{{ cosmovisor_service_name }}'
     state: restarted
     daemon_reload: yes
     enabled: yes

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo service {{ network }} stop
+sudo service {{ chain }} stop
 sleep 5
 {{ user_dir }}/go/bin/cosmprund prune ~/{{ folder }}/data
 sleep 5
-sudo service {{ network }} start
+sudo service {{ chain }} start

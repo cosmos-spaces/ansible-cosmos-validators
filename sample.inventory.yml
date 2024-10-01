@@ -5,7 +5,7 @@ all:
     ansible_ssh_private_key_file: "~/.ssh/id_ubuntu"
     user_dir: "/home/ubuntu"
     bastion_ip: "<bastion_ip>"
-    var_file: "vars/{{ target }}/{{ network }}.yml"
+    var_file: "vars/{{ target }}/{{ chain }}.yml"
     path: "/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/go/bin:{{ user_dir }}/go/bin"
     node_name: "<Brand>"
     private_network_cidr: 10.1.0.0/16

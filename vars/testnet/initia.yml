@@ -1,4 +1,4 @@
-network: initia
+chain: initia
 folder: '.initia'
 daemon: initiad
 chain_id: initiation-1

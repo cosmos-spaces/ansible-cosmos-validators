@@ -1,4 +1,4 @@
-network: comdex
+chain: comdex
 folder: '.comdex'
 daemon: comdex
 chain_id: comdex-1

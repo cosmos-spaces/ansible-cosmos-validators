@@ -1,4 +1,4 @@
-network: cosmos
+chain: cosmos
 folder: '.gaia'
 daemon: gaiad
 chain_id: cosmoshub-4

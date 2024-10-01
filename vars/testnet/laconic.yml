@@ -1,4 +1,4 @@
-network: laconic
+chain: laconic
 folder: '.laconic'
 daemon: laconicd
 chain_id: laconic_9000-1

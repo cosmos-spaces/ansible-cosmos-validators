@@ -1,4 +1,3 @@
----
 - name: open p2p port
   become: true
   command: 'ufw allow {{ custom_port_prefix }}56/tcp'
@@ -28,7 +27,7 @@
   become: true
   template:
     src: 'tenderseed.service.j2'
-    dest: '/etc/systemd/system/tenderseed_{{ network }}.service'
+    dest: '/etc/systemd/system/tenderseed_{{ chain }}.service'
     owner: root
     group: root
     mode: '0644'
@@ -36,7 +35,7 @@
 - name: start tenderseed service
   become: true
   systemd:
-    name: 'tenderseed_{{ network }}'
+    name: 'tenderseed_{{ chain }}'
     state: restarted
     daemon_reload: yes
     enabled: yes

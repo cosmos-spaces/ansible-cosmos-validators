@@ -1,4 +1,4 @@
-network: migaloo
+chain: migaloo
 folder: '.migalood'
 daemon: migalood
 chain_id: migaloo-1
