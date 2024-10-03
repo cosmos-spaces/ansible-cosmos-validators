@@ -54,6 +54,7 @@
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: '{{ item.key }}'
     line: '{{ item.value }}'
+    backrefs: yes
   loop: '{{ app_port_changes | dict2items }}'
 
 - name: Adjust pruning setting for validator
@@ -92,7 +93,7 @@
 - name: Enable RPC port for relayer (Firewall will still manage the access to this port)
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
-    regexp: 'laddr = "tcp://127.0.0.1:{{ custom_port_prefix }}57"'
+    regexp: 'laddr = "tcp://localhost:{{ custom_port_prefix }}57"'
     line: 'laddr = "tcp://0.0.0.0:{{ custom_port_prefix }}57"'
     state: present
   when: publicrpc|default(false)|bool == true
