@@ -3,7 +3,7 @@ groups:
     rules:
     - alert: InstanceDown
       # Condition for alerting
-      expr: up{job=="node"} == 0
+      expr: up{job="node"} == 0
       for: 5m
       # Annotation - additional informational labels to store more information
       annotations:
@@ -147,3 +147,12 @@ groups:
         service: cosmos
       annotations:
         description: 'Degraded syncing performance - Job {{ $labels.job }} on {{ $labels.instance }}'
+
+    - alert: OracleConnectDown
+      expr: side_car_connect_build_info{job="cosmos"} < 1 or absent(side_car_connect_build_info{job="cosmos"})
+      for: 5m
+      labels:
+        severity: warning
+        service: cosmos
+      annotations:
+        description: 'Oracle service {{ $labels.chain_id }} on {{ $labels.instance }} is down'
