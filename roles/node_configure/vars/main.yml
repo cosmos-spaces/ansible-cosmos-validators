@@ -1,15 +1,15 @@
 ---
 config_port_changes:
   'laddr = "tcp://0.0.0.0:26656"': 'laddr = "tcp://0.0.0.0:{{ custom_port_prefix }}56"' # p2p address
-  'laddr = "tcp://127.0.0.1:26657"': 'laddr = "tcp://127.0.0.1:{{ custom_port_prefix }}57"' # rpc address
-  'proxy_app = "tcp://127.0.0.1:26658"': 'proxy_app = "tcp://127.0.0.1:{{ custom_port_prefix }}58"'
+  'laddr = "tcp://127.0.0.1:26657"': 'laddr = "tcp://localhost:{{ custom_port_prefix }}57"' # rpc address
+  'proxy_app = "tcp://127.0.0.1:26658"': 'proxy_app = "tcp://localhost:{{ custom_port_prefix }}58"'
   'prometheus_listen_addr = ":26660"': 'prometheus_listen_addr = ":{{ custom_port_prefix }}61"'
   'pprof_laddr = "localhost:6060"': 'pprof_laddr = "localhost:{{ custom_port_prefix }}60"'
 app_port_changes:
-  ':1317': 'address = "tcp://0.0.0.0:{{ custom_port_prefix }}17"' # api address
-  '(?:localhost:8080|:8080)': 'address = ":{{ custom_port_prefix }}80"' # rosetta address
-  ':9090': 'address = "0.0.0.0:{{ custom_port_prefix }}90"' # grpc address
-  '(?:localhost:9091|:9091)': 'address = "0.0.0.0:{{ custom_port_prefix }}91"' # grpc-web address
+  ':1317': 'address = "tcp://localhost:{{ custom_port_prefix }}17"' # api address
+  'address = ".*:8080"': 'address = "localhost:{{ custom_port_prefix }}80"' # rosetta address
+  ':9090': 'address = "localhost:{{ custom_port_prefix }}90"' # grpc address
+  'address = ".*:9091"': 'address = "localhost:{{ custom_port_prefix }}91"' # grpc-web address
 pruning_validator:
   'pruning = "': 'pruning = "custom"'
   'pruning-keep-recent = "': 'pruning-keep-recent = "100"'
