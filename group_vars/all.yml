@@ -19,6 +19,7 @@ enableapi: false
 enablegrpc: false
 publicrpc: false
 indexer: "null"
+make_install_params: null
 
 # horcrux
 horcrux_repo: 'https://github.com/strangelove-ventures/horcrux.git'
