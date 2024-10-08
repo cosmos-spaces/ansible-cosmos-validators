@@ -13,3 +13,4 @@ minimum_gas_price: '0.005uatom'
 enable_priv_validator_laddr: false
 upgrade_folder: v20
 enablegrpc: true
+indexer: kv
