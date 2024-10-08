@@ -1,4 +1,4 @@
-network: stride
+chain: stride
 folder: '.stride'
 daemon: strided
 chain_id: stride-1

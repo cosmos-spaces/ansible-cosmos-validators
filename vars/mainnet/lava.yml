@@ -1,4 +1,4 @@
-network: lava
+chain: lava
 folder: '.lava'
 daemon: lavad
 chain_id: lava-mainnet-1

@@ -1,4 +1,3 @@
----
 - name: Create directory
   file:
     path: '{{ user_dir }}/prune'
@@ -8,7 +7,7 @@
 - name: Copy prune script
   template:
     src: 'prune.sh.j2'
-    dest: '{{ user_dir }}/prune/{{ network }}.sh'
+    dest: '{{ user_dir }}/prune/{{ chain }}.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'

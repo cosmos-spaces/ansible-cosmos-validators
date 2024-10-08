@@ -55,7 +55,7 @@
   become: true
   template:
     src: 'rpc_nginx_conf.j2'
-    dest: '/etc/nginx/sites-enabled/{{network}}-rpc'
+    dest: '/etc/nginx/sites-enabled/{{chain}}-rpc'
     owner: 'root'
     group: 'root'
     mode: '0644'
@@ -64,7 +64,7 @@
   become: true
   template:
     src: 'api_nginx_conf.j2'
-    dest: '/etc/nginx/sites-enabled/{{network}}-api'
+    dest: '/etc/nginx/sites-enabled/{{chain}}-api'
     owner: 'root'
     group: 'root'
     mode: '0644'

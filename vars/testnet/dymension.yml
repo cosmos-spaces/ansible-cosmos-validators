@@ -1,4 +1,4 @@
-network: dymension
+chain: dymension
 folder: '.dymension'
 daemon: dymd
 chain_id: froopyland_100-1

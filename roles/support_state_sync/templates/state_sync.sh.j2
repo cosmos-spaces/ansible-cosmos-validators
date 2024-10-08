@@ -1,9 +1,9 @@
 #!/bin/bash
 
 {% if type == 'test' or type == 'testrelay' %}
-SNAP_RPC="https://{{ network }}-testnet-rpc.polkachu.com:443"
+SNAP_RPC="https://{{ chain }}-testnet-rpc.polkachu.com:443"
 {% else %}
-SNAP_RPC="https://{{ network }}-rpc.polkachu.com:443"
+SNAP_RPC="https://{{ chain }}-rpc.polkachu.com:443"
 {% endif %}
 
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height); \

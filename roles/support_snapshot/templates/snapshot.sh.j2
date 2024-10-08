@@ -11,24 +11,24 @@
 {% endif %}
 
 # prune node
-sudo service {{ network }} stop
+sudo service {{ cosmovisor_service_name }} stop
 sleep 5
 {{ user_dir }}/go/bin/cosmprund prune ~/{{ folder }}/data
 sleep 5
 
 # Make sure the service is running
-sudo service {{ network }} start
+sudo service {{ cosmovisor_service_name }} start
 sleep 10
 
 # Get block height
 BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}57/status | jq -r .result.sync_info.latest_block_height)
 
 # Stop service
-sudo service {{ network }} stop
+sudo service {{ cosmovisor_service_name }} stop
 
 # Compress the folder
-FILENAME=$(echo {{ network }}_${BLOCK_HEIGHT}.tar.lz4)
-WASM_FILENAME='{{ network }}_wasmonly.tar.lz4'
+FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
+WASM_FILENAME='{{ chain }}_wasmonly.tar.lz4'
 cd {{ user_dir }}/{{ folder }}
 
 {% if wasm is defined and wasm == "outside" %}
@@ -45,19 +45,19 @@ tar -cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
 {% endif %}
 
 # Restart the service
-sudo service {{ network }} start
+sudo service {{ cosmovisor_service_name }} start
 
 # Transfer the file and then remove the file
 cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://{{snapshot_folder}}/{{ network }}/" --profile={{ snapshot_profile }}
+aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://{{snapshot_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
 rm $FILENAME
 
 {% if wasm is defined %}
 cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $WASM_FILENAME "s3://{{wasm_folder}}/{{ network }}/" --profile={{ snapshot_profile }}
+aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $WASM_FILENAME "s3://{{wasm_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
 rm $WASM_FILENAME
 {% endif %}
 
 # Transfer the addrbook
 cd {{ user_dir }}/{{ folder }}/config
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://{{addrbook_folder}}/{{ network }}/" --profile={{ snapshot_profile }}
+aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://{{addrbook_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}

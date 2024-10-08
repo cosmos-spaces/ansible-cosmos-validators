@@ -1,4 +1,4 @@
-network: celestia
+chain: celestia
 folder: '.celestia'
 daemon: celestia-appd
 chain_id: mocha-4

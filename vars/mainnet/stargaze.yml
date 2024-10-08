@@ -1,4 +1,4 @@
-network: stargaze
+chain: stargaze
 folder: '.starsd'
 daemon: starsd
 chain_id: stargaze-1

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo service {{ network }} stop
+sudo service {{ cosmovisor_service_name }} stop
 sleep 2
 rm {{ user_dir }}/{{ folder }}/data -rf
 cp {{ user_dir }}/{{ folder }}/data-old {{ user_dir }}/{{ folder }}/data -r
-sudo service {{ network }} start
+sudo service {{ cosmovisor_service_name }} start

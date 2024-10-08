@@ -1,14 +1,13 @@
----
 - name: set dns_prefix for dydx RPC
   set_fact:
-    rpc: '{{ network }}-dao-rpc-{{ number }}'
-    api: '{{ network }}-dao-api-{{ number }}'
-    grpc: '{{ network }}-dao-grpc-{{ number }}'
+    rpc: '{{ chain }}-dao-rpc-{{ number }}'
+    api: '{{ chain }}-dao-api-{{ number }}'
+    grpc: '{{ chain }}-dao-grpc-{{ number }}'
   when: type == 'relayer'
 
 - name: set dns_prefix for dydx archive
   set_fact:
-    rpc: '{{ network }}-dao-archive-rpc-{{ number }}'
-    api: '{{ network }}-dao-archive-api-{{ number }}'
-    grpc: '{{ network }}-dao-archive-grpc-{{ number }}'
+    rpc: '{{ chain }}-dao-archive-rpc-{{ number }}'
+    api: '{{ chain }}-dao-archive-api-{{ number }}'
+    grpc: '{{ chain }}-dao-archive-grpc-{{ number }}'
   when: type == 'archive'

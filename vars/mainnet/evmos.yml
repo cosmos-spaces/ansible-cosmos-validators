@@ -1,4 +1,4 @@
-network: evmos
+chain: evmos
 folder: '.evmosd'
 daemon: evmosd
 chain_id: evmos_9001-2

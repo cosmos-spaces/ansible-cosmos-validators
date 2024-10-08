@@ -1,4 +1,4 @@
-network: govgen
+chain: govgen
 folder: '.govgen'
 daemon: govgend
 chain_id: govgen-1

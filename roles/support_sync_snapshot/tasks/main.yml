@@ -1,15 +1,14 @@
----
 - meta: end_play
   when: snapshot_url is undefined
 
 - name: Print snapshot_url
   debug:
-    msg: 'Downloading {{ network }} snapshot {{ snapshot_url  }}'
+    msg: 'Downloading {{ chain }} snapshot {{ snapshot_url  }}'
 
 - name: Download snapshot
   get_url:
     url: '{{ snapshot_url }}'
-    dest: '{{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz'
+    dest: '{{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz'
     mode: '0644'
 
 - name: Stop node process
@@ -32,7 +31,7 @@
     state: absent
 
 - name: Extract snapshot
-  shell: 'lz4 -c -d {{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz | tar -x -C {{ user_dir }}/{{ folder }}'
+  shell: 'lz4 -c -d {{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz | tar -x -C {{ user_dir }}/{{ folder }}'
 
 - name: Move priv_validator_state.json back
   command: 'mv {{ user_dir }}/{{ folder }}/priv_validator_state.json {{ user_dir }}/{{ folder }}/data/'
@@ -55,7 +54,7 @@
 
 - name: Delete the downloaded snapshot file
   file:
-    path: '{{ user_dir }}/{{ folder }}/snapshot-{{ network }}.tar.gz'
+    path: '{{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz'
     state: absent
 
 - name: Ensure it is running

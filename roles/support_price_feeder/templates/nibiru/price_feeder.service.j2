@@ -1,10 +1,10 @@
 [Unit]
-Description={{ network }} Price Feeder
+Description={{ chain }} Price Feeder
 After=network-online.target
 
 [Service]
 User={{ ansible_user }}
-ExecStart={{ user_dir }}/go/bin/{{ network }}_price_feeder
+ExecStart={{ user_dir }}/go/bin/{{ chain }}_price_feeder
 Restart=always
 StartLimitInterval=0
 RestartSec=3

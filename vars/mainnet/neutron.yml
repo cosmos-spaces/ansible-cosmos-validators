@@ -1,4 +1,4 @@
-network: neutron
+chain: neutron
 folder: '.neutrond'
 daemon: neutrond
 chain_id: neutron-1

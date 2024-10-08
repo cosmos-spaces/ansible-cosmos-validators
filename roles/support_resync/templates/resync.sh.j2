@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo service {{ network }} stop
+sudo service {{ cosmovisor_service_name }} stop
 sleep 2
 rm {{ user_dir }}/{{ folder }}/data-old -rf
 cp {{ user_dir }}/{{ folder }}/data {{ user_dir }}/{{ folder }}/data-old -r
@@ -21,5 +21,5 @@ mv {{ user_dir }}/{{ folder }}/config/addrbook.backup {{ user_dir }}/{{ folder }
 cp {{ user_dir }}/{{ folder }}/data-old/wasm {{ user_dir }}/{{ folder }}/data/wasm -r
 {% endif %}
 
-{{ user_dir }}/state_sync/{{ network }}.sh
-sudo service {{ network }} start
+{{ user_dir }}/state_sync/{{ chain }}.sh
+sudo service {{ cosmovisor_service_name }} start

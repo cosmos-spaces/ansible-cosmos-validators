@@ -1,5 +1,5 @@
 #Mainnet temporarily
-network: neutron
+chain: neutron
 folder: '.neutron'
 daemon: neutrond
 chain_id: neutron-1

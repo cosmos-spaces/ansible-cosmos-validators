@@ -1,4 +1,4 @@
-network: passage
+chain: passage
 folder: '.passage'
 daemon: passage
 chain_id: passage-2

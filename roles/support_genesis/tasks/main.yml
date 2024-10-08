@@ -1,4 +1,3 @@
----
 - name: Create directory
   file:
     path: '{{ user_dir }}/genesis'
@@ -8,7 +7,7 @@
 - name: Copy genesis script
   template:
     src: 'genesis.sh.j2'
-    dest: '{{ user_dir }}/genesis/{{ network }}.sh'
+    dest: '{{ user_dir }}/genesis/{{ chain }}.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'

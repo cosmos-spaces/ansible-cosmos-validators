@@ -1,4 +1,3 @@
----
 - name: Create directory
   file:
     path: '{{ user_dir }}/state_sync'
@@ -8,7 +7,7 @@
 - name: Copy state_sync file
   template:
     src: 'state_sync.sh.j2'
-    dest: '{{ user_dir }}/state_sync/{{ network }}.sh'
+    dest: '{{ user_dir }}/state_sync/{{ chain }}.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'

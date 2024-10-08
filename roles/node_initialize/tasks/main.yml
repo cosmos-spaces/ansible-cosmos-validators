@@ -1,4 +1,3 @@
----
 - name: Ensure that the folder does not exist
   file:
     path: '{{ user_dir }}/{{ folder }}'
@@ -47,7 +46,7 @@
   debug:
     msg: 'Downloading {{ genesis }}'
   when: genesis_processing is undefined
-  
+
 - name: regular genesis download
   include_tasks: genesis_default.yml
   when: genesis_processing is undefined
@@ -71,8 +70,8 @@
 - name: Add sync_info alias command
   lineinfile:
     path: '{{ user_dir }}/.bash_aliases'
-    line: "alias sync_info_{{ network }}='curl -s http://localhost:{{ custom_port_prefix }}57/status | jq .result.sync_info'"
-    regexp: "^alias sync_info_{{ network }}='curl -s http:\\/\\/localhost:{{ custom_port_prefix }}57\\/status \\| jq .result.sync_info'$"
+    line: "alias sync_info_{{ chain }}='curl -s http://localhost:{{ custom_port_prefix }}57/status | jq .result.sync_info'"
+    regexp: "^alias sync_info_{{ chain }}='curl -s http:\\/\\/localhost:{{ custom_port_prefix }}57\\/status \\| jq .result.sync_info'$"
     state: present
     insertafter: EOF
     create: True
@@ -80,8 +79,8 @@
 - name: Add logs alias command
   lineinfile:
     path: '{{ user_dir }}/.bash_aliases'
-    line: "alias logs_{{ network }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'"
-    regexp: "^alias logs_{{ network }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'$"
+    line: "alias logs_{{ chain }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'"
+    regexp: "^alias logs_{{ chain }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'$"
     state: present
     insertafter: EOF
     create: True
@@ -89,8 +88,8 @@
 - name: Add restart alias command
   lineinfile:
     path: '{{ user_dir }}/.bash_aliases'
-    line: "alias restart_{{ network }}='sudo systemctl restart {{ cosmovisor_service_name }}'"
-    regexp: "^alias restart_{{ network }}='sudo systemctl restart {{ cosmovisor_service_name }}'$"
+    line: "alias restart_{{ chain }}='sudo systemctl restart {{ cosmovisor_service_name }}'"
+    regexp: "^alias restart_{{ chain }}='sudo systemctl restart {{ cosmovisor_service_name }}'$"
     state: present
     insertafter: EOF
     create: True
