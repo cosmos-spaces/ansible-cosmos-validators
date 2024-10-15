@@ -2,11 +2,11 @@ chain: laconic
 folder: '.laconic'
 daemon: laconicd
 chain_id: laconic_9000-1
-node_version: 'v0.1.8'
+node_version: 'v0.1.7'
 repo: https://git.vdb.to/cerc-io/laconicd
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/laconic/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/laconic/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:29356'
-snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/laconic/laconic_1353896.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/laconic/laconic_1449948.tar.lz4'
 custom_port_prefix: 118
 minimum_gas_price: "0alnt"
