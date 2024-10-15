@@ -60,7 +60,7 @@
     src: '{{ private_network_cidr }}'
     comment: 'Horcrux Ports'
   when:
-    - type == 'relayer'
+    - type == 'sentry'
     - private_network_cidr is defined
   tags:
     - firewall

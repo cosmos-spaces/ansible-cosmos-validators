@@ -15,9 +15,15 @@ pruning_validator:
   'pruning-keep-recent = "': 'pruning-keep-recent = "100"'
   'pruning-interval = "': 'pruning-interval = "19"'
   'snapshot-interval = ': 'snapshot-interval = 0'
-pruning_relayer:
+pruning_sentry:
   'pruning = "': 'pruning = "custom"'
   'pruning-keep-recent = "': 'pruning-keep-recent = "1000"'
   'pruning-keep-every = "': 'pruning-keep-every = "100"'
+  'pruning-interval = "': 'pruning-interval = "43"'
+  'snapshot-interval = ': 'snapshot-interval = 0'
+pruning_relayer:
+  'pruning = "': 'pruning = "custom"'
+  'pruning-keep-recent = "': 'pruning-keep-recent = "100"'
+  'pruning-keep-every = "': 'pruning-keep-every = "50000"'
   'pruning-interval = "': 'pruning-interval = "43"'
   'snapshot-interval = ': 'snapshot-interval = 0'
