@@ -1,0 +1,22 @@
+- name: Write new entry to prom-cosmos.yml
+  blockinfile:
+    path: "etc/prometheus/prom-cosmos.yml"
+    backup: yes
+    block: |
+      - targets: ['{{ target }}:11061']
+        labels:
+          instance: testnet-sbg-sentry01
+          chain_id: {{ chain_id }}
+          network: testnet
+          type: sentry
+
+- name: Restart the Prometheus Server to pick up new configuration
+  shell: |
+    PROM_PID=$(top -b -n 1 | grep "prometheus" | awk '{print $1}')
+    kill -HUP $PROM_PID
+
+- name: Check if it up
+  systemd_service:
+- name: check if it is responding via cURL
+  shell: |
+    
