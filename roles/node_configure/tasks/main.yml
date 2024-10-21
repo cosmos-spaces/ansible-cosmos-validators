@@ -75,7 +75,16 @@
   loop: '{{ pruning_relayer | dict2items }}'
   when: type is defined and type == 'relayer'
 
-- name: Adjust indexer setting for validator
+- name: Adjust pruning setting for sentry
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+    insertafter: "These are applied if and only if the pruning strategy is custom."
+  loop: '{{ pruning_sentry | dict2items }}'
+  when: type is defined and type == 'sentry'
+
+- name: Adjust indexer setting
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
     regexp: 'indexer = "'
@@ -98,14 +107,14 @@
     state: present
   when: publicrpc|default(false)|bool == true
 
-- name: Enable API for relayer
+- name: Set API config
   replace:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: "# Enable defines if the API(.*)\\senable = (?:false|true)"
     replace: "# Enable defines if the API server should be enabled.\\nenable = {{ enableapi|lower }}"
   when: enableapi|default(false)|bool == false
 
-- name: Enable GRPC for relayer
+- name: Set GRPC config
   replace:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: "# Enable defines if the gRPC server(.*)\\senable = (?:false|true)"

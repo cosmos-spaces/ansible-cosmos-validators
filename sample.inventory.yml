@@ -21,7 +21,7 @@ testnet:
     dev01:
       ansible_host: <server_ip>
       server_hostname: "cosmos-sentry-dev01"
-      type: relayer
+      type: sentry
 
 # Mainnet
 mainnet:
@@ -29,7 +29,7 @@ mainnet:
     prod01:
       ansible_host: <server_ip>
       server_hostname: "cosmos-sentry-prod01"
-      type: relayer
+      type: sentry
 
 # Horcrux
 horcrux_cluster:

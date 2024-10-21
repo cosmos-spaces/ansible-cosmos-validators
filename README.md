@@ -1,6 +1,6 @@
 # Cosmos CometBFT Setup with Horcrux Support
 
-This repository secures cloud provider servers, installs and configures CometBFT based chains for both, validator and sentry (relayer) nodes, and installs Horcrux using [Ansible]("https://docs.ansible.com/ansible/latest/getting_started/index.html).
+This repository secures cloud provider servers, installs and configures CometBFT based chains for validator, sentry and relayer node types as well as Horcrux using [Ansible]("https://docs.ansible.com/ansible/latest/getting_started/index.html).
 
 ## Design Philosophy
 1. Secure server setup
@@ -25,9 +25,9 @@ ansible-playbook horcrux.yml -e "target=horcrux_cluster|horcrux_cluster_testnet>
 ```
 
 ## Architecture
-For every chain where we run a validator on mainnet, we run 2 sentry (relayer) nodes connected to a 3/3 cosigner node horcrux cluster. 
+For every chain where we run a validator on mainnet, we run 2 sentry nodes connected to a 3/3 cosigner node horcrux cluster. 
 
-Leveraging [Horcrux](https://github.com/strangelove-ventures/horcrux/tree/main) provides high-availability while maintaining high security and avoiding double signing via consensus and failover detection mechanisms. This allows to connect multiple sentry (relayer) nodes to cosigner nodes, which reduces downtime and block signing failures, and increases fault tolerance and resiliency of blockchain operations.
+Leveraging [Horcrux](https://github.com/strangelove-ventures/horcrux/tree/main) provides high-availability while maintaining high security and avoiding double signing via consensus and failover detection mechanisms. This allows to connect multiple sentry nodes to cosigner nodes, which reduces downtime and block signing failures, and increases fault tolerance and resiliency of blockchain operations.
 
 ## Node Setup
 Typically, a cloud server provides a machine with root access and insecure setup. This ansible playbook is designed to address those issues. It is based on Ubuntu 22.04, but it should be applicable to other Ubuntu images. To run this playbook, you will need a user with sudo privileges. This playbook does not create a user on purpose as a security measure to avoid using root. This playbook will perform the following:
@@ -70,14 +70,14 @@ ansible-playbook setup.yml -e "target=<mainnet|testnet|horcrux_cluster>" -e "ssh
 
 ## Install/Configure Chain
 
-As mentioned above, we run 2 sentry (relayer) nodes connected to a 3/3 cosigner node horcrux cluster. However, this repo supports configuring chain nodes as a `Validator` or as a `Relayer`, each with different settings described below. If you do not wish to use Horcrux, set the type to `Validator` for each corresponding node.
+As mentioned above, we run 2 sentry nodes connected to a 3/3 cosigner node horcrux cluster. However, this repo supports configuring chain nodes as a `validator`, `sentry` or `relayer`, each with different settings described below. If you do not wish to use Horcrux, set the type to `validator` for each corresponding node.
 
 ### Opinionated Configuration
 
 We have 2 strong opinions about the node configuration:
 
 1. Each chain will have its custom 3-digit port prefix. This is to prevent port collision if you run multiple nodes on the same server. For example, you can configure Babylon with the custom port prefix 109 and Osmosis with 110. It is up to you what port prefix to use.
-1. Each type of node will have its setting based on our experience. For example, the main node (Validator) has null indexer, and 100/0/<prime number> pruning, and Sentry node has kv indexer and 1000/100/<prime number> pruning. We will force these settings on you unless you fork the code.
+1. Each type of node will have its setting based on our experience. For example, the main node (validator) has 100/0/<prime number> pruning, sentry node has 1000/100/<prime number> pruning, and relayer has 50000/100/<prime number> pruning. We will force these settings on you unless you fork the code.
 
 ### Variables
 
@@ -86,7 +86,7 @@ Look at the `inventory.sample.yml` file. You will see an example of how the stru
 1. `target`: Required. Whether mainnet or tesnet.
 1. `ansible_host`: Required. The IP address of the server.
 1. `chain`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
-1. `type`: Required. It can be `validator` or `relayer`. Each is opinionated in its configuration settings.
+1. `type`: Required. It can be `validator`, `sentry` or `relayer`. Each is opinionated in its configuration settings.
 1. `ansible_user`: The sample file assumes `ubuntu`, but feel free to use another username. This user needs sudo privilege.
 1. `ansible_port`: The sample file assumes `22`. If you ran the node setup playbook, it should match ssh_port.
 1. `ansible_ssh_private_key_file`: Path to ssh key file.
