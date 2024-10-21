@@ -1,7 +1,8 @@
 - name: Write new entry to prom-cosmos.yml
   blockinfile:
     path: "etc/prometheus/{{ cosmos_prom_file }}.yml"
-    backup: yes
+    backup: true
+    create: true
     block: |
       - targets: ['{{ target_ip }}:11061']
         labels:
