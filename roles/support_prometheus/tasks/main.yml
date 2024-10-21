@@ -3,7 +3,7 @@
     path: "etc/prometheus/prom-cosmos.yml"
     backup: yes
     block: |
-      - targets: ['{{ target }}:11061']
+      - targets: ['{{ target_ip }}:11061']
         labels:
           instance: {{ node_name }}
           chain_id: {{ chain_id }}
