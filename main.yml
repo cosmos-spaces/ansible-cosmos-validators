@@ -2,13 +2,13 @@
   hosts: '{{ target }}'
   gather_facts: false
   vars_files:
-  - '{{ var_file }}'
+    - '{{ var_file }}'
   roles:
-  - node_install
-  - node_initialize
-  - node_configure
-  - node_launch
-  - role: support_sync_snapshot
-    when: snapshot_url is defined
-  - role: support_prometheus
-    when: prometheus is defined
+    - node_install
+    - node_initialize
+    - node_configure
+    - node_launch
+    - role: support_sync_snapshot
+      when: snapshot_url is defined
+    - role: support_prometheus
+      when: prometheus is defined 
