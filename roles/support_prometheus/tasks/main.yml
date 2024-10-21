@@ -5,10 +5,10 @@
     block: |
       - targets: ['{{ target }}:11061']
         labels:
-          instance: testnet-sbg-sentry01
+          instance: {{ node_name }}
           chain_id: {{ chain_id }}
-          network: testnet
-          type: sentry
+          network: {{ network }}
+          type: {{ node_type }}
 
 - name: Restart the Prometheus Server to pick up new configuration
   shell: |
