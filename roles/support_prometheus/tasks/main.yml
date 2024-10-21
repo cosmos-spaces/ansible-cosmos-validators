@@ -31,4 +31,4 @@
   debug:
     msg:
       systemd_status: "{{ prometheusd_status }}"
-      curl_status: "{{ prometheus_curl_status}}"
+      curl_status: "{{ prometheus_curl_status }}"
