@@ -15,8 +15,20 @@
     PROM_PID=$(top -b -n 1 | grep "prometheus" | awk '{print $1}')
     kill -HUP $PROM_PID
 
-- name: Check if it up
+- name: Check if Prometheus up and running with no errors
   systemd_service:
+    name: prometheus.service
+    state: started
+  register: prometheusd_status
+
 - name: check if it is responding via cURL
   shell: |
-    
+    curl localhost:9090/-/healthy
+    curl localhost:9090/-/ready
+  register: prometheus_curl_status
+
+- name: Results after restarting for new configuration
+  debug:
+    msg:
+      systemd_status: "{{ prometheusd_status }}"
+      curl_status: "{{ prometheus_curl_status}}"
