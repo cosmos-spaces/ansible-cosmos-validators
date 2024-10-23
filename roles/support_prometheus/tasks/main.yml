@@ -13,7 +13,7 @@
 - name: Restart the Prometheus Server to pick up new configuration
   shell: |
     PROM_PID=$(top -b -n 1 | grep "prometheus" | awk '{print $1}')
-    kill -HUP $PROM_PID
+    kill -s SIGHUP $PROM_PID
 
 - name: Check if Prometheus up and running with no errors
   systemd_service:
