@@ -7,7 +7,7 @@
         labels:
           instance: '{{ node_name }}'
           chain_id: '{{ chain_id }}'
-          network: '{{ network }}'
+          network: '{{ target }}'
           type: '{{ node_type }}'
 
 - name: Restart the Prometheus Server to pick up new configuration
