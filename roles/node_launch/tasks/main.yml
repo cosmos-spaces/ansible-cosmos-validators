@@ -5,7 +5,7 @@
     port: '{{ custom_port_prefix }}56'
     proto: tcp
     comment: 'P2P port for {{ chain }}'
-  when: type == 'relayer'
+  when: type == 'relayer' or type == 'sentry'
 
 - name: Print allowing rpc port
   debug:
