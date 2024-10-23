@@ -6,3 +6,4 @@
     - '{{ var_file }}'
   roles:
     - support_prometheus
+  become: true
