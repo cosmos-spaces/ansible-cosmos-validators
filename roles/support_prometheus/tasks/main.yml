@@ -5,10 +5,10 @@
     block: |
       - targets: ['{{ target_ip }}:11061']
         labels:
-          instance: '{{ node_name }}'
-          chain_id: '{{ chain_id }}'
-          network: '{{ network }}'
-          type: '{{ node_type }}'
+          instance: {{ node_name }}
+          chain_id: {{ chain_id }}
+          network: {{ network }}
+          type: {{ node_type }}
 
 - name: Restart the Prometheus Server to pick up new configuration
   shell: |
