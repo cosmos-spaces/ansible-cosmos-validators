@@ -1,8 +1,8 @@
 - name: Main
-  hosts: '{{ target }}'
+  hosts: "{{ target }}"
   gather_facts: false
   vars_files:
-    - '{{ var_file }}'
+    - "{{ var_file }}"
   roles:
     - node_install
     - node_initialize
@@ -11,4 +11,4 @@
     - role: support_sync_snapshot
       when: snapshot_url is defined
     - role: support_prometheus
-      when: prometheus is defined 
+      when: prometheus is defined and prometheus | bool

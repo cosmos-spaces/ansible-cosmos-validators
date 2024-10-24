@@ -3,21 +3,23 @@
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
     backup: true
     block: |
-      - targets: ['{{ target_ip }}:11061']
+      - targets: ['{{ hostvars[item].ansible_host }}:11061']
         labels:
-          instance: {{ node_name }}
+          instance: {{ hostvars[item].server_hostname }}
           chain_id: {{ chain_id }}
-          network: {{ network }}
-          type: {{ node_type }}
+          network: {{ target }}
+          type: {{ hostvars[item].type }}
+  loop: "{{ groups[target] }}"
+  when: groups[target] is defined
 
-- name: Restart the Prometheus Server to pick up new configuration
-  shell: |
-    PROM_PID=$(top -b -n 1 | grep "prometheus" | awk '{print $1}')
-    if [ -n "$PROM_PID" ]; then
-      kill -1 $PROM_PID
-    else
-      echo "Prometheus process not found."
-    fi
+# - name: Restart the Prometheus Server to pick up new configuration
+#   shell: |
+#     PROM_PID=$(top -b -n 1 | grep "prometheus" | awk '{print $1}')
+#     if [ -n "$PROM_PID" ]; then
+#       kill -1 $PROM_PID
+#     else
+#       echo "Prometheus process not found."
+#     fi
 
 - name: Check if Prometheus up and running with no errors
   systemd_service:
@@ -27,8 +29,8 @@
 
 - name: check if it is responding via cURL
   shell: |
-    curl localhost:9090/-/healthy
-    curl localhost:9090/-/ready
+    curl -s -w "\nHTTP Status Code: %{http_code}\n" localhost:9090/-/healthy
+    curl -s -w "\nHTTP Status Code: %{http_code}\n" localhost:9090/-/ready
   register: prometheus_curl_status
 
 - name: Results after restarting for new configuration

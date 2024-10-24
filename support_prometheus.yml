@@ -1,7 +1,7 @@
 ---
 - name: Setup Prometheus Monitoring on Chain
-  hosts: "{{ target }}"
-  gather_facts: false
+  hosts: telemetry
+  gather_facts: true
   vars_files:
     - "{{ var_file }}"
   roles:
