@@ -3,7 +3,7 @@
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
     backup: true
     block: |
-      - targets: ['{{ hostvars[item]['ansible_facts']['ansible_host'] }}:{{ custom_port_prefix }}61']
+      - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
         labels:
           instance: {{ hostvars[item].server_hostname }}
           chain_id: {{ chain_id }}
