@@ -1,6 +1,6 @@
 - name: Write new entry to prom-cosmos.yml
   blockinfile:
-    path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
+    path: "/etc/prometheus/cosmos_prom_file.yml"
     backup: true
     block: |
       - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
@@ -11,16 +11,6 @@
           type: {{ hostvars[item].type }}
   loop: "{{ groups[target] }}"
   when: groups[target] is defined
-
-# - name: Restart the Prometheus Server to pick up new configuration
-#   shell: |
-#     PROM_PID=$(top -b -n 1 | grep "prometheus" | awk '{print $1}')
-#     if [ -n "$PROM_PID" ]; then
-#       kill -1 $PROM_PID
-#     else
-#       echo "Prometheus process not found."
-#     fi
-
 - name: Check if Prometheus up and running with no errors
   systemd_service:
     name: prometheus.service
