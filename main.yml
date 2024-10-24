@@ -12,3 +12,5 @@
       when: snapshot_url is defined
     - role: support_prometheus
       when: prometheus is defined and prometheus | bool
+    - role: support_tenderduty
+      when: tenderduty is defined and tenderduty | bool
