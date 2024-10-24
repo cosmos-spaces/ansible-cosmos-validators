@@ -3,12 +3,12 @@
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
     backup: true
     block: |
-      - targets: ['{{ groups[item].ansible_host }}:11061']
+      - targets: ['{{ hostvars[item]['ansible_facts']['eth0']['ipv4']['address'] }}:{{ custom_port_prefix }}61']
         labels:
-          instance: {{ groups[item].server_hostname }}
+          instance: {{ hostvars[item].server_hostname }}
           chain_id: {{ chain_id }}
           network: {{ target }}
-          type: {{ groups[item].type }}
+          type: {{ hostvars[item].type }}
   loop: "{{ groups[target] }}"
   when: groups[target] is defined
 
