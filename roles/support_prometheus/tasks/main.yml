@@ -3,7 +3,7 @@
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
     backup: true
     block: |
-      - targets: ['{{ hostvars[item].ansible_host }}:11061']
+      - targets: ['{{ hostvars[item].ansible_internal_host }}:{{ custom_port_prefix }}61']
         labels:
           instance: {{ hostvars[item].server_hostname }}
           chain_id: {{ chain_id }}
@@ -27,7 +27,7 @@
     state: started
   register: prometheusd_status
 
-- name: check if it is responding via cURL
+- name: Check if Prometheus is responding via cURL
   shell: |
     curl -s -w "\nHTTP Status Code: %{http_code}\n" localhost:9090/-/healthy
     curl -s -w "\nHTTP Status Code: %{http_code}\n" localhost:9090/-/ready
