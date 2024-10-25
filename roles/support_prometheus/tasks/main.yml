@@ -16,15 +16,15 @@
 - name: Check if Prometheus is responding via cURL
   shell: |
     promtool check healthy
-  register: prom-healthy
+  register: promHealthy
 
 - name: Check if Prometheus is responding via cURL
   shell: |
     promtool check ready
-  register: prom-ready
+  register: promReady
 
 - name: Results after restarting for new configuration
   debug:
     msg:
-      prom-healthy: "{{ prom-healthy }}"
-      prom-ready: "{{ prom-ready }}"
+      promHealthy: "{{ promHealthy }}"
+      promReady: "{{ promReady }}"
