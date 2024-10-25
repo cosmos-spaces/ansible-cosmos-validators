@@ -10,11 +10,9 @@
     - node_launch
     - role: support_sync_snapshot
       when: snapshot_url is defined
-    - role: support_prometheus
-      when: prometheus is defined and prometheus | bool
+
 - name: Setup Prometheus Monitoring on Chain
   hosts: telemetry
-  gather_facts: true
   vars_files:
     - "{{ var_file }}"
   roles:

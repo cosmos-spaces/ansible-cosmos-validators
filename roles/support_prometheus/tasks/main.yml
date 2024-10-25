@@ -13,12 +13,12 @@
   loop: "{{ groups[target] }}"
   when: groups[target] is defined
 
-- name: Check if Prometheus is responding via cURL
+- name: Check if Prometheus is healthy with promtool
   shell: |
     promtool check healthy
   register: promHealthy
 
-- name: Check if Prometheus is responding via cURL
+- name: Check if Prometheus is ready with promtool
   shell: |
     promtool check ready
   register: promReady
