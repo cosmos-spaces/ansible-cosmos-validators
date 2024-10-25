@@ -1,0 +1,30 @@
+- name: Write new entry to prom-cosmos.yml
+  blockinfile:
+    path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
+    backup: true
+    block: |
+      # {{ chain | upper }}
+      - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
+        labels:
+          instance: {{ hostvars[item].server_hostname }}
+          chain_id: {{ chain_id }}
+          network: {{ target }}
+          type: {{ hostvars[item].type }}
+  loop: "{{ groups[target] }}"
+  when: groups[target] is defined
+
+- name: Check if Prometheus is healthy with promtool
+  shell: |
+    promtool check healthy
+  register: promHealthy
+
+- name: Check if Prometheus is ready with promtool
+  shell: |
+    promtool check ready
+  register: promReady
+
+- name: Results after restarting for new configuration
+  debug:
+    msg:
+      promHealthy: "{{ promHealthy }}"
+      promReady: "{{ promReady }}"

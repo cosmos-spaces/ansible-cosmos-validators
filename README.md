@@ -22,6 +22,9 @@ ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
 
 # Install/Configure Horcrux
 ansible-playbook horcrux.yml -e "target=horcrux_cluster|horcrux_cluster_testnet>"
+
+# Configure Prometheus for Chain
+ansible-playbook support_prometheus.yml -e "target=<mainnet|testnet|horcrux_cluster>"-e "chain=<chain>"
 ```
 
 ## Architecture
@@ -143,6 +146,22 @@ There are additional variables under `group_vars/all.yml` for global configurati
 ansible-playbook horcrux.yml
 ```
 
+## Configure Prometheus for Chain
+This playbook will configure a new prometheus target with info from the chain.yml on the servers defined in inventory.yml under `telemetry`. 
+
+### Variables
+
+1. `target`: Required. Whether mainnet or tesnet.
+1. `chain`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
+1. `var_file`: It tells the program where to look for the variable file.
+1. `cosmos_prom_file`: It tells the program the filename of the prometheus targets for the chains.
+
+### Run install/configure playbook
+```bash
+# Configure Prometheus for Chain
+ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
+```
+
 ### Manual Steps
 - Horcrux uses secp256k1 keys to encrypt (ECIES) and sign (ECDSA) cosigner-to-cosigner p2p communication. This is done by encrypting the payloads that are sent over GRPC between cosigners. Due to security reasons, this step must be done manually, and the key files should be copied to each cosigner accordingly after running the following command:
 ```bash
@@ -182,6 +201,8 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `support_horcrux_config.yml` | Add additional nodes to the horcrux config |
 | `support_chain_horcrux` | Updates priv_validator_laddr with horcrux port |
 | `support_bastion_firewall` | Allow additional IPs to connect to bastion |
+| `support_prometheus` | Configure Prometheus with a given chain |
+
 
 ### Selected playbook Usage Example
 
