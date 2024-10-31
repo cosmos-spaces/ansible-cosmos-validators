@@ -40,6 +40,15 @@ groups:
       annotations:
         description: 'Filesystem "{{ $labels.mountpoint }}" on "{{ $labels.instance }}" will be out of diskspace within 1 hour.'
 
+    - alert: NodeDiskSpace10%Free
+      expr: 100 - (100 * node_filesystem_avail_bytes / node_filesystem_size_bytes) > 90
+      labels:
+        severity: moderate
+        service: node_exporter
+      annotations:
+        summary: "Instance {{ $labels.instance }} is low on disk space"
+        description: "Diskspace on {{ $labels.instance }} is used over {{ $value | printf '%.2f' }}%."
+       
     - alert: NodeDiskFull
       expr: node_filesystem_avail_bytes/node_filesystem_size_bytes < 0.01
       for: 5m
