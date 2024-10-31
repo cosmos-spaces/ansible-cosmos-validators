@@ -2,7 +2,7 @@ network: neutron
 folder: '.neutrond'
 daemon: neutrond
 chain_id: neutron-1
-node_version: 'v4.2.4'
+node_version: 'v5.0.0'
 repo: https://github.com/neutron-org/neutron
 genesis: 'https://snapshots.polkachu.com/genesis/neutron/genesis.json'
 addrbook_file: ' https://snapshots.polkachu.com/addrbook/neutron/addrbook.json'
@@ -13,3 +13,4 @@ minimum_gas_price: '0factory/neutron1ug740qrkquxzrk2hh29qrlx3sktkfml3je7juusc2te
 enable_priv_validator_laddr: false
 enablegrpc: true
 indexer: kv
+upgrade_folder: v5.0.0
