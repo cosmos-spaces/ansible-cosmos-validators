@@ -1,0 +1,47 @@
+- name: Write new entry to tenderduty config.yml
+  blockinfile:
+    path: "/home/ubuntu/tenderduty/{{ tender_config_file }}.yml"
+    backup: true
+    block: |
+      {% filter indent(width=4, first=true) %}
+      "{{ chain }}":
+        chain_id: {{ chain_id }}
+        valoper_address: {{ valoper_address }}
+        public_fallback: yes
+        alerts:
+          stalled_enabled: yes
+          stalled_minutes: 10
+          consecutive_enabled: yes
+          consecutive_missed: 20
+          consecutive_priority: critical
+          percentage_enabled: yes
+          percentage_missed: 5
+          percentage_priority: warning
+          alert_if_inactive: yes
+          alert_if_no_servers: yes
+          telegram:
+            enabled: yes
+        nodes:
+          - url: {{ tender_rpc1 }}
+            alert_if_down: no
+          - url: {{ tender_rpc2 }}
+            alert_if_down: no
+      {% endfilter %}
+
+- name: Restart Tenderduty daemon
+  systemd_service:
+    name: tenderdutyval.service
+    state: restarted
+  register: tenderd_status
+  become: true
+
+- name: Check if Tenderduty is responding via cURL
+  shell: |
+    curl -s -w "\nHTTP Status Code: %{http_code}\n" {{ tender_url }}
+  register: tenderduty_curl_status
+
+- name: Results after restarting for new configuration
+  debug:
+    msg:
+      systemd_status: "{{ tenderd_status }}"
+      curl_status: "{{ tenderduty_curl_status }}"

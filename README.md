@@ -25,6 +25,9 @@ ansible-playbook horcrux.yml -e "target=horcrux_cluster|horcrux_cluster_testnet>
 
 # Configure Prometheus for Chain
 ansible-playbook support_prometheus.yml -e "target=<mainnet|testnet|horcrux_cluster>"-e "chain=<chain>"
+
+# Configure Tenderduty for Chain
+ansible-playbook support_tenderduty.yml -e "target=<mainnet|testnet|horcrux_cluster>"-e "chain=<chain>"
 ```
 
 ## Architecture
@@ -159,7 +162,24 @@ This playbook will configure a new prometheus target with info from the chain.ym
 ### Run install/configure playbook
 ```bash
 # Configure Prometheus for Chain
-ansible-playbook main.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
+ansible-playbook support_prometheus.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
+```
+
+## Configure Tenderduty for Chain
+This playbook will configure a new Tenderduty chain with info from the chain.yml on the servers defined in inventory.yml under `telemetry`. 
+
+### Variables
+
+1. `target`: Required. Whether mainnet or tesnet.
+1. `chain`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
+1. `var_file`: It tells the program where to look for the variable file.
+1. `tender_config_file`: It tells the program the filename of the prometheus targets for the chains.
+1. `tender_url`: It tells the program the url for to check for liveness and health after editing the tender_config_file.
+
+### Run install/configure playbook
+```bash
+# Configure Prometheus for Chain
+ansible-playbook support_tenderduty.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
 ```
 
 ### Manual Steps
@@ -202,6 +222,7 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `support_chain_horcrux` | Updates priv_validator_laddr with horcrux port |
 | `support_bastion_firewall` | Allow additional IPs to connect to bastion |
 | `support_prometheus` | Configure Prometheus with a given chain |
+| `support_tenderduty` | Configure Tenderduty with a given chain |
 
 
 ### Selected playbook Usage Example

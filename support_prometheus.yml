@@ -1,5 +1,5 @@
 ---
-- name: Setup Prometheus Monitoring on Chain
+- name: Setup Prometheus Monitoring for a given Chain
   hosts: telemetry
   gather_facts: false
   vars_files:

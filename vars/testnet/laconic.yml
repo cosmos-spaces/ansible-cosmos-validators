@@ -10,3 +10,7 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:2935
 snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/laconic/laconic_1449948.tar.lz4'
 custom_port_prefix: 118
 minimum_gas_price: "0alnt"
+
+valoper_address: 'laconicvaloper170t4kcpf7vauv3j0ycc9p5yucm2a6mtw5sfe3q'
+tender_rpc1: 'https://laconic-testnet-rpc.polkachu.com:443'
+tender_rpc2: 'https://laconic-testnet-rpc.synergynodes.com:443'
