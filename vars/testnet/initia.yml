@@ -1,17 +1,18 @@
-chain: initia
-folder: '.initia'
-daemon: initiad
-chain_id: initiation-1
-node_version: 'v0.2.15'
-repo: https://github.com/initia-labs/initia.git
-genesis: 'https://initia.s3.ap-southeast-1.amazonaws.com/initiation-1/genesis.json'
-addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/initia/addrbook.json'
-seeds: '2eaa272622d1ba6796100ab39f58c75d458b9dbc@34.142.181.82:26656,c28827cb96c14c905b127b92065a3fb4cd77d7f6@testnet-seeds.whispernode.com:25756'
-snapshot_url: 'https://snapshots.kjnodes.com/initia-testnet/snapshot_latest.tar.lz4'
-custom_port_prefix: 113
-upgrade_folder: v0.2
-minimum_gas_price: '0.15uinit,0.01uusdc'
-enable_priv_validator_laddr: false
+#Chain no longer active
+# chain: initia
+# folder: '.initia'
+# daemon: initiad
+# chain_id: initiation-1
+# node_version: 'v0.2.15'
+# repo: https://github.com/initia-labs/initia.git
+# genesis: 'https://initia.s3.ap-southeast-1.amazonaws.com/initiation-1/genesis.json'
+# addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/initia/addrbook.json'
+# seeds: '2eaa272622d1ba6796100ab39f58c75d458b9dbc@34.142.181.82:26656,c28827cb96c14c905b127b92065a3fb4cd77d7f6@testnet-seeds.whispernode.com:25756'
+# snapshot_url: 'https://snapshots.kjnodes.com/initia-testnet/snapshot_latest.tar.lz4'
+# custom_port_prefix: 113
+# upgrade_folder: v0.2
+# minimum_gas_price: '0.15uinit,0.01uusdc'
+# enable_priv_validator_laddr: false
 #note!: Change manually consensus parameters
 # How long we wait for a proposal block before prevoting nil
 #timeout_propose = "3s"
