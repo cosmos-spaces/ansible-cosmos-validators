@@ -1,4 +1,4 @@
-network: quasar
+chain: quasar
 folder: '.quasar'
 daemon: quasard
 chain_id: quasar-1
