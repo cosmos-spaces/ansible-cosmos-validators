@@ -7,7 +7,7 @@ repo: 'https://github.com/lavanet/lava'
 genesis: 'https://storage.googleapis.com/lavanet-public-asssets/tge/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/lava/addrbook.json'
 seeds: '400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@lava.rpc.kjnodes.com:14459'
-snapshot_url: 'https://snapshots.kjnodes.com/lava/snapshot_latest.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/lava/lava_1673633.tar.lz4'
 custom_port_prefix: 117
 upgrade_folder: v4.1.0
 minimum_gas_price: '0.000000001ulava'
