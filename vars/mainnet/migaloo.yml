@@ -2,7 +2,7 @@ chain: migaloo
 folder: '.migalood'
 daemon: migalood
 chain_id: migaloo-1
-node_version: 'v4.2.5'
+node_version: 'v4.2.6'
 repo: https://github.com/White-Whale-Defi-Platform/migaloo-chain
 genesis: 'https://snapshots.polkachu.com/genesis/migaloo/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/migaloo/addrbook.json'
@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/migaloo/migaloo_7795469.
 custom_port_prefix: 116
 minimum_gas_price: '1uwhale'
 enable_priv_validator_laddr: false
-upgrade_folder: v4.2.5
+upgrade_folder: v4.2.6
