@@ -7,7 +7,7 @@ repo: https://github.com/tharsis/evmos
 genesis: 'https://snapshots.polkachu.com/genesis/evmos/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/evmos/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:13456'
-snapshot_url: 'https://snapshots.cosmos-spaces.cloud/datago.tar.lz4'
+snapshot_url: 'https://snapshots.publicnode.com/evmos-pruned-24950048-24950058.tar.lz4'
 custom_port_prefix: 119
 minimum_gas_price: '0aevmos'
 enable_priv_validator_laddr: false
