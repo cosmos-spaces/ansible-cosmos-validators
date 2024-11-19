@@ -2,7 +2,7 @@ chain: evmos
 folder: '.evmosd'
 daemon: evmosd
 chain_id: evmos_9001-2
-node_version: 'v19.1.0'
+node_version: 'v20.0.0'
 repo: https://github.com/tharsis/evmos
 genesis: 'https://snapshots.polkachu.com/genesis/evmos/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/evmos/addrbook.json'
@@ -11,3 +11,4 @@ snapshot_url: 'https://snapshots.cosmos-spaces.cloud/datago.tar.lz4'
 custom_port_prefix: 119
 minimum_gas_price: '0aevmos'
 enable_priv_validator_laddr: false
+upgrade_folder: 'v20.0.0'
