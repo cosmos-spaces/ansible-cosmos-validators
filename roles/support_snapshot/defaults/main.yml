@@ -1,1 +1,1 @@
-tender_config_file: { { snapshot_url } }
+snapshot_endpoint: { { snapshot_url } }
