@@ -13,4 +13,3 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/cosmos/cosmos_21657014.t
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
 enable_priv_validator_laddr: true
-upgrade_folder: 'v21.0.1'
