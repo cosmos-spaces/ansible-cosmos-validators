@@ -3,7 +3,7 @@ folder: '.gaia'
 daemon: gaiad
 chain_id: cosmoshub-4
 node_version: 'v21.0.1'
-binary: "https://github.com/cosmos/gaia/releases/tag/v21.0.1/gaiad-v21.0.1-linux-amd64"
+binary: "https://github.com/cosmos/gaia/releases/download/v21.0.1/gaiad-v21.0.1-linux-amd64"
 binary_processing: default
 repo: https://github.com/cosmos/gaia
 genesis: 'https://snapshots.polkachu.com/genesis/cosmos/genesis.json'
