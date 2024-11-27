@@ -6,9 +6,5 @@ node_version: 'v0.1.9'
 repo: https://git.vdb.to/cerc-io/laconicd
 genesis: 'https://git.vdb.to/cerc-io/testnet-laconicd-stack/raw/branch/main/ops/stage2/genesis.json'
 seeds: 'f062dcfcbd5413c7446447812d0f22a67af93d18@laconicd-sapo.laconic.com:36656'
-custom_port_prefix: 118
+custom_port_prefix: 123
 minimum_gas_price: "0alnt"
-
-valoper_address: 'laconicvaloper170t4kcpf7vauv3j0ycc9p5yucm2a6mtw5sfe3q'
-tender_rpc1: 'https://laconic-testnet-rpc.polkachu.com:443'
-tender_rpc2: 'https://laconic-testnet-rpc.synergynodes.com:443'
