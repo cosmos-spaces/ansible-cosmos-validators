@@ -1,5 +1,5 @@
 chain: laconic2
-folder: '.laconic'
+folder: '.laconic2'
 daemon: laconicd
 chain_id: laconic-testnet-2
 node_version: 'v0.1.9'
