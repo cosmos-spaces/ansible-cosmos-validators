@@ -2,11 +2,11 @@ chain: initia2
 folder: '.initia2'
 daemon: initiad
 chain_id: initiation-2
-node_version: v0.6.0
+node_version: v0.6.4
 repo: 'https://github.com/initia-labs/initia'
 genesis: 'https://storage.googleapis.com/init-common-genesis/initiation-2/genesis.json'
 peers: '3715cdb41efb45714eb534c3943c5947f4894787@34.143.179.242:26656'
 minimum_gas_price: '0.015uinit'
 custom_port_prefix: 119
 enable_priv_validator_laddr: false
-upgrade_folder: 0.6.0
+upgrade_folder: v0.6.4
