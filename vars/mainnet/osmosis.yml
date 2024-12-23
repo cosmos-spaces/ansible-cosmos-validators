@@ -1,0 +1,16 @@
+chain: osmosis
+folder: '.osmosisd'
+daemon: osmosisd
+chain_id: osmosis-1 
+node_version: 'v28.0.0'
+repo: 'https://github.com/osmosis-labs/osmosis'
+genesis: 'https://snapshots.polkachu.com/genesis/osmosis/genesis.json'
+addrbook_file: 'hhttps://snapshots.polkachu.com/addrbook/osmosis/addrbook.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:12556'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/osmosis/osmosis_26205500.tar.lz4'
+custom_port_prefix: 123
+minimum_gas_price: "0.0025uosmo"
+
+# valoper_address: 'osmo1t48236ajss9wswamwll4nj7up2gqdns5sly826'
+# tender_rpc1: 'https://rpc.osmosis.zone:443'
+# tender_rpc2: 'https://osmosis-rpc.polkachu.com:443'
