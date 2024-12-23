@@ -21,7 +21,7 @@
       args:
         chdir: '{{ user_dir }}/{{ folder }}'
       with_items:
-        - 'make install {{ make_install_params }}'
+        - 'make {{ make_cmd }} {{ make_install_params }}'
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
