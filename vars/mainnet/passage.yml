@@ -13,5 +13,5 @@ minimum_gas_price: '0upasg'
 enable_priv_validator_laddr: false
 
 valoper_address: 'pasgvaloper1ld58k03ndpyl6k6xtwjj0j67kkjx5qcauyf3x0'
-tender_rpc1: 'https://passage-rpc.polkachu.com:443'
-tender_rpc2: 'https://passage-rpc.ibs.team:443'
+tender_rpc1: 'https://passage-rpc.ibs.team:443'
+tender_rpc2: 'https://passage-rpc.stakerhouse.com:443'
