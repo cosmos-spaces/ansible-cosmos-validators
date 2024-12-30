@@ -1,6 +1,6 @@
 - name: Print varfile to see what is happening
   ansible.builtin.debug:
-    var: var_file
+    msg: The var file is set to {{ var_file }}
     verbosity: 4
 
 - name: Write new entry to tenderduty config.yml
