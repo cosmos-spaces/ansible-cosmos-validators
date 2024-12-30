@@ -1,3 +1,8 @@
+- name: Print varfile to see what is happening
+  ansible.builtin.debug:
+    var: var_file
+    verbosity: 4
+
 - name: Write new entry to tenderduty config.yml
   blockinfile:
     path: "/home/ubuntu/tenderduty/{{ tender_config_file }}.yml"
