@@ -4,8 +4,8 @@ daemon: axelard
 chain_id: axelar-dojo-1
 node_version: 'v1.1.3'
 repo: 'https://github.com/axelarnetwork/axelar-core'
-binary: 'https://github.com/axelarnetwork/axelar-core/releases/download/v1.1.3/axelard-linux-amd64-v1.1.3'
-binary_processing: default
+# binary: 'https://github.com/axelarnetwork/axelar-core/releases/download/v1.1.3/axelard-linux-amd64-v1.1.3'
+# binary_processing: default
 genesis: 'https://snapshots.polkachu.com/genesis/axelar/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/axelar/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15156'
