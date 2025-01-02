@@ -11,7 +11,7 @@ addrbook_file: 'https://snapshots.polkachu.com/addrbook/axelar/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15156'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/axelar/axelar_16109264.tar.lz4'
 custom_port_prefix: 124
-minimum_gas_price: "0.007uaxl"
+minimum_gas_price: '0.007uaxl'
 
 make_cmd: build
 
