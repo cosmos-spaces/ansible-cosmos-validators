@@ -1,7 +1,7 @@
 folder: '.babylond'
 daemon: babylond
 chain_id: bbn-test-5
-node_version: 'v1.0.0-rc.1'
+node_version: 'v1.0.0-rc.3'
 repo: 'https://github.com/babylonlabs-io/babylon'
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/babylon/genesis.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656'
@@ -11,9 +11,9 @@ snapshot_url: 'https://github.com/babylonlabs-io/networks/blob/main/bbn-test-5/n
 minimum_gas_price: '0.005ubbn' # bby after upgrade?
 custom_port_prefix: 111
 
-# need to upgrade to v1.0.0-rc.3 after synced
+upgrade_folder: 'v1.0.0-rc.3'
 
 # tender_name: Babylon_test5 #TODO
-# valoper_address: 'osmo1t48236ajss9wswamwll4nj7up2gqdns5sly826' #TODO
-# tender_rpc1: 'https://babylon-testnet-grpc.nodes.guru:443'
-# tender_rpc2: 'http://babylon-testnet-grpc.polkachu.com:20690:443'
+valoper_address: 'bbn16zysjhcrg28g0eww3pv8g33ksr6f086rq7cehq'
+tender_rpc1: 'https://babylon-testnet-grpc.nodes.guru:443'
+tender_rpc2: 'http://babylon-testnet-grpc.polkachu.com:20690:443'
