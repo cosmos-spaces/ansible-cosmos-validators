@@ -1,3 +1,4 @@
+chain: babylon
 folder: '.babylond'
 daemon: babylond
 chain_id: bbn-test-5
