@@ -1,14 +1,14 @@
 folder: '.babylond'
 daemon: babylond
 chain_id: bbn-test-5
-node_version:  v1.0.0-rc.1
+node_version: 'v1.0.0-rc.1'
 repo: 'https://github.com/babylonchain/babylon.git'
 genesis: 'https://github.com/babylonlabs-io/networks/blob/main/bbn-test-5/network-artifacts/genesis.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656'
 # peers: 'fe62e0a38eb7694080c83a84225a6bb33be01fed@babylon-testnet-rpc-pruned-1.nodes.guru:55706'
 addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/babylon/addrbook.json'
 snapshot_url: 'https://github.com/babylonlabs-io/networks/blob/main/bbn-test-5/network-artifacts/bbn-test-5.tar.gz' # sync to 200 blocks
-minimum_gas_price: '0.005ubbn' # bby?
+minimum_gas_price: '0.005ubbn' # bby after upgrade?
 custom_port_prefix: 111
 
 # need to upgrade to v1.0.0-rc.3 after synced
