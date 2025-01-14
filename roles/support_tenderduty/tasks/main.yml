@@ -29,7 +29,7 @@
           - url: {{ tender_rpc2 }}
             alert_if_down: no
           - url: {{ cosmos_directory_rpc }}
-            alert_if_down: yes
+            alert_if_down: no
       {% endfilter %}
   when: cosmos_directory_enabled == 'true'
 
