@@ -1,5 +1,5 @@
 chain: band
-folder: '.bandd'
+folder: '.band'
 daemon: bandd
 chain_id: "band-v3-testnet-1"
 node_version: v3.0.0-rc1
