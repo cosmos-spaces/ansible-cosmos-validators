@@ -2,7 +2,7 @@ chain: cosmos
 folder: '.gaia'
 daemon: gaiad
 chain_id: cosmoshub-4
-node_version: 'v22'
+node_version: 'v22.0.0'
 repo: 'https://github.com/cosmos/gaia'
 genesis: 'https://snapshots.polkachu.com/genesis/cosmos/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/cosmos/addrbook.json'
