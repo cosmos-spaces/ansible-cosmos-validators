@@ -1,6 +1,6 @@
 chain: juno
-folder: '.osmosisd'
-daemon: osmosisd
+folder: '.juno'
+daemon: junod
 chain_id: juno-1 
 node_version: 'v26.0.0'
 repo: 'https://github.com/CosmosContracts/juno'
