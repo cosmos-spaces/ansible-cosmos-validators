@@ -1,0 +1,17 @@
+chain: juno
+folder: '.osmosisd'
+daemon: osmosisd
+chain_id: juno-1 
+node_version: 'v26.0.0'
+repo: 'https://github.com/CosmosContracts/juno'
+genesis: 'https://snapshots.polkachu.com/genesis/juno/genesis.json'
+addrbook_file: 'https://snapshots.polkachu.com/addrbook/juno/addrbook.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:12656'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/juno/juno_23589107.tar.lz4'
+custom_port_prefix: 130
+minimum_gas_price: "0.25ujuno"
+upgrade_folder: 'v26'
+
+# valoper_address: 'osmo1t48236ajss9wswamwll4nj7up2gqdns5sly826'
+# tender_rpc1: 'https://rpc.osmosis.zone:443'
+# tender_rpc2: 'https://osmosis-rpc.polkachu.com:443'
