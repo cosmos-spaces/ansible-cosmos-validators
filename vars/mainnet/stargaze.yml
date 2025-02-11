@@ -8,6 +8,9 @@ genesis: 'https://snapshots.polkachu.com/genesis/stargaze/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/stargaze/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:13756'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/stargaze/stargaze_14616900.tar.lz4'
+# relayer
+# custom_port_prefix: 131 not yet. need to reorganize ports on relayer
+# validator
 custom_port_prefix: 123
 minimum_gas_price: '0ustars'
 
