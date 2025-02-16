@@ -3,6 +3,7 @@ folder: '.union'
 daemon: uniond
 chain_id: union-testnet-9
 node_version: 'v0.25.0'
+repo: 'https://github.com/unionlabs/union'
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/union/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/union/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:24656'
