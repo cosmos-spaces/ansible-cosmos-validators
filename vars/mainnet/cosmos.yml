@@ -2,10 +2,8 @@ chain: cosmos
 folder: '.gaia'
 daemon: gaiad
 chain_id: cosmoshub-4
-node_version: 'v21.0.1'
-binary: "https://github.com/cosmos/gaia/releases/download/v21.0.1/gaiad-v21.0.1-linux-amd64"
-binary_processing: default
-repo: https://github.com/cosmos/gaia
+node_version: 'v22.1.0'
+repo: 'https://github.com/cosmos/gaia'
 genesis: 'https://snapshots.polkachu.com/genesis/cosmos/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/cosmos/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:14956'
@@ -13,3 +11,5 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/cosmos/cosmos_21657014.t
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
 enable_priv_validator_laddr: true
+
+upgrade_folder: 'v22.1.0'
