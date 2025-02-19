@@ -172,7 +172,6 @@ This playbook will configure a new Tenderduty chain with info from the chain.yml
 
 1. `target`: Required. Whether mainnet or tesnet.
 1. `chain`: Required. The chain network name to install/configure (should match file vars/<testnet/mainnet>).
-1. `network`: Required. TODO.
 1. `var_file`: It tells the program where to look for the variable file.
 1. `tender_config_file`: It tells the program the filename of the prometheus targets for the chains.
 1. `tender_url`: It tells the program the url for to check for liveness and health after editing the tender_config_file.
@@ -180,7 +179,7 @@ This playbook will configure a new Tenderduty chain with info from the chain.yml
 ### Run install/configure playbook
 ```bash
 # Configure Tenderduty for Chain
-ansible-playbook support_tenderduty.yml -e "target=<mainnet|testnet>" -e "chain=<chain>" -e "network=TODO"
+ansible-playbook support_tenderduty.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
 ```
 
 ### Manual Steps
