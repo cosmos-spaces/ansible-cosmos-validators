@@ -1,3 +1,4 @@
 tender_config_file: "config"
 tender_url: "https://tenderduty.cosmosspaces.zone"
 cosmos_directory_rpc: "https://rest.cosmos.directory:443/{{ chain }}"
+network: {{ target }}
