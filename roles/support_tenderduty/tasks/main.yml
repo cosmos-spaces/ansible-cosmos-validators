@@ -31,7 +31,7 @@
           - url: {{ cosmos_directory_rpc }}
             alert_if_down: no
       {% endfilter %}
-  when: cosmos_directory_enabled == 'true'
+  when: cosmos_directory_enabled is defined and cosmos_directory_enabled == 'true'
 
 - name: Write new entry to tenderduty config.yml
   blockinfile:
@@ -64,7 +64,7 @@
           - url: {{ tender_rpc2 }}
             alert_if_down: no
       {% endfilter %}
-  when: cosmos_directory_enabled == 'false' or network == 'testnet' or cosmos_directory_enabled is undefined
+  when: cosmos_directory_enabled is undefined or cosmos_directory_enabled == 'false' or network == 'testnet' 
 
 - name: Restart Tenderduty daemon
   systemd_service:
