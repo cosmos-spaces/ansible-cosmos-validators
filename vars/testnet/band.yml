@@ -8,3 +8,7 @@ genesis: https://raw.githubusercontent.com/bandprotocol/launch/master/band-v3-te
 seeds: 'cf91ef30a9877d7cf0e654d5f75f8d68ff6ee4e7@34.2.133.3:26656,cbe055146a4607c3db5909bfa20e9e0c5ea95f90@35.212.1.35:26656'
 custom_port_prefix: 113
 minimum_gas_price: '0.0025uband'
+
+valoper_address: 'bandvaloper1n94mepumgyuuknv38y2ml3mdkafujwrwzwqwk8'
+tender_rpc1: 'https://rpc.band-v3-testnet.bandchain.org:443'
+tender_rpc2: 'https://band-testnet-rpc.polkachu.com:443'
