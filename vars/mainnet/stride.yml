@@ -2,7 +2,7 @@ chain: stride
 folder: '.stride'
 daemon: strided
 chain_id: stride-1
-node_version: 'v22.0.0'
+node_version: 'v26.0.0'
 repo: https://github.com/Stride-Labs/stride.git
 genesis: 'https://snapshots.polkachu.com/genesis/stride/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/stride/addrbook.json'
@@ -11,3 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/stride/stride_9929700.ta
 custom_port_prefix: 120
 minimum_gas_price: '0.0005ustrd,0.001stuosmo,0.0001stuatom,0.001ibc/D24B4564BCD51D3D02D9987D92571EAC5915676A9BD6D9B0C1D0254CB8A5EA34,0.0001ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2'
 enable_priv_validator_laddr: false
+upgrade_folder: v26
