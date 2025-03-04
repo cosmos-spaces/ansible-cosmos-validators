@@ -136,6 +136,22 @@
     line: 'node = "tcp://localhost:{{ custom_port_prefix }}57"'
     state: present
 
+- name: Update custom config parameters
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: '{{ item.key }} = "'
+    line: '{{ item.key }} = "{{ item.value }}"'
+  loop: '{{ config_parameters | dict2items }}'
+  when: config_parameters is defined
+
+- name: Update custom app parameters
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }} = "'
+    line: '{{ item.key }} = "{{ item.value }}"'
+  loop: '{{ app_parameters | dict2items }}'
+  when: app_parameters is defined
+
 - name: Create cosmovisor directories
   file:
     path: '{{ item }}'

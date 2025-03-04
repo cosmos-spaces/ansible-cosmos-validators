@@ -10,4 +10,3 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:13156'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/comdex/comdex_13922138.tar.lz4'
 custom_port_prefix: 110
 minimum_gas_price: '0.025ucmdx'
-enable_priv_validator_laddr: false

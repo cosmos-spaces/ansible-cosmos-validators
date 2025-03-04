@@ -10,5 +10,4 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:14956'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/cosmos/cosmos_21657014.tar.lz4'
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
-enable_priv_validator_laddr: true
 upgrade_folder: v21

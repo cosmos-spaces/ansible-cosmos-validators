@@ -10,5 +10,4 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:13456'
 snapshot_url: 'https://snapshots.cosmos-spaces.cloud/datago.tar.lz4'
 custom_port_prefix: 119
 minimum_gas_price: '0aevmos'
-enable_priv_validator_laddr: false
 upgrade_folder: 'v20.0.0'

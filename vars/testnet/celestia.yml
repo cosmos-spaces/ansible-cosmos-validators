@@ -11,4 +11,3 @@ snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/celestia/celesti
 custom_port_prefix: 110
 upgrade_folder: v1.11
 minimum_gas_price: '0.002utia'
-enable_priv_validator_laddr: false

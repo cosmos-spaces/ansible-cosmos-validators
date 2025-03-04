@@ -1,5 +1,5 @@
 chain: comdex
-folder: '.comdex'
+folder: '.comdex-test'
 daemon: comdex
 chain_id: comdex-1
 node_version: 'v14.1.0'

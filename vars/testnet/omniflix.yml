@@ -10,4 +10,3 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:16956'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/omniflix/omniflix_14264729.tar.lz4'
 custom_port_prefix: 122
 minimum_gas_price: '0.001uflix'
-enable_priv_validator_laddr: false
