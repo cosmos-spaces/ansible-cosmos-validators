@@ -140,7 +140,7 @@
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
     regexp: '^{{ item.key }} ='
-    line: '{{ item.key }} = {{ item.value }}'
+    line: "{{ item.key }} = {{ item.value }}"
     backrefs: true
   loop: '{{ config_parameters | dict2items }}'
   when: config_parameters is defined
@@ -149,7 +149,7 @@
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: '^{{ item.key }} ='
-    line: '{{ item.key }} = {{ item.value }}'
+    line: "{{ item.key }} = {{ item.value }}"
     backrefs: true
   loop: '{{ app_parameters | dict2items }}'
   when: app_parameters is defined

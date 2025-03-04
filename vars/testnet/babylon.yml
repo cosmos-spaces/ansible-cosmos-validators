@@ -13,9 +13,9 @@ custom_port_prefix: 111
 indexer: "kv"
 enablegrpc: true
 config_parameters:
-  timeout_commit: '{{ "10s" | string }}'
+  timeout_commit: '{{ "10s" | string | quote }}'
 app_parameters:
   network: "signet"
   iavl-cache-size: 0
-  iavl-disable-fastnode: "{{ true | bool }}"
-  pruning: "nothing"
+  iavl-disable-fastnode: "{{ true | string }}"
+  pruning: '{{ "nothing" | string | quote }}'
