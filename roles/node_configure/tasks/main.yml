@@ -112,14 +112,12 @@
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: "# Enable defines if the API(.*)\\senable = (?:false|true)"
     replace: "# Enable defines if the API server should be enabled.\\nenable = {{ enableapi|lower }}"
-  when: enableapi|default(false)|bool == false
 
 - name: Set GRPC config
   replace:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: "# Enable defines if the gRPC server(.*)\\senable = (?:false|true)"
     replace: "# Enable defines if the gRPC server should be enabled.\\nenable = {{ enablegrpc|lower }}"
-  when: enablegrpc|default(false)|bool == false
 
 - name: Enable prometheus on the config.toml file
   lineinfile:
