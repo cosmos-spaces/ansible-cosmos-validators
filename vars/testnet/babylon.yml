@@ -1,5 +1,5 @@
 chain: babylon
-folder: '.babylond-test'
+folder: '.babylond'
 daemon: babylond
 chain_id: bbn-test-5
 node_version: "v1.0.0-rc.5"
