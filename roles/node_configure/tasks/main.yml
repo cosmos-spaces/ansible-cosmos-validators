@@ -139,19 +139,19 @@
 - name: Update custom config parameters
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
-    regexp: '^{{ item.key }} ='
-    line: "{{ item.key }} = {{ item.value }}"
+    regexp: "{{ item.regexp }}" 
+    line: "{{ item.line }}"
     backrefs: true
-  loop: '{{ config_parameters | dict2items }}'
+  with_items: '{{ config_parameters }}'
   when: config_parameters is defined
 
 - name: Update custom app parameters
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
-    regexp: '^{{ item.key }} ='
-    line: "{{ item.key }} = {{ item.value }}"
+    regexp: "{{ item.regexp }}" 
+    line: "{{ item.line }}"
     backrefs: true
-  loop: '{{ app_parameters | dict2items }}'
+  with_items: '{{ app_parameters }}'
   when: app_parameters is defined
 
 - name: Create cosmovisor directories
