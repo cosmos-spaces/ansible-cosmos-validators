@@ -139,7 +139,7 @@
 - name: Update custom config parameters
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/config.toml'
-    regexp: '{{ item.key }} = "'
+    regexp: '{{ item.key }} ='
     line: '{{ item.key }} = {{ item.value }}'
     backrefs: true
   loop: '{{ config_parameters | dict2items }}'
@@ -148,7 +148,7 @@
 - name: Update custom app parameters
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
-    regexp: '{{ item.key }} = "'
+    regexp: '{{ item.key }} ='
     line: '{{ item.key }} = {{ item.value }}'
     backrefs: true
   loop: '{{ app_parameters | dict2items }}'
