@@ -2,7 +2,7 @@ chain: cosmos
 folder: '.gaia'
 daemon: gaiad
 chain_id: provider
-node_version: 'v22.2.0'
+node_version: 'v23.0.0-rc2'
 repo: https://github.com/cosmos/gaia
 genesis: 'https://snapshots.kjnodes.com/cosmoshub-testnet/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/cosmoshub-testnet/addrbook.json'
@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.kjnodes.com/cosmoshub-testnet/snapshot_latest.t
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
 enable_priv_validator_laddr: false
-upgrade_folder: v22
+upgrade_folder: v23
