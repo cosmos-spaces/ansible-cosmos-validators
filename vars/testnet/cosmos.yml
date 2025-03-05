@@ -10,5 +10,4 @@ seeds: '3f472746f46493309650e5a033076689996c8881@cosmoshub-testnet.rpc.kjnodes.c
 snapshot_url: 'https://snapshots.kjnodes.com/cosmoshub-testnet/snapshot_latest.tar.lz4'
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
-enable_priv_validator_laddr: false
 upgrade_folder: v23

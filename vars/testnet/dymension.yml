@@ -11,4 +11,3 @@ snapshot_url: 'https://snapshots.kjnodes.com/dymension-testnet/snapshot_latest.t
 custom_port_prefix: 115
 #upgrade_folder: v1.9
 minimum_gas_price: '20000000000udym'
-enable_priv_validator_laddr: false

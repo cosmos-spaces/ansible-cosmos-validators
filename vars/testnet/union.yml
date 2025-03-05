@@ -12,4 +12,3 @@ snapshot_url: 'https://snapshots.kjnodes.com/union-testnet/snapshot_latest.tar.l
 custom_port_prefix: 112
 upgrade_folder: v0.24.0
 minimum_gas_price: '0muno'
-enable_priv_validator_laddr: false
