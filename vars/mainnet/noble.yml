@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/noble/noble_22580010.tar
 custom_port_prefix: 131
 minimum_gas_price: '0.001uusdc'
 
-upgrade_folder: 'v9.0.1'
+upgrade_folder: argentum
