@@ -11,7 +11,3 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/picasso/picasso_6093518.
 custom_port_prefix: 118
 minimum_gas_price: '0stake' #to recheck
 enable_priv_validator_laddr: false
-
-valoper_address: 'picavaloper1n98l6fqg6et7f5dvq0zns5uahrg0xgu0u7egyc'
-tender_rpc1: 'https://picasso-rpc.polkachu.com:443'
-tender_rpc2: 'https://rpc.cosmos.directory/composable:443'

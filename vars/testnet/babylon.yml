@@ -14,7 +14,3 @@ custom_port_prefix: 111
 
 upgrade_folder: v1
 
-# tender_name: Babylon_test5 #TODO
-valoper_address: "bbnvaloper16zysjhcrg28g0eww3pv8g33ksr6f086raujymp"
-tender_rpc1: "https://babylon-testnet-rpc.nodes.guru:443"
-tender_rpc2: "https://babylon-testnet-rpc.polkachu.com:443"

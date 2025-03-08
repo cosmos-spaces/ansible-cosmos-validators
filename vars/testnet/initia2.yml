@@ -12,7 +12,3 @@ custom_port_prefix: 119
 enable_priv_validator_laddr: false
 # Note: chain does not like the preceding v in the version names.
 upgrade_folder: 0.7.0
-
-valoper_address: 'initvaloper1km3hvewargf7xu7fa2w43n0d7fcwj9x55p5kd6'
-tender_rpc1: 'https://initia-testnet.rpc.kjnodes.com:443'
-tender_rpc2: 'https://initia-testnet-rpc.polkachu.com:443'

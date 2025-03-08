@@ -11,7 +11,3 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/juno/juno_23589107.tar.l
 custom_port_prefix: 130
 minimum_gas_price: "0.25ujuno"
 upgrade_folder: 'v27'
-
-# valoper_address: 'osmo1t48236ajss9wswamwll4nj7up2gqdns5sly826'
-# tender_rpc1: 'https://rpc.osmosis.zone:443'
-# tender_rpc2: 'https://osmosis-rpc.polkachu.com:443'

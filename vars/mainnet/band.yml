@@ -11,7 +11,3 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/band/band_37280586.tar.l
 custom_port_prefix: 128
 minimum_gas_price: '0.0025uband'
 upgrade_folder: 'v2.5'
-
-valoper_address: 'bandvaloper1fzhy0swda9ajmtqeh0ch8v59ngnwsy8ys2dhv9'
-tender_rpc1: 'https://band-rpc.w3coins.io:443'
-tender_rpc2: 'https://band-rpc.polkachu.com:443'

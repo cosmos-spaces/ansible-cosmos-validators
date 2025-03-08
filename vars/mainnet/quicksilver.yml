@@ -10,7 +10,3 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11156'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/quicksilver/quicksilver_11205424.tar.lz4'
 custom_port_prefix: 129
 minimum_gas_price: '0.0025uqck'
-
-# valoper_address: 'osmo1t48236ajss9wswamwll4nj7up2gqdns5sly826'
-# tender_rpc1: 'https://rpc.osmosis.zone:443'
-# tender_rpc2: 'https://osmosis-rpc.polkachu.com:443'
