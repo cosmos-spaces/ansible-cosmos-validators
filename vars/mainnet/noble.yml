@@ -1,0 +1,14 @@
+chain: noble
+folder: '.noble'
+daemon: nobled
+chain_id: noble-1
+node_version: 'v9.0.1'
+repo: https://github.com/strangelove-ventures/noble
+genesis: 'https://snapshots.polkachu.com/genesis/noble/genesis.json'
+addrbook_file: 'https://snapshots.polkachu.com/addrbook/noble/addrbook.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:21556'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/noble/noble_22580010.tar.lz4'
+custom_port_prefix: 131
+minimum_gas_price: '0.001uusdc'
+
+upgrade_folder: 'v9.0.1'
