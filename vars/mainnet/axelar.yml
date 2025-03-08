@@ -14,3 +14,5 @@ custom_port_prefix: 124
 minimum_gas_price: '0.007uaxl'
 
 make_cmd: build
+
+upgrade_folder: v1.2
