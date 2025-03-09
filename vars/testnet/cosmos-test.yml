@@ -1,0 +1,11 @@
+chain: cosmos
+folder: '.gaia-test-upgrade'
+daemon: gaiad-test-upgrade
+chain_id: test-upgrade-1
+node_version: 'v21.0.1'
+genesis: 'https://github.com/cosmos/testnets/raw/master/interchain-security/test-upgrade-1/genesis.json'
+binary: https://github.com/cosmos/gaia/releases/download/v21.0.1/gaiad-v21.0.1-linux-amd64
+binary_processing: default
+custom_port_prefix: 123
+minimum_gas_price: '0.005udrl'
+upgrade_folder: v23
