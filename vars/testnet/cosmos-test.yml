@@ -1,4 +1,4 @@
-chain: cosmos
+chain: cosmos-test-upgrade
 folder: '.gaia-test-upgrade'
 daemon: gaiad-test-upgrade
 chain_id: test-upgrade-1
