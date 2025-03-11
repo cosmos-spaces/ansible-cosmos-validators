@@ -1,6 +1,6 @@
-chain: noble
+chain: noble-test
 folder: ".noble-test"
-daemon: nobled
+daemon: nobled-test
 chain_id: grand-1
 node_version: "v9.0.0-rc.3-swagger"
 repo: https://github.com/strangelove-ventures/noble
