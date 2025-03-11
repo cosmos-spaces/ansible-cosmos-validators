@@ -9,5 +9,6 @@ addrbook_file: 'https://snapshots.kjnodes.com/celestia-testnet/addrbook.json'
 seeds: '3f472746f46493309650e5a033076689996c8881@celestia-testnet.rpc.kjnodes.com:12059'
 snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/celestia/celestia_2225040.tar.lz4' #https://dteam.tech/services/testnet/snapshot/celestia
 custom_port_prefix: 110
-upgrade_folder: v3.0.0
 minimum_gas_price: '0.002utia'
+
+upgrade_folder: v3.0.0

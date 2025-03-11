@@ -112,14 +112,12 @@
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: "# Enable defines if the API(.*)\\senable = (?:false|true)"
     replace: "# Enable defines if the API server should be enabled.\\nenable = {{ enableapi|lower }}"
-  when: enableapi|default(false)|bool == false
 
 - name: Set GRPC config
   replace:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
     regexp: "# Enable defines if the gRPC server(.*)\\senable = (?:false|true)"
     replace: "# Enable defines if the gRPC server should be enabled.\\nenable = {{ enablegrpc|lower }}"
-  when: enablegrpc|default(false)|bool == false
 
 - name: Enable prometheus on the config.toml file
   lineinfile:
@@ -135,6 +133,24 @@
     regexp: '^node ='
     line: 'node = "tcp://localhost:{{ custom_port_prefix }}57"'
     state: present
+
+- name: Update custom config parameters
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/config.toml'
+    regexp: "{{ item.regexp }}" 
+    line: "{{ item.line }}"
+    backrefs: true
+  with_items: '{{ config_parameters }}'
+  when: config_parameters is defined and config_parameters != None
+
+- name: Update custom app parameters
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: "{{ item.regexp }}" 
+    line: "{{ item.line }}"
+    backrefs: true
+  with_items: '{{ app_parameters }}'
+  when: app_parameters is defined and app_parameters != None
 
 - name: Create cosmovisor directories
   file:

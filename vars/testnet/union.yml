@@ -12,3 +12,5 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:2465
 snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/union/union_4528115.tar.lz4'
 custom_port_prefix: 112
 minimum_gas_price: '0muno'
+
+upgrade_folder: v0.24.0
