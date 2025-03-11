@@ -2,7 +2,7 @@ chain: noble
 folder: ".noble-test"
 daemon: nobled
 chain_id: grand-1
-node_version: "v9.0.0-rc.3"
+node_version: "v9.0.0-rc.3-swagger"
 repo: https://github.com/strangelove-ventures/noble
 genesis: "https://snapshots.polkachu.com/testnet-genesis/noble/genesis.json"
 addrbook_file: "https://snapshots.polkachu.com/testnet-addrbook/noble/addrbook.json"
