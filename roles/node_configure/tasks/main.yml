@@ -128,6 +128,7 @@
   when: node_exporter|bool == true
 
 - name: Update node port on client.toml
+  ignore_errors: true
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/client.toml'
     regexp: '^node ='
