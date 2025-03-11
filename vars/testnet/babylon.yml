@@ -12,15 +12,15 @@ minimum_gas_price: "0.002ubbn"
 custom_port_prefix: 134 # 111
 indexer: "kv"
 enablegrpc: true
-config_parameters:
-  - regexp: '^timeout_commit ='
-    line: 'timeout_commit = "10s"'
-app_parameters:
-  - regexp: '^network ='
-    line: 'network = "signet"'
-  - regexp: '^iavl-cache-size ='
-    line: 'iavl-cache-size = 0'
-  - regexp: '^iavl-disable-fastnode ='
-    line: 'iavl-disable-fastnode = true'
-  - regexp: '^pruning ='
-    line: 'pruning = "nothing"'
+# config_parameters:
+#   - regexp: '^timeout_commit ='
+#     line: 'timeout_commit = "10s"'
+# app_parameters:
+#   - regexp: '^network ='
+#     line: 'network = "signet"'
+#   - regexp: '^iavl-cache-size ='
+#     line: 'iavl-cache-size = 0'
+#   - regexp: '^iavl-disable-fastnode ='
+#     line: 'iavl-disable-fastnode = true'
+#   - regexp: '^pruning ='
+#     line: 'pruning = "nothing"'
