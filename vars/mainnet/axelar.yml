@@ -8,7 +8,7 @@ binary_processing: default
 genesis: 'https://snapshots.polkachu.com/genesis/axelar/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/axelar/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15156'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/axelar/axelar_17071113.tar.lz4'
+snapshot_url: 'http://snapshots.autostake.com/lyIs25DaSWMSm8evWKHGQrb/axelar-dojo-1/latest.tar.lz4'
 custom_port_prefix: 124
 minimum_gas_price: '0.007uaxl'
 
