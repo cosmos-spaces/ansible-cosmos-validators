@@ -1,0 +1,13 @@
+chain: celestia
+folder: '.celestia'
+daemon: celestia-appd
+chain_id: mocha-4
+node_version: 'v3.2.0'
+repo: https://github.com/celestiaorg/celestia-app.git
+genesis: 'https://snapshots.polkachu.com/genesis/celestia/genesis.json'
+addrbook_file: 'https://snapshots.polkachu.com/addrbook/celestia/addrbook.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11656'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/celestia/celestia_4144805.tar.lz4' #https://dteam.tech/services/testnet/snapshot/celestia
+custom_port_prefix: 125
+upgrade_folder: v3.2.0
+minimum_gas_price: '0.002utia'

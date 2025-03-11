@@ -2,12 +2,16 @@ chain: neutron
 folder: '.neutrond'
 daemon: neutrond
 chain_id: neutron-1
-node_version: 'v5.0.0'
+node_version: 'v5.1.3'
 repo: https://github.com/neutron-org/neutron
 genesis: 'https://snapshots.polkachu.com/genesis/neutron/genesis.json'
 addrbook_file: ' https://snapshots.polkachu.com/addrbook/neutron/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:19156'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/neutron/neutron_13391217.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/neutron/neutron_20329985.tar.lz4'
+# relayer
+# custom_port_prefix: 111
+# validator
 custom_port_prefix: 121
 minimum_gas_price: '0factory/neutron1ug740qrkquxzrk2hh29qrlx3sktkfml3je7juusc2te7xmvsscns0n2wry/wstETH,0ibc/2CB87BCE0937B1D1DFCEE79BE4501AAF3C265E923509AEAC410AD85D27F35130,0ibc/773B4D0A3CD667B2275D5A4A7A2F0909C0BA0F4059C0B9181E680DDF4965DCC7,0ibc/B7864B03E1B9FD4F049243E92ABD691586F682137037A9F3FCA5222815620B3C,0ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9,0ibc/F082B65C88E4B6D5EF1DB243CDA1D331D002759E938A0F5CD3FFDC5D53B3E349,0untrn'
-upgrade_folder: v5.0.0
+
+upgrade_folder: v5.1.3
