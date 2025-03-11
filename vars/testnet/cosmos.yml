@@ -1,15 +1,16 @@
 chain: cosmos-test
-folder: '.gaia-test' # change back after relayer test
+folder: ".gaia-test" # change back after relayer test
 daemon: gaiad-test
 chain_id: provider
-node_version: 'v23.0.0-rc3'
-repo: https://github.com/cosmos/gaia
-genesis: 'https://snapshots.kjnodes.com/cosmoshub-testnet/genesis.json'
-addrbook_file: 'https://snapshots.kjnodes.com/cosmoshub-testnet/addrbook.json'
-seeds: '3f472746f46493309650e5a033076689996c8881@cosmoshub-testnet.rpc.kjnodes.com:13459'
-snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/cosmos/cosmos_10873443.tar.lz4'
+node_version: "v23.0.0-rc3"
+binary: https://github.com/cosmos/gaia/releases/download/v23.0.0-rc3/gaiad-v23.0.0-rc3-linux-amd64
+binary_processing: default
+genesis: "https://snapshots.kjnodes.com/cosmoshub-testnet/genesis.json"
+addrbook_file: "https://snapshots.kjnodes.com/cosmoshub-testnet/addrbook.json"
+seeds: "3f472746f46493309650e5a033076689996c8881@cosmoshub-testnet.rpc.kjnodes.com:13459"
+snapshot_url: "https://snapshots.polkachu.com/testnet-snapshots/cosmos/cosmos_10873443.tar.lz4"
 custom_port_prefix: 133 # was 122 before in testnet
-minimum_gas_price: '0.005uatom'
+minimum_gas_price: "0.005uatom"
 
 upgrade_folder: 23.0.0-rc3
 
