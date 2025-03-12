@@ -8,7 +8,7 @@ binary_processing: default
 genesis: "https://snapshots.kjnodes.com/cosmoshub-testnet/genesis.json"
 addrbook_file: "https://snapshots.kjnodes.com/cosmoshub-testnet/addrbook.json"
 seeds: "3f472746f46493309650e5a033076689996c8881@cosmoshub-testnet.rpc.kjnodes.com:13459"
-snapshot_url: "https://snapshots.polkachu.com/testnet-snapshots/cosmos/cosmos_10873443.tar.lz4"
+snapshot_url: "https://services.huginn.tech/network/cosmos-hub-testnet"
 custom_port_prefix: 133 # was 122 before in testnet
 minimum_gas_price: "0.005uatom"
 

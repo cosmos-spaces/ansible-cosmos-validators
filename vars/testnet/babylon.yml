@@ -25,3 +25,7 @@ app_parameters:
     line: "iavl-disable-fastnode = true"
   - regexp: "^pruning ="
     line: 'pruning = "nothing"'
+
+upgrade_folder: v1rc5
+
+# on chain init, it prompts for bls key input
