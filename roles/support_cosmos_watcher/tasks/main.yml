@@ -15,7 +15,7 @@
           --http-addr :{{ watcher_port }}{{ custom_port_prefix }}
           --node {{ rpc_1 }}
           --node {{ rpc_2 }}
-          --validator {{ validator_ hex }}:"cs-{{ chain }}"
+          --validator {{ validator_hex }}:"cs-{{ chain }}"
         ports:
           - "{{ watcher_port }}{{ custom_port_prefix }}:{{ watcher_port }}{{ custom_port_prefix }}"
 
