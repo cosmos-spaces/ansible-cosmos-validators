@@ -1,0 +1,104 @@
+groups:
+  - name: Cosmos Watcher
+    rules:
+      - alert: InstanceDown
+        expr: up{job="cosmos"} == 0
+        for: 5m
+        labels:
+          severity: 'critical'
+          service: cosmos
+        annotations:
+          title: 'Instance {{ $labels.instance }} down'
+          description: '{{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes.'
+      - alert: DegradedSyncing
+        expr: increase(cosmos_validator_watcher_block_height[5m]) < 10
+        for: 5m
+        labels:
+          severity: warning
+          service: cosmos
+        annotations:
+          title: Degraded syncing
+          description: 'Network: {{ $labels.network }} - Unable to connect to RPCs for monitoring on {{ $labels.instance }}.'
+      - alert: MissedBlocks
+        expr: cosmos_validator_watcher_consecutive_missed_blocks > 20 and cosmos_validator_watcher_is_bonded == 1
+        for: 3m
+        labels:
+          severity: warning
+          service: cosmos
+        annotations:
+          title: Validator Missed Blocks
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed {{ $value }} blocks on {{ $labels.chain_id }}.'
+      - alert: MissedBlockWindow15
+        expr: cosmos_validator_watcher_missed_blocks_window > on(chain_id,network) ((1 - cosmos_validator_watcher_min_signed_blocks_per_window) * cosmos_validator_watcher_signed_blocks_window) * 0.15
+        for: 0m
+        labels:
+          severity: warning
+          service: cosmos
+        annotations:
+          title: Validator Missed 15% of Current Block Window
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed 15% of blocks in the current window on {{ $labels.chain_id }}. Missed blocks: {{ $value }}'
+      - alert: MissedBlockWindow50
+        expr: cosmos_validator_watcher_missed_blocks_window > on(chain_id,network) ((1 - cosmos_validator_watcher_min_signed_blocks_per_window) * cosmos_validator_watcher_signed_blocks_window) * 0.50
+        for: 0m
+        labels:
+          severity: critical
+          service: cosmos
+        annotations:
+          title: Validator Missed 50% of Current Block Window
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed 50% of blocks in the current window on {{ $labels.chain_id }}. Missed blocks: {{ $value }}'
+      - alert: NotBonded
+        expr: cosmos_validator_watcher_is_bonded == 0
+        for: 0m
+        labels:
+          severity: info
+          service: cosmos
+        annotations:
+          title: Validator not Bonded
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} is no longer bonded for {{ $labels.chain_id }}.'
+      - alert: Jailed
+        expr: cosmos_validator_watcher_is_jailed == 1
+        for: 0m
+        labels:
+          severity: critical
+          service: cosmos
+        annotations:
+          title: Validator Jailed
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} is jailed on {{ $labels.chain_id }}.'
+      - alert: Vote
+        expr: cosmos_validator_watcher_vote == 0
+        for: 0m
+        labels:
+          severity: info
+          service: cosmos
+          category: voting
+        annotations:
+          title: Governance Proposal
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} has not voted on proposal {{ $labels.proposal_id }} for {{ $labels.chain_id }}.'
+      - alert: Upgrade
+        expr: cosmos_validator_watcher_upgrade_plan > 0
+        for: 0m
+        labels:
+          severity: info
+          service: cosmos
+          category: upgrades
+        annotations:
+          title: Upcoming Chain Upgrade
+          description: 'Network: {{ $labels.network }} - {{ $labels.chain_id }} must be upgraded to {{ $labels.version }} by block {{ $labels.block }}.'
+      - alert: BabylonMissedCheckpointVote
+        expr: babylon_consecutive_missed_checkpoint_vote > 3
+        for: 0m
+        labels:
+          severity: critical
+          service: cosmos
+        annotations:
+          title: Babylon Missed Checkpoint Votes
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed {{ $value }} checkpoint votes on {{ $labels.chain_id }}.'
+      - alert: BabylonMissedFinalityProviderVote
+        expr: babylon_consecutive_missed_finality_votes > 20
+        for: 3m
+        labels:
+          severity: critical
+          service: cosmos
+        annotations:
+          title: Babylon Missed Finality Provider Votes
+          description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed {{ $value }} finality provider votes on {{ $labels.chain_id }}.'
