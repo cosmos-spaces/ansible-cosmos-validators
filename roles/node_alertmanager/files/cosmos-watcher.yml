@@ -9,7 +9,7 @@ groups:
           service: cosmos
         annotations:
           title: 'Instance {{ $labels.instance }} down'
-          description: '{{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes.'
+          description: '{{ $labels.job }} on {{ $labels.instance }} for {{ $labels.chain }} has been down for more than 5 minutes.'
       - alert: DegradedSyncing
         expr: increase(cosmos_validator_watcher_block_height[5m]) < 10
         for: 5m
@@ -18,7 +18,7 @@ groups:
           service: cosmos
         annotations:
           title: Degraded syncing
-          description: 'Network: {{ $labels.network }} - Unable to connect to RPCs for monitoring on {{ $labels.instance }}.'
+          description: 'Network: {{ $labels.network }} - Unable to connect to RPCs for monitoring on {{ $labels.instance }} for {{ $labels.chain }}.'
       - alert: MissedBlocks
         expr: cosmos_validator_watcher_consecutive_missed_blocks > 20 and cosmos_validator_watcher_is_bonded == 1
         for: 3m

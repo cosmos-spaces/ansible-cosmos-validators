@@ -1,0 +1,4 @@
+watcher_prom_file: "prom-watcher"
+watcher_mainnet_port: 37
+watcher_testnet_port: 38
+image: ghcr.io/kilnfi/cosmos-validator-watcher:latest
