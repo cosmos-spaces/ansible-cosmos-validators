@@ -4,7 +4,7 @@
 
 - name: Write new entry to docker-compose.yml
   blockinfile:
-    path: "/home/{{ ansible_user }}/cosmos-watcher/docker-compose-test.yml"
+    path: "/home/{{ ansible_user }}/cosmos-watcher-test/docker-compose.yml"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
     backup: true
     block: |
