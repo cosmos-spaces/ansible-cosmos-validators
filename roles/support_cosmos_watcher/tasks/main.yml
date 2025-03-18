@@ -3,7 +3,6 @@
     path: "/home/{{ ansible_user }}/cosmos-watcher-test/docker-compose.yml"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
     backup: true
-    insertafter: 'services:'
     block: |2
       # {{ chain | upper }}
         {{ chain }}-{{ network }}:
