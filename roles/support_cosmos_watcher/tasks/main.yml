@@ -4,18 +4,18 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
     backup: true
     insertafter: 'services:'
-    block: |4
-        # {{ chain | upper }}
-        {{ chain }}-{{ network }}:
-          image: {{ image }}
-          restart: on-failure:5 # Restarts up to 5 times on failure
-          command: >
-            --http-addr :{{ watcher_port }}{{ custom_port_prefix }}
-            --node {{ rpc_1 }}
-            --node {{ rpc_2 }}
-            --validator {{ validator_hex }}:"cs-{{ chain }}"
-          ports:
-            - "{{ watcher_port }}{{ custom_port_prefix }}:{{ watcher_port }}{{ custom_port_prefix }}"
+    block: |6
+          # {{ chain | upper }}
+          {{ chain }}-{{ network }}:
+            image: {{ image }}
+            restart: on-failure:5 # Restarts up to 5 times on failure
+            command: >
+              --http-addr :{{ watcher_port }}{{ custom_port_prefix }}
+              --node {{ rpc_1 }}
+              --node {{ rpc_2 }}
+              --validator {{ validator_hex }}:"cs-{{ chain }}"
+            ports:
+              - "{{ watcher_port }}{{ custom_port_prefix }}:{{ watcher_port }}{{ custom_port_prefix }}"
 
 - name: Update docker services
   shell:
