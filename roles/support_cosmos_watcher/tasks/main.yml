@@ -24,7 +24,7 @@
 - name: Write new entry to prom-watcher.yml
   blockinfile:
     #path: "/etc/prometheus/{{ watcher_prom_file }}-test.yml"
-    path: /home/{{ ansible_user }}/cosmos-watcher-test/{{ watcher_prom_file }}-test.yml"
+    path: "/home/{{ ansible_user }}/cosmos-watcher-test/{{ watcher_prom_file }}-test.yml"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
     backup: true
     block: |
