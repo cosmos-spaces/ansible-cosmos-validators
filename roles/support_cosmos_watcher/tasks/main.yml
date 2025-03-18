@@ -34,5 +34,3 @@
           chain: {{ chain }}
           chain_id: {{ chain_id }}
           network: {{ network }}
-  loop: "{{ groups[target] }}"
-  when: groups[target] is defined
