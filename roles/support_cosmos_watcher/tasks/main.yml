@@ -5,6 +5,7 @@
     backup: true
     insertafter: 'services:'
     block: |4
+        # {{ chain | upper }}
         {{ chain }}-{{ network }}:
           image: {{ image }}
           restart: on-failure:5 # Restarts up to 5 times on failure
