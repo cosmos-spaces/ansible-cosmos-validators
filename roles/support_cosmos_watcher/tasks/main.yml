@@ -29,7 +29,7 @@
     backup: true
     block: |
       # {{ chain | upper }}
-      - targets: ['{{ localhost }}:{{ watcher_port }}{{ custom_port_prefix }}']
+      - targets: ['localhost:{{ watcher_port }}{{ custom_port_prefix }}']
         labels:
           chain: {{ chain }}
           chain_id: {{ chain_id }}
