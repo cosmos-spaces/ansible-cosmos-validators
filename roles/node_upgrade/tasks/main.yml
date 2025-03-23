@@ -60,6 +60,12 @@
 
 - name: validate version
   command: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version'
+  register: daemon_version
+  when: upgrade_folder is defined
+
+- name: print version
+  debug:
+    msg: "Desired version: {{ node_version }}; Installed version: {{ daemon_version }}"
   when: upgrade_folder is defined
 
 - name: copy binary file to cosmovisor genesis folder
