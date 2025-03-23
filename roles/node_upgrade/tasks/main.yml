@@ -59,7 +59,8 @@
   when: upgrade_folder is defined
 
 - name: validate version
-  command: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version'
+  shell: |
+    '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version'
   register: daemon_version
   when: upgrade_folder is defined
 
