@@ -58,6 +58,10 @@
     mode: '0755'
   when: upgrade_folder is defined
 
+- name: validate version
+  command: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version'
+  when: upgrade_folder is defined
+
 - name: copy binary file to cosmovisor genesis folder
   copy:
     src: '{{ user_dir }}/go/bin/{{ daemon }}'
