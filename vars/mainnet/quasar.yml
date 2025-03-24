@@ -2,7 +2,7 @@ chain: quasar
 folder: '.quasar'
 daemon: quasarnoded
 chain_id: quasar-1
-node_version: 'v1.0.1'
+node_version: 'v3.0.2'
 repo: https://github.com/quasar-finance/quasar.git
 genesis: 'https://snapshots.kjnodes.com/quasar/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/quasar/addrbook.json'

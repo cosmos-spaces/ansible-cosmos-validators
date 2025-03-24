@@ -10,4 +10,5 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:16956'
 snapshot_url: 'https://dl-eu2.ccvalidators.com/SNAPSHOTS/omniflixhub/omniflixhub-1_13386940.tar.lz4'
 custom_port_prefix: 112
 minimum_gas_price: '0.001uflix'
+
 upgrade_folder: v5.2.0

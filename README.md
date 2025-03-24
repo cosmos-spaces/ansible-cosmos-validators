@@ -178,7 +178,7 @@ This playbook will configure a new Tenderduty chain with info from the chain.yml
 
 ### Run install/configure playbook
 ```bash
-# Configure Prometheus for Chain
+# Configure Tenderduty for Chain
 ansible-playbook support_tenderduty.yml -e "target=<mainnet|testnet>" -e "chain=<chain>"
 ```
 
