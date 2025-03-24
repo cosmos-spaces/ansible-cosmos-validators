@@ -21,6 +21,7 @@
     - fio
     - screen
     - net-tools
+    - aria2
 
 - name: Change hostname
   hostname:

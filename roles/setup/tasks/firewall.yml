@@ -83,11 +83,10 @@
     rule: allow
     port: 9100
     proto: tcp
-    src: '{{ hostvars[item].ansible_host }}'
+    src: '{{ telemetry_server }}'
     comment: 'Prometheus node-exporter port'
-  loop: '{{ groups["telemetry"] }}'
   when:
-    - groups["telemetry"] is defined
+    - telemetry_server is defined
     - node_exporter|bool == true
   tags:
     - firewall
