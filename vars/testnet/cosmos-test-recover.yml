@@ -1,0 +1,13 @@
+chain: cosmos-test-recover
+folder: '.gaiad-test-recover'
+daemon: gaiad-test-recover
+chain_id: test-recover-1
+node_version: 'v22.0.0'
+genesis: 'https://github.com/cosmos/testnets/raw/master/interchain-security/test-recover-1/genesis.json'
+repo: 'https://github.com/cosmos/gaia'
+binary: https://github.com/cosmos/gaia/releases/download/v22.0.0/gaiad-v22.0.0-linux-amd64
+binary_processing: default
+custom_port_prefix: 132
+minimum_gas_price: '0.005urec'
+peers: 20e42e4deab49fb11b36b270f7c31d86870f64f5@recover-sentry.ics-testnet.polypore.xyz:26656
+upgrade_folder: v22
