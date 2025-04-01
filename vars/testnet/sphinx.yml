@@ -1,0 +1,12 @@
+chain: sphinx
+folder: '.sphxd'
+daemon: sphxd
+chain_id: sphx-testnet
+binary: "https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/sphx"
+binary_processing: default
+genesis: 'https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/genesis.json'
+peers: '4000c9ae9c849ca02b2a19844265bee8ebf1e0f3@52.91.173.91:26656,9070c993919d31b1f02b872f731f59bb901f0512@54.172.101.52:26656'
+custom_port_prefix: 114
+minimum_gas_price: '0.0025uosmo'
+
+#upgrade_folder: v0.24.0
