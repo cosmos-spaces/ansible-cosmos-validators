@@ -2,7 +2,7 @@ chain: cosmos-test
 folder: ".gaia-test" # change back after relayer test
 daemon: gaiad-test
 chain_id: provider
-node_version: "v23.0.0-rc3"
+node_version: "v23.0.1"
 binary: https://github.com/cosmos/gaia/releases/download/v23.0.0-rc3/gaiad-v23.0.0-rc3-linux-amd64
 binary_processing: default
 genesis: "https://snapshots.kjnodes.com/cosmoshub-testnet/genesis.json"
@@ -12,7 +12,7 @@ snapshot_url: "https://services.huginn.tech/network/cosmos-hub-testnet"
 custom_port_prefix: 133 # was 122 before in testnet
 minimum_gas_price: "0.005uatom"
 
-upgrade_folder: 23.0.0-rc3
+upgrade_folder: v23.0.1
 
 enablegrpc: true
 network: testnet
