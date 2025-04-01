@@ -1,5 +1,5 @@
 chain: sphinx
-folder: '.sphxd'
+folder: '.sphx'
 daemon: sphxd
 chain_id: sphx-testnet
 binary: "https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/sphx"
