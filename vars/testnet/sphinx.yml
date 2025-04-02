@@ -1,0 +1,34 @@
+chain: sphinx
+folder: '.sphx'
+daemon: sphxd
+chain_id: sphx-testnet
+binary: "https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/sphx"
+binary_processing: default
+genesis: 'https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/genesis.json'
+peers: '266604a25789c36006e8b8a72cdc25e0abe14355@3.252.201.64:30125,1551c89b99f6023b801aabf76b68c11a77db608d@3.226.251.47:26656,a1abbc6357926403387a02dcde8e4e2f0641696d@3.227.234.108:26656,65aa619247042923241d8358a1b1dc6613bc274b@44.192.26.233:26656,fdfefd6bf8f8534f01b9a1812bc572175764fa1a@3.234.212.241:26656,86549f2c4c27e77a9a50cde92d4a8adcec461bcc@54.242.15.50:26656,95047d729bce74db3a6727d733aa13cbc3be0b19@54.161.162.161:26656,bf8690f241735e862f540d27892d28dfe00a92bf@54.162.252.151:26656,0001c45294229e3f68ce59aef1a10dcc1dfd876d@3.238.51.18:26656'
+custom_port_prefix: 114
+minimum_gas_price: '0.0025uosmo'
+config_parameters:
+  - regexp: '^recheck ='
+    line: 'recheck = false'
+  - regexp: '^timeout_propose ='
+    line: 'timeout_propose = "5s"'
+  - regexp: '^timeout_propose_delta ='
+    line: 'timeout_propose_delta = "1s"'
+  - regexp: '^timeout_prevote ='
+    line: 'timeout_prevote = "2s"'
+  - regexp: '^timeout_prevote_delta ='
+    line: 'timeout_prevote_delta = "1s"'
+  - regexp: '^timeout_precommit ='
+    line: 'timeout_precommit = "2s"'
+  - regexp: '^timeout_precommit_delta ='
+    line: 'timeout_precommit_delta = "1s"'
+  - regexp: '^timeout_commit ='
+    line: 'timeout_commit = "7s"'
+  - regexp: '^create_empty_blocks_interval ='
+    line: 'create_empty_blocks_interval = "5s"'
+  - regexp: '^cache_size ='
+    line: 'cache_size = 20000'
+  - regexp: '^max_tx_bytes ='
+    line: 'max_tx_bytes = 2097152'
+#upgrade_folder: v0.24.0
