@@ -13,6 +13,8 @@ minimum_gas_price: 0.025uakt
 
 upgrade_folder: v0.38.0
 
+make_cmd: ""
+
 config_parameters:
   - regexp: "^fast_sync ="
     line: 'fast_sync = true'
