@@ -4,6 +4,8 @@ daemon: akash
 chain_id: akashnet-2
 node_version: v0.38.0
 repo: https://github.com/ovrclk/akash
+binary: https://github.com/akash-network/node/releases/download/v0.38.0/akash_0.38.0_linux_amd64.zip
+binary_processing: zip
 genesis: https://snapshots.polkachu.com/genesis/akash/genesis.json
 addrbook_file: https://snapshots.polkachu.com/addrbook/akash/addrbook.json
 seeds: ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:12856
@@ -12,8 +14,6 @@ custom_port_prefix: 135
 minimum_gas_price: 0.025uakt
 
 upgrade_folder: v0.38.0
-
-make_cmd: ""
 
 config_parameters:
   - regexp: "^fast_sync ="
