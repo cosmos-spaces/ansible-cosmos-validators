@@ -5,8 +5,30 @@ chain_id: sphx-testnet
 binary: "https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/sphx"
 binary_processing: default
 genesis: 'https://github.com/sphx-dev/infra-chain/releases/download/v0.0.9/genesis.json'
-peers: '4000c9ae9c849ca02b2a19844265bee8ebf1e0f3@52.91.173.91:26656,9070c993919d31b1f02b872f731f59bb901f0512@54.172.101.52:26656'
+peers: '266604a25789c36006e8b8a72cdc25e0abe14355@3.252.201.64:30125,077e8406bfd5a7c4e6ffa8692c60580ecdd0e93e@35.171.159.163:26657,b42a14f9f6fb66ef4ac66faab6c2b19a05f37731@84.203.116.103:26656'
 custom_port_prefix: 114
 minimum_gas_price: '0.0025uosmo'
-
+config_parameters:
+  - regexp: '^recheck ='
+    line: 'recheck = false'
+  - regexp: '^timeout_propose ='
+    line: 'timeout_propose = "5s"'
+  - regexp: '^timeout_propose_delta ='
+    line: 'timeout_propose_delta = "1s"'
+  - regexp: '^timeout_prevote ='
+    line: 'timeout_prevote = "2s"'
+  - regexp: '^timeout_prevote_delta ='
+    line: 'timeout_prevote_delta = "1s"'
+  - regexp: '^timeout_precommit ='
+    line: 'timeout_precommit = "2s"'
+  - regexp: '^timeout_precommit_delta ='
+    line: 'timeout_precommit_delta = "1s"'
+  - regexp: '^timeout_commit ='
+    line: 'timeout_commit = "7s"'
+  - regexp: '^create_empty_blocks_interval ='
+    line: 'create_empty_blocks_interval = "5s"'
+  - regexp: '^cache_size ='
+    line: 'cache_size = 20000'
+  - regexp: '^max_tx_bytes ='
+    line: 'max_tx_bytes = 2097152'
 #upgrade_folder: v0.24.0
