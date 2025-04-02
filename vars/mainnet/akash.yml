@@ -20,3 +20,5 @@ config_parameters:
     line: 'fast_sync = true'
   - regexp: "^version ="
     line: 'version = 0'
+
+# TASK [node_configure : Update node port on client.toml] ignore_errors: true
