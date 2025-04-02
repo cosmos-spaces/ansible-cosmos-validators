@@ -1,6 +1,6 @@
 - name: Write new entry to docker-compose.yml
   blockinfile:
-    path: "/home/{{ ansible_user }}/cosmos-watcher-test/docker-compose.yml"
+    path: "/home/{{ ansible_user }}/cosmos-watcher/docker-compose.yml"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
     backup: true
     block: |2
@@ -19,12 +19,11 @@
 - name: Update docker services
   shell:
     cmd: docker compose up -d
-    chdir: /home/{{ ansible_user }}/cosmos-watcher-test
+    chdir: /home/{{ ansible_user }}/cosmos-watcher
 
 - name: Write new entry to prom-watcher.yml
   blockinfile:
-    #path: "/etc/prometheus/{{ watcher_prom_file }}-test.yml"
-    path: "/home/{{ ansible_user }}/cosmos-watcher-test/{{ watcher_prom_file }}-test.yml"
+    path: "/etc/prometheus/{{ watcher_prom_file }}.yml"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
     backup: true
     block: |
