@@ -133,6 +133,7 @@
     regexp: '^node ='
     line: 'node = "tcp://localhost:{{ custom_port_prefix }}57"'
     state: present
+  ignore_errors: true
 
 - name: Update custom config parameters
   lineinfile:
