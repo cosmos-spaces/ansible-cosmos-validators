@@ -23,5 +23,5 @@ app_parameters:
 config_parameters:
   - regexp: "^timeout_commit ="
     line: 'timeout_commit = "9200ms"'
-# on chain init, it prompts for bls key input
 
+# on chain init, it prompts for bls key input
