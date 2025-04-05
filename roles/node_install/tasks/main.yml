@@ -25,7 +25,18 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
-  when: binary is undefined
+      when: make_overwrite is undefined
+
+    - name: Install node with make overwrite
+      command: '{{ item }}'
+      args:
+        chdir: '{{ user_dir }}/{{ folder }}'
+      with_items:
+        - "{{ make_overwrite }}"
+      environment:
+        PATH: '{{ path }}'
+        GOPATH: '{{ user_dir }}/go'   
+      when: binary is defined
 
 - name: set binary install exit condition
   set_fact:
