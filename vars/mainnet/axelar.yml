@@ -13,6 +13,6 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/axelar/axelar_17071113.t
 custom_port_prefix: 124
 minimum_gas_price: '0.007uaxl'
 
-make_cmd: build
+make_overwrite: 'make build'
 
 upgrade_folder: v1.2

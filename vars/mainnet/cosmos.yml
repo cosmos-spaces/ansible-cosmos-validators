@@ -8,9 +8,6 @@ genesis: 'https://snapshots.polkachu.com/genesis/cosmos/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/cosmos/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:14956'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/cosmos/cosmos_21657014.tar.lz4'
-# relayer
-# custom_port_prefix: 110
-# sentry
 custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
 

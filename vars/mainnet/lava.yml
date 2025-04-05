@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.kjnodes.com/lava/snapshot_latest.tar.lz4'
 custom_port_prefix: 117
 upgrade_folder: v5.2.0
 minimum_gas_price: '0.000000001ulava'
-make_install_params: 'LAVA_BINARY=lavad'
+make_overwrite: 'make install LAVA_BINARY=lavad'
