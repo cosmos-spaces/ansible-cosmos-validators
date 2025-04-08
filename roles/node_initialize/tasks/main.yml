@@ -3,10 +3,11 @@
     path: '{{ user_dir }}/{{ folder }}'
     state: absent
 
-- name: Initialize Node
-  command: '{{ daemon }} init {{ node_name }} --chain-id {{ chain_id }} --home {{ user_dir }}/{{ folder }}'
-  environment:
-    PATH: '{{ path }}'
+# - name: Initialize Node
+#   command: '{{ daemon }} init {{ node_name }} --chain-id {{ chain_id }} --home {{ user_dir }}/{{ folder }}'
+#   environment:
+#     PATH: '{{ path }}'
+
 
 - name: Download config file
   get_url:
