@@ -1,0 +1,12 @@
+groups:
+  - name: RPC
+    rules:
+      - alert: InstanceDown
+        expr: up{job="rpc"} == 0
+        for: 5m
+        labels:
+          severity: 'critical'
+          service: rpc
+        annotations:
+          title: 'Instance {{ $labels.instance }} down'
+          description: '{{ $labels.job }} on {{ $labels.instance }} for {{ $labels.app }} has been down for more than 5 minutes.'
