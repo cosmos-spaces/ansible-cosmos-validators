@@ -36,7 +36,7 @@
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'   
-      when: binary is defined
+      when: make_overwrite is defined
 
 - name: set binary install exit condition
   set_fact:
