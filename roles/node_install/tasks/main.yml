@@ -32,7 +32,7 @@
       args:
         chdir: '{{ user_dir }}/{{ folder }}'
       with_items:
-        - "{{ make_overwrite }}"
+        - '{{ make_overwrite }}'
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'   
