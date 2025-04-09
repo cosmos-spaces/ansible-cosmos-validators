@@ -6,7 +6,68 @@ groups:
         for: 5m
         labels:
           severity: 'critical'
-          service: rpc
         annotations:
           title: 'Instance {{ $labels.instance }} down'
           description: '{{ $labels.job }} on {{ $labels.instance }} for {{ $labels.app }} has been down for more than 5 minutes.'
+
+      - alert: JsonRpcDshackleErrorRateIsHigh
+        expr: rate(dshackle_request_jsonrpc_err_total[1m]) > 0.1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          title: JSON RPC Error Rate
+          description: "Json RPC error rate is high for (instance {{ $labels.instance }})"
+
+      - alert: JsonRpcDshackleFailRateIsHigh
+        expr: rate(dshackle_request_jsonrpc_fail_total[1m]) > 0.1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          title: JSON RPC Fail Rate
+          description: "Json RPC fail rate is high for (instance {{ $labels.instance }})"
+
+      - alert: JsonRpcDshackleRateToHigh
+        expr: rate(dshackle_request_jsonrpc_request_total[1m]) > 1000
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          title: JSON RPC High Rate
+          description: "Json RPC rate is high for (instance {{ $labels.instance }})"
+
+      - alert: WsRpcDshackleErrorRateIsHigh
+        expr: rate(dshackle_upstream_ws_err_total[1m]) > 0.1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          title: WS RPC Error Rate
+          description: "WS RPC error rate is high for (instance {{ $labels.instance }})"
+
+      - alert: UpstreamUnavailable
+        expr: dshackle_upstreams_availability{status!~"(ok|lagging)"} > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          title: Upstream Unavailable
+          description: "One of the upstream nodes is broken (instance {{ $labels.instance }})"
+
+      # - alert: NoEthNodesForNetwork
+      #   expr: dshackle_upstreams_connected < 1
+      #   for: 1m
+      #   labels:
+      #     severity: critical
+      #   annotations:
+      #     description: "No nodes for chain {{ $labels.chain }} on (instance {{ $labels.instance }})"
+
+      - alert: UpstreamIsNotSyncing
+        expr: rate(dshackle_upstreams_lag[5m]) < 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          title: Upstream Not Syncing
+          description: "Upstream Node for chain {{ $labels.chain }} is not syncing on host (instance {{ $labels.instance }})"
