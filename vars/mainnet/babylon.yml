@@ -1,0 +1,29 @@
+chain: babylon
+folder: ".babylond"
+daemon: babylond
+chain_id: bbn-1
+node_version: "v1.0.1"
+repo: "https://github.com/babylonlabs-io/babylon.git"
+genesis: "https://raw.githubusercontent.com/babylonlabs-io/networks/refs/heads/main/bbn-1/network-artifacts/genesis.json"
+seeds: "42fad8afbf7dfca51020c3c6e1a487ce17c4c218@babylon-seed-1.nodes.guru:55706"
+peers: "f0d280c08608400cac0ccc3d64d67c63fabc8bcc@91.134.70.52:55706"
+snapshot_url: "https://github.com/babylonlabs-io/networks/raw/refs/heads/main/bbn-1/network-artifacts/bbn-1.tar.gz"
+
+minimum_gas_price: "0.002ubbn"
+custom_port_prefix: 136
+indexer: "kv"
+enablegrpc: true
+
+make_overwrite: 'BABYLON_BUILD_OPTIONS="mainnet" make install'
+
+app_parameters:
+  - regexp: "^max-txs ="
+    line: 'max-txs = "0"'
+  - regexp: "^network ="
+    line: 'network = "mainnet"'
+
+config_parameters:
+  - regexp: "^timeout_commit ="
+    line: 'timeout_commit = "9200ms"'
+
+# on chain init, it prompts for bls key input

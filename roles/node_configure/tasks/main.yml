@@ -142,6 +142,7 @@
     backrefs: true
   with_items: '{{ config_parameters }}'
   when: config_parameters is defined and config_parameters != None
+  tags: config_parameters
 
 - name: Update custom app parameters
   lineinfile:
@@ -151,6 +152,7 @@
     backrefs: true
   with_items: '{{ app_parameters }}'
   when: app_parameters is defined and app_parameters != None
+  tags: app_parameters
 
 - name: Create cosmovisor directories
   file:

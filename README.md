@@ -223,6 +223,7 @@ For more information, refer to the [documentation](https://github.com/strangelov
 | `support_bastion_firewall` | Allow additional IPs to connect to bastion |
 | `support_prometheus` | Configure Prometheus with a given chain |
 | `support_tenderduty` | Configure Tenderduty with a given chain |
+| `support_cosmos_watcher` | Adds given chain to cosmos_watcher monitoring and integrates with prometheus |
 
 
 ### Selected playbook Usage Example

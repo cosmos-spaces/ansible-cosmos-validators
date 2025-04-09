@@ -43,11 +43,11 @@ groups:
     - alert: NodeDiskSpace10%Free
       expr: 100 - (100 * node_filesystem_avail_bytes / node_filesystem_size_bytes) > 90
       labels:
-        severity: moderate
+        severity: critical
         service: node_exporter
       annotations:
         summary: "Instance {{ $labels.instance }} is low on disk space"
-        description: "Diskspace on {{ $labels.instance }} is used over {{ $value | printf '%.2f' }}%."
+        description: "Diskspace on {{ $labels.instance }} is used over {{ $value }}%."
        
     - alert: NodeDiskFull
       expr: node_filesystem_avail_bytes/node_filesystem_size_bytes < 0.01
@@ -89,7 +89,7 @@ groups:
       expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
       for: 2m
       labels:
-        severity: warning
+        severity: critical
         service: node_exporter
       annotations:
         description: 'Node memory is filling up < 10% left\n  VALUE = {{ $value }}\n LABELS: {{ $labels.instance }}'
