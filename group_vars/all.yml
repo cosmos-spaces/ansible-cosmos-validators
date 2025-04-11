@@ -21,6 +21,7 @@ publicrpc: false
 indexer: "null"
 app_parameters: null
 config_parameters: null
+custom_init_params: ""
 
 # horcrux
 horcrux_repo: 'https://github.com/strangelove-ventures/horcrux.git'
