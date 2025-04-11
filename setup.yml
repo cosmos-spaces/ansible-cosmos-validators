@@ -20,4 +20,4 @@
           - targets: ['{{ hostvars[item].ansible_host }}:9100']
             labels:
               instance: {{ hostvars[item].server_hostname }}
-      loop: "{{ target }}"
+      loop: "{{ lookup('inventory_hostnames', target, wantlist=True) }}"
