@@ -27,7 +27,7 @@
 
     - name: Install node make_overwrite
       shell:
-        cmd: eval {{ make_overwrite }}
+        cmd: '{{ make_overwrite }}'
         chdir: '{{ user_dir }}/{{ folder }}'
       environment:
         PATH: '{{ path }}'
