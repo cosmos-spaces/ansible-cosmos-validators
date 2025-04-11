@@ -26,7 +26,7 @@
       when: make_overwrite is undefined
 
     - name: Install node make_overwrite
-      command: '{{ make_overwrite }}'
+      command: 'eval {{ make_overwrite }}'
       args:
         chdir: '{{ user_dir }}/{{ folder }}'
       environment:
