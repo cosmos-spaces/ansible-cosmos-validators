@@ -85,7 +85,7 @@ groups:
           title: Upcoming Chain Upgrade
           description: 'Network: {{ $labels.network }} - {{ $labels.chain_id }} must be upgraded to {{ $labels.version }} by block {{ $labels.block }}.'
       - alert: BabylonMissedCheckpointVote
-        expr: babylon_consecutive_missed_checkpoint_vote > 3
+        expr: cosmos_validator_watcher_babylon_consecutive_missed_checkpoint_vote > 3
         for: 0m
         labels:
           severity: critical
@@ -94,7 +94,7 @@ groups:
           title: Babylon Missed Checkpoint Votes
           description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed {{ $value }} checkpoint votes on {{ $labels.chain_id }}.'
       - alert: BabylonMissedFinalityProviderVote
-        expr: babylon_consecutive_missed_finality_votes > 20
+        expr: cosmos_validator_watcher_babylon_consecutive_missed_finality_votes > 20
         for: 3m
         labels:
           severity: critical

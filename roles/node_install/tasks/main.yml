@@ -17,14 +17,22 @@
         recursive: no
 
     - name: Install node
-      command: '{{ item }}'
+      command: '{{ make_cmd }}'
       args:
         chdir: '{{ user_dir }}/{{ folder }}'
-      with_items:
-        - 'make {{ make_cmd }} {{ make_install_params }}'
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
+      when: make_overwrite is undefined
+
+    - name: Install node make_overwrite
+      command: '{{ make_overwrite }}'
+      args:
+        chdir: '{{ user_dir }}/{{ folder }}'
+      environment:
+        PATH: '{{ path }}'
+        GOPATH: '{{ user_dir }}/go'
+      when: make_overwrite is defined
   when: binary is undefined
 
 - name: set binary install exit condition

@@ -12,7 +12,7 @@
             --http-addr :{{ watcher_port }}{{ custom_port_prefix }}
             --node {{ rpc_1 }}
             --node {{ rpc_2 }}
-            --validator {{ validator_hex }}:"cs-{{ chain }}"
+            --validator {{ validator_hex }}:"cs-{{ chain }}-{{ network }}"
           ports:
             - "{{ watcher_port }}{{ custom_port_prefix }}:{{ watcher_port }}{{ custom_port_prefix }}"
 
