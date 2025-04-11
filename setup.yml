@@ -14,9 +14,10 @@
     - name: Write new entry to prom-node.yml
       blockinfile:
         path: "/etc/prometheus/prom-node.yml"
-        marker: "# {mark} ANSIBLE MANAGED BLOCK {{ server_hostname }}"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}"
         backup: true
         block: |
-          - targets: ['{{ ansible_host }}:9100']
+          - targets: ['{{ hostvars[item].ansible_host }}:9100']
             labels:
-              instance: {{ server_hostname }}
+              instance: {{ hostvars[item].server_hostname }}
+      loop: "{{ target }}"
