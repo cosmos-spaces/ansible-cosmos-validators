@@ -5,3 +5,18 @@
   gather_facts: true
   roles:
     - setup
+
+- name: Setup Prometheus Node Monitoring
+  hosts: telemetry
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Write new entry to prom-node.yml
+      blockinfile:
+        path: "/etc/prometheus/prom-node.yml"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK {{ server_hostname }}"
+        backup: true
+        block: |
+          - targets: ['{{ ansible_host }}:9100']
+            labels:
+              instance: {{ server_hostname }}
