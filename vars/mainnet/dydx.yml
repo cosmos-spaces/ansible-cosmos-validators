@@ -4,7 +4,6 @@ daemon: dydxprotocold
 chain_id: dydx-mainnet-1
 node_version: 'protocol/v8.0.7'
 binary: https://github.com/dydxprotocol/v4-chain/releases/download/protocol%2Fv8.0.7/dydxprotocold-v8.0.7-linux-amd64.tar.gz
-binary_processing: default
 genesis: 'https://snapshots.polkachu.com/genesis/dydx/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/dydx/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856'
