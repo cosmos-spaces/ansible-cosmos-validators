@@ -35,12 +35,15 @@
       when: make_overwrite is defined
   when: binary is undefined
 
-- name: set binary install exit condition
-  set_fact:
-    binary_installed: false
+- name: Check if binary is installed
+  command: which {{ user_dir }}/go/bin/{{ binary }}
+  changed_when: false
+  register: binary_installed
 
 - name: download pre-installed binary
-  when: binary is defined
+  when: 
+    - binary is defined
+    - binary_installed.rc not in [ 0 ]
   block:
     - name: Install from binary zipped
       include_tasks: binary_zip.yml
