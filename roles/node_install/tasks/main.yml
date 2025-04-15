@@ -36,7 +36,7 @@
   when: binary is undefined
 
 - name: Check if binary is installed
-  command: which {{ user_dir }}/go/bin/{{ binary }}
+  command: which {{ user_dir }}/go/bin/{{ daemon }}
   changed_when: false
   register: binary_installed
 
