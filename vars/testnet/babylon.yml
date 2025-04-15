@@ -1,6 +1,6 @@
 chain: babylon-testnet
 folder: 'testnet/babylon'
-daemon: babylond
+daemon: babylond-testnet
 chain_id: bbn-test-5
 node_version: "v1.0.1"
 repo: "https://github.com/babylonlabs-io/babylon"
