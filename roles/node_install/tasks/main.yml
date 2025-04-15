@@ -17,7 +17,7 @@
         recursive: no
 
     - name: Install node
-      command: '{{ make_cmd }}'
+      command: make install
       args:
         chdir: '{{ user_dir }}/{{ folder }}'
       environment:
