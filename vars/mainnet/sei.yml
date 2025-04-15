@@ -10,4 +10,10 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/sei/sei_142229569.tar.lz
 custom_port_prefix: 138
 minimum_gas_price: '0.02usei'
 
+app_parameters:
+  - regexp: "^sc-enable ="
+    line: 'sc-enable = true'
+  - rregexp: "^ss-enable ="
+    line: 'ss-enable = true'
+
 #upgrade_folder: 'v2.5'
