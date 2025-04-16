@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/lava/lava_302485
 custom_port_prefix: 137
 upgrade_folder: v5.1.0
 minimum_gas_price: '0.000000001ulava'
-make_install_params: 'LAVA_BINARY=lavadtestnet'
+make_install_params: 'LAVA_BINARY=lavad'
