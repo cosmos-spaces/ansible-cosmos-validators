@@ -1,0 +1,2 @@
+enablegrpc: true
+indexer: kv
