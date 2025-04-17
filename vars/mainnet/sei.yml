@@ -1,0 +1,19 @@
+chain: sei
+folder: '.sei'
+daemon: seid
+chain_id: pacific-1
+node_version: 'v6.0.5'
+repo: 'https://github.com/sei-protocol/sei-chain'
+genesis: 'https://snapshots.polkachu.com/genesis/sei/genesis.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11956'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/sei/sei_142229569.tar.lz4'
+custom_port_prefix: 138
+minimum_gas_price: '0.02usei'
+
+app_parameters:
+  - regexp: "^sc-enable ="
+    line: 'sc-enable = true'
+  - rregexp: "^ss-enable ="
+    line: 'ss-enable = true'
+
+#upgrade_folder: 'v2.5'

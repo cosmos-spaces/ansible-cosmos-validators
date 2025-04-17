@@ -1,26 +1,23 @@
-chain: babylon
-folder: '.babylond'
-daemon: babylond
+chain: babylon-testnet
+folder: 'testnet/babylon'
+daemon: babylond-testnet
 chain_id: bbn-test-5
-node_version: "v1.0.0-rc.5"
+node_version: "v1.0.1"
 repo: "https://github.com/babylonlabs-io/babylon"
 genesis: "https://raw.githubusercontent.com/babylonlabs-io/networks/refs/heads/main/bbn-test-5/network-artifacts/genesis.json"
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656"
 addrbook_file: "https://snapshots.polkachu.com/testnet-addrbook/babylon/addrbook.json"
-snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/babylon/babylon_486220.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/babylon/babylon_752037.tar.lz4'
 minimum_gas_price: "0.002ubbn"
-custom_port_prefix: 111
+custom_port_prefix: 134
 indexer: "kv"
 enablegrpc: true
+
+make_overwrite: 'BABYLON_BUILD_OPTIONS=testnet make install'
+
 config_parameters:
   - regexp: '^timeout_commit ='
     line: 'timeout_commit = "10s"'
 app_parameters:
   - regexp: '^network ='
     line: 'network = "signet"'
-  - regexp: '^iavl-cache-size ='
-    line: 'iavl-cache-size = 0'
-  - regexp: '^iavl-disable-fastnode ='
-    line: 'iavl-disable-fastnode = true'
-  - regexp: '^pruning ='
-    line: 'pruning = "nothing"'

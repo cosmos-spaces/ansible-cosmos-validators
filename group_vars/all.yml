@@ -21,12 +21,10 @@ publicrpc: false
 indexer: "null"
 app_parameters: null
 config_parameters: null
+custom_init_params: ""
+custom_start_params: ""
 
 # horcrux
 horcrux_repo: 'https://github.com/strangelove-ventures/horcrux.git'
 horcrux_version: 'v3.3.1'
 horcrux_cosigner_port: 2222
-
-# binary build cmds
-make_cmd: install
-make_install_params: null

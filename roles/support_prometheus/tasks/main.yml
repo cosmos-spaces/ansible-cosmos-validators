@@ -1,10 +1,10 @@
-- name: Write new entry to prom-cosmos.yml
+- name: Write new entry to prom-cosmos.yml group
   blockinfile:
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ chain_id }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}-{{ chain_id }}"
     backup: true
     block: |
-      # {{ chain | upper }}
+      # {{ chain | upper }} on {{ hostvars[item].server_hostname }}
       - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
         labels:
           instance: {{ hostvars[item].server_hostname }}
@@ -13,6 +13,22 @@
           type: {{ hostvars[item].type }}
   loop: "{{ groups[target] }}"
   when: groups[target] is defined
+
+- name: Write new entry to prom-cosmos.yml single server
+  blockinfile:
+    path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}-{{ chain_id }}"
+    backup: true
+    block: |
+      # {{ chain | upper }} on {{ hostvars[item].server_hostname }}
+      - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
+        labels:
+          instance: {{ hostvars[item].server_hostname }}
+          chain_id: {{ chain_id }}
+          network: {{ network }}
+          type: {{ hostvars[item].type }}
+  loop: "{{ lookup('inventory_hostnames', target, wantlist=True) }}"
+  when: groups[target] is undefined
 
 - name: Check if Prometheus is healthy with promtool
   shell: |
