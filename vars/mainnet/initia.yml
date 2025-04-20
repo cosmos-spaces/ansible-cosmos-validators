@@ -8,6 +8,7 @@ genesis: 'https://storage.googleapis.com/init-common-genesis/interwoven-1/genesi
 snapshot_url: 'https://snapshots.nodes.guru/initia/initia_1598617.tar.lz4'
 addrbook_file: 'https://storage.googleapis.com/initia-mainnet/addrbook.json'
 peers: '80e8870743458d1a28ce9f9da939e4ddcb7cedfe@34.142.172.124:26656,c02d9c632bcbc7af974399c122eae36a8ed466bb@34.126.106.6:26656,b58e3dacc8c8009514c14e36730b564962028adc@34.124.183.130:26656'
+enablegrpc: true
 #minimum_gas_price: '0.015uinit'
 custom_port_prefix: 139
 
