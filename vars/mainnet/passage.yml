@@ -2,7 +2,7 @@ chain: passage
 folder: '.passage'
 daemon: passage
 chain_id: passage-2
-node_version: 'v2.4.0'
+node_version: 'v2.5.0'
 repo: https://github.com/envadiv/Passage3D.git
 genesis: 'https://snapshots.polkachu.com/genesis/passage/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/passage/addrbook.json'
@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/passage/passage_13266413
 custom_port_prefix: 113
 minimum_gas_price: '0upasg'
 
-upgrade_folder: v2.4.0
+upgrade_folder: v2.5.0
