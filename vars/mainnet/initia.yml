@@ -2,7 +2,7 @@ chain: initia
 folder: '.initia'
 daemon: initiad
 chain_id: interwoven-1
-node_version: v1.0.0-rc.1
+node_version: v1.0.0
 repo: 'https://github.com/initia-labs/initia'
 genesis: 'https://storage.googleapis.com/init-common-genesis/interwoven-1/genesis.json'
 snapshot_url: 'https://snapshots.nodes.guru/initia/initia_1598617.tar.lz4'
@@ -12,4 +12,4 @@ enablegrpc: true
 #minimum_gas_price: '0.015uinit'
 custom_port_prefix: 139
 
-#upgrade_folder: v1.0.0
+upgrade_folder: v1.0.0
