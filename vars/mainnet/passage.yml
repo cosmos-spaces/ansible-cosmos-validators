@@ -9,6 +9,6 @@ addrbook_file: 'https://snapshots.polkachu.com/addrbook/passage/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15656'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/passage/passage_13266413.tar.lz4'
 custom_port_prefix: 113
-minimum_gas_price: '0upasg'
+minimum_gas_price: '12.5upasg'
 
 upgrade_folder: v2.5.0
