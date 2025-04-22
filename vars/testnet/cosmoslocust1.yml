@@ -6,7 +6,6 @@ node_version: "v23.1.1"
 repo: https://github.com/cosmos/gaia
 genesis: "https://github.com/cosmos/testnets/raw/master/interchain-security/test-locust-1/genesis.json"
 peers: "5e74e7bbd62c87e5048944b0a9086a5798f9fd02@locust-sentry-1.ics-testnet.polypore.xyz:26656,c74cf5f48de0ce2bedc0aa8118849968da47f835@locust-sentry-2.ics-testnet.polypore.xyz:26656,a6ad4be73ae18f7d935f4ed21e5c64a434d0fc63@locust-sentry-3.ics-testnet.polypore.xyz:26656,ce6d1f797a85f5816d1240d443bbf34572525a49@locust-sentry-4.ics-testnet.polypore.xyz:26656"
-snapshot_url: "https://snapshots.kjnodes.com/cosmoshub-testnet/snapshot_latest.tar.lz4"
 custom_port_prefix: 139
 minimum_gas_price: "0.001ulcst"
 
