@@ -6,21 +6,29 @@
     - name: Clone node repo
       git:
         repo: '{{ repo }}'
-        dest: '{{ user_dir }}/src/{{ folder }}'
+        dest: '{{ user_dir }}/src/{{ chain }}'
         version: '{{ node_version }}'
         update: yes
         force: yes
         recursive: no
 
     - name: Install node
-      command: '{{ item }}'
+      command: make install
       args:
-        chdir: '{{ user_dir }}/src/{{ folder }}'
-      with_items:
-        - 'make {{ make_cmd }} {{ make_install_params }}'
+        chdir: '{{ user_dir }}/src/{{ chain }}'
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
+      when: make_overwrite is undefined
+
+    - name: Install node make_overwrite
+      shell:
+        cmd: '{{ make_overwrite }}'
+        chdir: '{{ user_dir }}/src/{{ chain }}'
+      environment:
+        PATH: '{{ path }}'
+        GOPATH: '{{ user_dir }}/go'
+      when: make_overwrite is defined
 
 - name: set binary install exit condition
   set_fact:
