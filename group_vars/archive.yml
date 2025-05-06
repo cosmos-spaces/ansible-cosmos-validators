@@ -1,5 +1,3 @@
 enablegrpc: true
 indexer: kv
-cosmovisor_service_name: 'cosmovisor-archive-{{ chain }}'
 user_dir: "/archive/{{ network }}"
-chain: "{{ chain }}_archive"
