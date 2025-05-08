@@ -20,5 +20,3 @@ config_parameters:
     line: 'private_peer_ids = "CosmosSpaces"'
   - regexp: '^addr_book_strict ='
     line: 'addr_book_strict = false'
-  - regexp: '^pex ='
-    line: 'pex = true'
