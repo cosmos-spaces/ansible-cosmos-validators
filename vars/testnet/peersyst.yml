@@ -1,0 +1,24 @@
+chain: peersyst
+folder: '.exrpd'
+daemon: exrpd
+chain_id: "exrp_1440002-1"
+node_version: v7.0.0
+repo: 'https://github.com/bandprotocol/chain'
+binary: "https://github.com/xrplevm/node/releases/download/v7.0.0/node_7.0.0_Linux_amd64.tar.gz"
+binary_processing: default
+genesis: https://raw.githubusercontent.com/Peersyst/xrp-evm-archive/main/poa-devnet/genesis.json
+peers: https://raw.githubusercontent.com/Peersyst/xrp-evm-archive/main/poa-devnet/peers.txt
+snapshot_url: https://evm-sidechain-snapshots-devnet.s3.amazonaws.com/exrpd.tar.lz4
+custom_port_prefix: 140
+minimum_gas_price: '0axrp'
+upgrade_folder: v7
+
+config_parameters:
+  - regexp: '^unconditional_peer_ids ='
+    line: 'unconditional_peer_ids = "CosmosSpaces"'
+  - regexp: '^private_peer_ids ='
+    line: 'private_peer_ids = "CosmosSpaces"'
+  - regexp: '^addr_book_strict ='
+    line: 'addr_book_strict = false'
+  - regexp: '^pex ='
+    line: 'pex = true'
