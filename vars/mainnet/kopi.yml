@@ -9,7 +9,7 @@ addrbook_file: "https://raw.githubusercontent.com/CoinHuntersTR/props/refs/heads
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:27656"
 snapshot_url: "https://snapshots.polkachu.com/snapshots/kopi/kopi_10877783.tar.lz4"
 custom_port_prefix: 142
-upgrade_folder: "v20.1"
+upgrade_folder: "v20"
 minimum_gas_price: "0ukopi"
 
 config_parameters:
