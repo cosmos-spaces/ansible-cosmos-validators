@@ -30,7 +30,7 @@ config_parameters:
   - regexp: "^create_empty_blocks ="
     line: "create_empty_blocks = true"
   - regexp: "^create_empty_blocks_interval ="
-    line: 'create_empty_blocks_interval = 15s"'
+    line: 'create_empty_blocks_interval = "15s"'
   - regexp: "^timeout_broadcast_tx_commit ="
     line: 'timeout_broadcast_tx_commit = "151s"'
   - regexp: "^skip_timeout_commit ="
