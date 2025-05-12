@@ -2,7 +2,7 @@ chain: babylon
 folder: ".babylond"
 daemon: babylond
 chain_id: bbn-1
-node_version: "v1.0.1"
+node_version: "v1.1.0"
 repo: "https://github.com/babylonlabs-io/babylon.git"
 genesis: "https://snapshots.polkachu.com/genesis/babylon/genesis.json"
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:20656"
@@ -15,6 +15,8 @@ indexer: "kv"
 enablegrpc: true
 
 make_overwrite: 'BABYLON_BUILD_OPTIONS=mainnet make install'
+
+upgrade_folder: v1.1
 
 app_parameters:
   - regexp: "^max-txs ="

@@ -35,3 +35,4 @@ config_parameters:
     line: 'timeout_broadcast_tx_commit = "151s"'
   - regexp: "^skip_timeout_commit ="
     line: "skip_timeout_commit = false"
+

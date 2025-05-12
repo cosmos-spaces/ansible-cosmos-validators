@@ -2,14 +2,14 @@ chain: lavatestnet
 folder: '.lavatestnet'
 daemon: lavadtestnet
 chain_id: lava-testnet-2
-node_version: 'v5.3.0'
+node_version: 'v5.4.0'
 repo: 'https://github.com/lavanet/lava'
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/lava/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/lava/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:19956'
 snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/lava/lava_3024859.tar.lz4'
 custom_port_prefix: 137
-upgrade_folder: v5.3.0
+upgrade_folder: v5.4.0
 minimum_gas_price: '0ulava'
-make_install_params: 'LAVA_BINARY=lavad'
+make_overwrite: 'LAVA_BINARY=lavad make install'
 enablegrpc: true
