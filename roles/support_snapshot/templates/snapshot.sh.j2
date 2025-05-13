@@ -45,13 +45,13 @@ echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
 sudo service {{ cosmovisor_service_name }} start
 
 # Transfer the file and then remove the file
-rclone copy {{ snapshot_dir }}/$FILENAME cf-r2:snapshots/{{ network }}/{{ chain }}/
-rclone copy {{ snapshot_dir }}/metadata.txt cf-r2:snapshots/{{ network }}/{{ chain }}/
-#rclone --exclude $FILENAME delete cf-r2:snapshots/{{ network }}/{{ chain }}/
+rclone copy {{ snapshot_dir }}/$FILENAME {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
+rclone copy {{ snapshot_dir }}/metadata.txt {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
+#rclone --exclude $FILENAME delete {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
 rm {{ snapshot_dir }}/$FILENAME
 
 {% if wasm is defined %}
-rclone copy {{ snapshot_dir }}/$WASM_FILENAME cf-r2:snapshots/{{ network }}/wasm/{{ chain }}/
-#rclone --exclude $WASM_FILENAME delete cf-r2:snapshots/{{ network }}/wasm/{{ chain }}/
+rclone copy {{ snapshot_dir }}/$WASM_FILENAME {{ snapshot_endpoint }}/{{ network }}/wasm/{{ chain }}/
+#rclone --exclude $WASM_FILENAME delete {{ snapshot_endpoint }}/{{ network }}/wasm/{{ chain }}/
 rm {{ snapshot_dir }}/$WASM_FILENAME
 {% endif %}
