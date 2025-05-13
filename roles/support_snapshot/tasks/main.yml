@@ -1,13 +1,15 @@
 - name: Create directory
   file:
-    path: '{{ user_dir }}/snapshot'
+    path: '{{ snapshot_dir }}'
     state: directory
     mode: '0755'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
 
 - name: Copy snapshot script
   template:
     src: 'snapshot.sh.j2'
-    dest: '{{ user_dir }}/snapshot/{{ chain }}.sh'
+    dest: '{{ snapshot_dir }}/{{ chain }}.sh'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0700'
@@ -18,5 +20,4 @@
     name: '{{ chain }} snapshot'
     minute: '{{ snapshot_minute }}'
     hour: '{{ snapshot_hour }}'
-    job: '/bin/bash {{ user_dir }}/snapshot/{{ chain }}.sh'
-  when: type is defined and (type == 'backup' or type == 'test')
+    job: '/bin/bash {{ snapshot_dir }}/{{ chain }}.sh'

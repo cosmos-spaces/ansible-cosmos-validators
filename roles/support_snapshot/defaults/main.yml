@@ -1,1 +1,2 @@
 snapshot_endpoint: { { snapshot_url } }
+snapshot_dir: '{{ user_dir }}/{{ folder }}/snapshot'

@@ -1,19 +1,9 @@
 #!/bin/bash
 
-{% if type == 'test' or type == 'testrelay'  %}
-{% set snapshot_folder = "testnet-snapshots" %}
-{% set wasm_folder = "testnet-wasm" %}
-{% set addrbook_folder = "testnet-addrbook" %}
-{% else %}
-{% set snapshot_folder = "snapshots" %}
-{% set wasm_folder = "wasm" %}
-{% set addrbook_folder = "addrbook" %}
-{% endif %}
-
 # prune node
 sudo service {{ cosmovisor_service_name }} stop
 sleep 5
-{{ user_dir }}/go/bin/cosmprund prune ~/{{ folder }}/data
+{{ user_dir }}/go/bin/cosmprund prune {{ user_dir }}/{{ folder }}/data
 sleep 5
 
 # Make sure the service is running
@@ -27,37 +17,41 @@ BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}57/status | jq -
 sudo service {{ cosmovisor_service_name }} stop
 
 # Compress the folder
-FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
+#FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
+FILENAME=$(echo {{ chain }}_latest.tar.lz4)
 WASM_FILENAME='{{ chain }}_wasmonly.tar.lz4'
 cd {{ user_dir }}/{{ folder }}
 
 {% if wasm is defined and wasm == "outside" %}
-tar --exclude=wasm/wasm/cache -cvf - data wasm | lz4 > "{{ user_dir }}/$FILENAME"
-tar --exclude=wasm/wasm/cache -cvf - wasm | lz4 > "{{ user_dir }}/$WASM_FILENAME"
+tar --exclude=wasm/wasm/cache -cvf - data wasm | lz4 > {{ snapshot_dir }}/$FILENAME
+tar --exclude=wasm/wasm/cache -cvf - wasm | lz4 > {{ snapshot_dir }}/$WASM_FILENAME
 
 {% elif wasm is defined and wasm == "inside" %}
-tar --exclude=data/wasm/cache -cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
+tar --exclude=data/wasm/cache -cvf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 cd {{ user_dir }}/{{ folder }}/data
-tar --exclude=wasm/cache -cvf - wasm | lz4 > "{{ user_dir }}/$WASM_FILENAME"
+tar --exclude=wasm/cache -cvf - wasm | lz4 > {{ snapshot_dir }}/$WASM_FILENAME
 
 {% else %}
-tar -cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
+tar -cvf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 {% endif %}
+
+# Create metadata file
+echo "### Snapshot Metadata for {{ chain }}" >> {{ snapshot_dir }}/metadata.txt
+echo "FILENAME: $FILENAME" >> {{ snapshot_dir }}/metadata.txt
+echo "CREATED ON: $(date -d "$(stat -c "%y" $FILENAME)" "+%Y-%m-%d %H:%M:%S")" >> {{ snapshot_dir }}/metadata.txt
+echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
 
 # Restart the service
 sudo service {{ cosmovisor_service_name }} start
 
 # Transfer the file and then remove the file
-cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://{{snapshot_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
-rm $FILENAME
+rclone copy {{ snapshot_dir }}/$FILENAME cf-r2:snapshots/{{ network }}/{{ chain }}/
+rclone copy {{ snapshot_dir }}/metadata.txt cf-r2:snapshots/{{ network }}/{{ chain }}/
+#rclone --exclude $FILENAME delete cf-r2:snapshots/{{ network }}/{{ chain }}/
+rm {{ snapshot_dir }}/$FILENAME
 
 {% if wasm is defined %}
-cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $WASM_FILENAME "s3://{{wasm_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
-rm $WASM_FILENAME
+rclone copy {{ snapshot_dir }}/$WASM_FILENAME cf-r2:snapshots/{{ network }}/wasm/{{ chain }}/
+#rclone --exclude $WASM_FILENAME delete cf-r2:snapshots/{{ network }}/wasm/{{ chain }}/
+rm {{ snapshot_dir }}/$WASM_FILENAME
 {% endif %}
-
-# Transfer the addrbook
-cd {{ user_dir }}/{{ folder }}/config
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://{{addrbook_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
