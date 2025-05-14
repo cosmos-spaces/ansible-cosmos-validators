@@ -4,7 +4,7 @@
     rule: allow
     port: '{{ custom_port_prefix }}56'
     proto: tcp
-    comment: 'P2P port for {{ chain }}'
+    comment: 'P2P port for {{ service_prefix }}'
   when: type == 'relayer' or type == 'sentry'
 
 - name: Open prometheus cosmos port
@@ -14,7 +14,7 @@
     port: '{{ custom_port_prefix }}61'
     proto: tcp
     src: '{{ telemetry_server }}'
-    comment: 'Prometheus {{ chain }} port'
+    comment: 'Prometheus {{ service_prefix }} port'
   when:
   - telemetry_server is defined
   - node_exporter|bool == true
