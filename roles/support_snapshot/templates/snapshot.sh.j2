@@ -4,17 +4,9 @@
 sudo systemctl stop {{ cosmovisor_service_name }}
 sleep 5
 {{ user_dir }}/go/bin/cosmprund prune {{ user_dir }}/{{ folder }}/data
-sleep 5
-
-# Make sure the service is running
-sudo systemctl start {{ cosmovisor_service_name }}
-sleep 10
 
 # Get block height
-BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}57/status | jq -r .result.sync_info.latest_block_height)
-
-# Stop service
-sudo systemctl stop {{ cosmovisor_service_name }}
+BLOCK_HEIGHT=$(cosmprund db-info {{ user_dir }}/{{ folder }}/data | jq -r .last_block_height)
 
 # Compress the folder
 #FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
@@ -38,7 +30,7 @@ tar -cvf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 # Create metadata file
 echo "### Snapshot Metadata for {{ chain }}" >> {{ snapshot_dir }}/metadata.txt
 echo "FILENAME: $FILENAME" >> {{ snapshot_dir }}/metadata.txt
-echo "CREATED ON: $(date -d "$(stat -c "%y" $FILENAME)" "+%Y-%m-%d %H:%M:%S")" >> {{ snapshot_dir }}/metadata.txt
+echo "CREATED ON: $(date '+%Y-%m-%d %H:%M:%S')" >> {{ snapshot_dir }}/metadata.txt
 echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
 
 # Restart the service
