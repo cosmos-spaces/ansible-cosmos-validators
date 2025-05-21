@@ -12,3 +12,9 @@ custom_port_prefix: 122
 minimum_gas_price: '0.005uatom'
 
 upgrade_folder: 'v23.3.0'
+
+
+# Snapshot
+snapshot_hour: "*/6"
+snapshot_minute: 0
+wasm: outside

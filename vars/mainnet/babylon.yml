@@ -29,3 +29,8 @@ config_parameters:
     line: 'timeout_commit = "9200ms"'
 
 # on chain init, it prompts for bls key input
+
+# Snapshot
+snapshot_hour: "*/6"
+snapshot_minute: 15
+wasm: outside
