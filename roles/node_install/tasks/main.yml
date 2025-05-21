@@ -8,6 +8,7 @@
   command: which {{ user_dir }}/go/bin/{{ daemon }}
   changed_when: false
   register: binary_installed
+  ignore_errors: true
 
 - name: Install from source
   become: false
