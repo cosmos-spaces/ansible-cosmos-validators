@@ -2,7 +2,7 @@ chain: kopi
 folder: ".kopid"
 daemon: kopid
 chain_id: luwak-1
-node_version: "v20.1"
+node_version: "v21"
 repo: "https://github.com/kopi-money/kopi.git"
 genesis: "https://snapshots.polkachu.com/genesis/kopi/genesis.json"
 addrbook_file: "https://raw.githubusercontent.com/CoinHuntersTR/props/refs/heads/main/kopi/addrbook.json"
