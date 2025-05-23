@@ -3,3 +3,4 @@ debug.yml
 inventory.yml
 .DS_Store
 local/*
+directory.*
