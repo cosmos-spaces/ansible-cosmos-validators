@@ -20,4 +20,4 @@
     name: '{{ chain }} snapshot'
     minute: '{{ snapshot_minute }}'
     hour: '{{ snapshot_hour }}'
-    job: '/bin/bash {{ snapshot_dir }}/{{ chain }}.sh'
+    job: '/bin/bash {{ snapshot_dir }}/{{ chain }}.sh >> {{ snapshot_dir }}/cron.log 2>&1'
