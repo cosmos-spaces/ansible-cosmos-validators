@@ -5,14 +5,17 @@ date=$(date '+%Y-%m-%d %H:%M:%S')
 echo "$date [INFO] Starting snapshot process"
 
 # prune node
+echo "Stopping {{ cosmovisor_service_name }} service..."
 sudo systemctl stop {{ cosmovisor_service_name }}
 sleep 5
+echo "Prunning data..."
 {{ user_dir }}/go/bin/cosmprund prune {{ user_dir }}/{{ folder }}/data
 
 # Get block height
 BLOCK_HEIGHT=$(cosmprund db-info {{ user_dir }}/{{ folder }}/data | jq -r .last_block_height)
 
 # Compress the folder
+echo "Compressing data..."
 #FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
 FILENAME={{ chain }}_latest.tar.lz4
 WASM_FILENAME={{ chain }}_wasmonly.tar.lz4
@@ -32,7 +35,7 @@ tar -cf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 {% endif %}
 
 # Create metadata file
-echo "### Snapshot Metadata for {{ chain }}" >> {{ snapshot_dir }}/metadata.txt
+echo "### Snapshot Metadata for {{ chain }}" > {{ snapshot_dir }}/metadata.txt
 echo "FILENAME: $FILENAME" >> {{ snapshot_dir }}/metadata.txt
 echo "CREATED ON: $date" >> {{ snapshot_dir }}/metadata.txt
 echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
@@ -41,10 +44,13 @@ echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
 sudo systemctl start {{ cosmovisor_service_name }}
 
 # Transfer the file and then remove the file
+echo "Uploading tar files..."
 rclone copy {{ snapshot_dir }}/$FILENAME {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
 rclone copy {{ snapshot_dir }}/metadata.txt {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
 #rclone --exclude $FILENAME delete {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
+echo "Cleaning up..."
 rm {{ snapshot_dir }}/$FILENAME
+rm {{ snapshot_dir }}/metadata.txt
 
 {% if wasm is defined %}
 rclone copy {{ snapshot_dir }}/$WASM_FILENAME {{ snapshot_endpoint }}/{{ network }}/wasm/{{ chain }}/
