@@ -2,7 +2,7 @@ chain: omniflix
 folder: '.omniflixhub'
 daemon: omniflixhubd
 chain_id: omniflixhub-1
-node_version: 'v5.2.0'
+node_version: 'v5.2.1'
 repo: https://github.com/OmniFlix/omniflixhub
 genesis: 'https://snapshots.polkachu.com/genesis/omniflix/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/omniflix/addrbook.json'

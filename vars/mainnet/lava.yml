@@ -2,7 +2,7 @@ chain: lava
 folder: '.lava'
 daemon: lavad
 chain_id: lava-mainnet-1
-node_version: 'v5.2.0'
+node_version: 'v5.3.0'
 repo: 'https://github.com/lavanet/lava'
 genesis: 'https://storage.googleapis.com/lavanet-public-asssets/tge/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/lava/addrbook.json'
