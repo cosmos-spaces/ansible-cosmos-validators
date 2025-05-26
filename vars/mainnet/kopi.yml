@@ -7,7 +7,7 @@ repo: "https://github.com/kopi-money/kopi.git"
 genesis: "https://snapshots.polkachu.com/genesis/kopi/genesis.json"
 addrbook_file: "https://raw.githubusercontent.com/CoinHuntersTR/props/refs/heads/main/kopi/addrbook.json"
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:27656"
-snapshot_url: "https://snapshots.polkachu.com/snapshots/kopi/kopi_11829858.tar.lz4"
+snapshot_url: "https://snapshots.polkachu.com/snapshots/kopi/kopi_11900290.tar.lz4"
 custom_port_prefix: 142
 upgrade_folder: "v21"
 minimum_gas_price: "0ukopi"
