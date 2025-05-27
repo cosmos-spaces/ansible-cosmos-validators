@@ -13,3 +13,7 @@ minimum_gas_price: '0.015uinit'
 custom_port_prefix: 139
 
 upgrade_folder: v1.1.1
+
+# Snapshot
+snapshot_hour: "*/6"
+snapshot_minute: 30
