@@ -39,7 +39,7 @@ tar -cf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 # Create metadata file
 echo "### Snapshot Metadata for {{ chain }}" > {{ snapshot_dir }}/metadata.txt
 echo "FILENAME: $FILENAME" >> {{ snapshot_dir }}/metadata.txt
-echo "CREATED ON: $date" >> {{ snapshot_dir }}/metadata.txt
+echo "CREATED ON: $date UTC" >> {{ snapshot_dir }}/metadata.txt
 echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
 
 # Restart the service
