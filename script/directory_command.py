@@ -36,7 +36,7 @@ try:
                 "ansible-playbook",
                 f"{playbook_input}.yml",
                 "-e", f"target={host}",
-                "-e", f"chain={chain_input}.yml",
+                "-e", f"chain={chain_input}",
                 "-e", f"network={network_input}"
                 ]
             print(cmd)
