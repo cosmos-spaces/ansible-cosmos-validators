@@ -28,6 +28,7 @@ try:
     with open("directory.yaml",'r') as file:
         # grabbing data
         directory_data = yaml.safe_load(file)
+        # TODO add more comments explaining
         data = directory_data['chains'][chain_input][network_input]
         for host in data:
             print(f"Running command against {host}")
@@ -36,6 +37,7 @@ try:
                 f"{playbook_input}.yml",
                 "-e", f"target={host} chain={chain_input}.yml"
                 ]
+            print(cmd)
             result = subprocess.run(cmd, capture_output=True, text=True)
             print("STDOUT:", result.stdout)
             print("STDERR:", result.stderr)
