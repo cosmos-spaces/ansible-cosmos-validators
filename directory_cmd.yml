@@ -1,1 +1,0 @@
-# loop through directory.yaml building the var_file and hosts then calling the role
