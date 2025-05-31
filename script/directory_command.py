@@ -35,7 +35,8 @@ try:
             cmd = [
                 "ansible-playbook",
                 f"{playbook_input}.yml",
-                "-e", f"target={host} chain={chain_input}.yml"
+                "-e", f"target={host}",
+                "-e", f"chain={chain_input}.yml"
                 ]
             print(cmd)
             result = subprocess.run(cmd, capture_output=True, text=True)
