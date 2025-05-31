@@ -36,7 +36,7 @@ try:
         data = directory_data['chains'][chain_input][network_input]
         # Check with user that the information is right against the host list
         print(f"Do you want to proceed on the following? action = {playbook_input}, chain = {chain_input}, network = {network_input}, Hosts to run against: {data}")
-        proceed = input("Please enter y/n!")
+        proceed = input("Please enter y/n! ")
         if proceed == 'y':
             # looping through hosts
             for host in data:
@@ -52,6 +52,7 @@ try:
                 print("STDOUT:", result.stdout)
                 print("STDERR:", result.stderr)
                 print("Return Code:", result.returncode)
+                print("\n\n\n")
 except Exception as e:
     print(f"Error reading YAML file: {e}")
     exit(1)
