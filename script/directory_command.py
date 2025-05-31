@@ -36,7 +36,8 @@ try:
                 "ansible-playbook",
                 f"{playbook_input}.yml",
                 "-e", f"target={host}",
-                "-e", f"chain={chain_input}.yml"
+                "-e", f"chain={chain_input}.yml",
+                "-e", f"network={network_input}"
                 ]
             print(cmd)
             result = subprocess.run(cmd, capture_output=True, text=True)
