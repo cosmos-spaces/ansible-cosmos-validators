@@ -2,8 +2,10 @@ chain: test-locust-2
 folder: '.test-locust-2'
 daemon: test-locust-2
 chain_id: test-locust-2
-repo: "https://github.com/hyphacoop/gaia/tree/main"
-node_version: 'v24.0.99-alpha0'
+# repo: "https://github.com/hyphacoop/gaia/tree/main"
+# node_version: 'v24.0.99-alpha0'
+binary: 'https://github.com/hyphacoop/gaia/releases/download/v24.0.99-alpha0/gaiad-v24.0.99-alpha0-linux-amd64'
+binary_processing: default
 genesis: 'https://github.com/cosmos/testnets/blob/master/interchain-security/test-locust-2/genesis.json'
 peers: "25960d16ce876eb6a5d7cbbc728bad58c57ec6a2@locust-sentry-1.ics-testnet.polypore.xyz:26656,5e45ae91ca5d2551aeaee41b1ed5d302c9771fe5@locust-sentry-2.ics-testnet.polypore.xyz:26656,0479695c665a55f0deac3912c2d5faafd681cf75@locust-sentry-3.ics-testnet.polypore.xyz:26656,4828cebecd894bec1124177440065e8c537bfbda@locust-sentry-4.ics-testnet.polypore.xyz:26656"
 minimum_gas_price: "0.001ulcst"
