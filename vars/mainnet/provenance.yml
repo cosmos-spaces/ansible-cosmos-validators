@@ -1,6 +1,6 @@
 chain: provenance
 folder: '.provenanced'
-daemon: passage
+daemon: provenanced
 chain_id: pio-mainnet-1
 node_version: 'v1.23.0'
 repo: https://github.com/provenance-io/provenance.git
