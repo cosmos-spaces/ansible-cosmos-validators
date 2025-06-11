@@ -4,7 +4,7 @@ daemon: uniond10
 chain_id: union-testnet-10
 # node_version: 'v1.1.0-rc1.alpha1'
 # repo: 'https://github.com/unionlabs/union'
-binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.0.0-rc3.alpha1/uniond-release-x86_64-linux"
+binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.1.1-rc1.alpha1/uniond-release-x86_64-linux"
 binary_processing: default
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/union/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/union-testnet/addrbook.json'
@@ -13,4 +13,4 @@ snapshot_url: 'https://snapshots.kjnodes.com/union-testnet/genesis.json'
 custom_port_prefix: 138
 minimum_gas_price: '0muno'
 
-upgrade_folder: v1.0.0
+upgrade_folder: v1.1.1
