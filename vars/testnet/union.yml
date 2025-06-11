@@ -13,4 +13,4 @@ snapshot_url: 'https://snapshots.kjnodes.com/union-testnet/genesis.json'
 custom_port_prefix: 138
 minimum_gas_price: '0muno'
 
-upgrade_folder: v1.1.1
+upgrade_folder: v1.1.0
