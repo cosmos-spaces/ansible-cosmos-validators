@@ -1,2 +1,2 @@
-enablegrpc: true
+enablegrpc: false
 indexer: kv
