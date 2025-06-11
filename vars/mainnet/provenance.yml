@@ -7,7 +7,7 @@ repo: https://github.com/provenance-io/provenance.git
 genesis: 'https://snapshots.polkachu.com/genesis/provenance/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/provenance/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:27056'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/provenance/provenance_24360004.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/provenance/provenance_24379721.tar.lz4'
 custom_port_prefix: 140
 minimum_gas_price: '0.025nhash'
 
