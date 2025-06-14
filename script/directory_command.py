@@ -22,9 +22,9 @@ if not os.path.exists(f"vars/{network_input}/{chain_input}.yml"):
     print(f"Error: chain '{chain_input}' not found.")
     exit(1)
 
-# TODO
-# Optional. Accepts additional arguments to be passed to the playbook. Example input would be: "test=4,temp=5"
-# extra_args_input = input("Please enter variables as a csv: ")
+# Optional. Accepts additional arguments to be passed to the playbook. Example input would be: "-e test=4 -e temp=5"
+# This is where you would put: -e var_file=vars/<network>/<chain>.yml
+extra_args_input = input("Please enter variables as a full string: ")
 
 # try and catch in case missing directory.yaml
 try:
@@ -37,7 +37,7 @@ try:
         # Check with user that the information is right against the host list
         print(f"Do you want to proceed on the following? action = {playbook_input}, chain = {chain_input}, network = {network_input}, Hosts to run against: {data}")
         proceed = input("Please enter y/n! ")
-        if proceed == 'y':
+        if proceed.lower() == 'y':
             # looping through hosts
             for host in data:
                 print(f"Running command against {host}")
@@ -46,13 +46,14 @@ try:
                     f"{playbook_input}.yml",
                     "-e", f"target={host}",
                     "-e", f"chain={chain_input}",
-                    "-e", f"network={network_input}"
+                    "-e", f"network={network_input}",
+                    *extra_args_input.split()
                     ]
                 result = subprocess.run(cmd, capture_output=True, text=True)
                 print("STDOUT:", result.stdout)
                 print("STDERR:", result.stderr)
                 print("Return Code:", result.returncode)
-                print("\n\n\n")
+                print("\n\n\n\n")
 except Exception as e:
     print(f"Error reading YAML file: {e}")
     exit(1)
