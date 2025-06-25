@@ -7,7 +7,7 @@ repo: 'https://github.com/osmosis-labs/osmosis'
 genesis: 'https://snapshots.polkachu.com/genesis/osmosis/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/osmosis/addrbook.json'
 seeds: '400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@osmosis.rpc.kjnodes.com:12959'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/osmosis/osmosis_36341476.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/osmosis/osmosis_38400011.tar.lz4'
 custom_port_prefix: 127
 minimum_gas_price: "0.0025uosmo"
 
