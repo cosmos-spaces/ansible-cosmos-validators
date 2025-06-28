@@ -2,7 +2,7 @@ chain: babylon
 folder: .babylond
 daemon: babylond
 chain_id: bbn-test-5
-node_version: v2.0.0-rc.4
+node_version: v2.2.0
 repo: "https://github.com/babylonlabs-io/babylon"
 genesis: "https://raw.githubusercontent.com/babylonlabs-io/networks/refs/heads/main/bbn-test-5/network-artifacts/genesis.json"
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656"
@@ -15,7 +15,7 @@ enablegrpc: true
 
 make_overwrite: 'BABYLON_BUILD_OPTIONS=testnet make install'
 
-upgrade_folder: v2rc4
+upgrade_folder: v2.2
 
 config_parameters:
   - regexp: '^timeout_commit ='
