@@ -4,17 +4,28 @@ import os
 
 # The purpose of this file and directory.yaml is to run chain wide operations rather than server specific operations
 
-# Required. Accepts string input without the .yml. Example input would be: "upgrade"
-playbook_input = input("Please enter the playbook which you would like to run as a directory command: ")
+playbook_input = "test"
+chain_input = "test"
+network_input = "test"
+extra_args_input = ""
+
+# TODO -y input flag
+
+# prompt user because no hard coded
+if playbook_input is None and chain_input is None and network_input is None: 
+    # Required. Accepts string input without the .yml. Example input would be: "upgrade"
+    playbook_input = input("Please enter the playbook which you would like to run as a directory command: ")
+
+    # Required. Accepts string input of filenames found in vars without the .yml. Example input would be: "babylon"
+    chain_input = input("Please enter the chains to take action on: ")
+
+    # Required. Accepts string input of filenames found in vars. Example input would be: "mainnet"
+    network_input = input(f"Please enter the network of the {chain_input} to take action on: ")
+
+# error checking whether hard coded or user input
 if not os.path.exists(f"{playbook_input}.yml"):
     print(f"Error: Playbook '{playbook_input}.yml' not found.")
     exit(1)
-
-# Required. Accepts string input of filenames found in vars without the .yml. Example input would be: "babylon"
-chain_input = input("Please enter the chains to take action on: ")
-
-# Required. Accepts string input of filenames found in vars. Example input would be: "mainnet"
-network_input = input(f"Please enter the network of the {chain_input} to take action on: ")
 if network_input not in ['mainnet','testnet']:
     print(f"Error: network_input '{network_input}' not mainnet or testnet.")
     exit(1)
