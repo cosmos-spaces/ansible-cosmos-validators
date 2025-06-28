@@ -4,11 +4,11 @@ import os
 
 # The purpose of this file and directory.yaml is to run chain wide operations rather than server specific operations
 
-playbook_input = "test"
-chain_input = "test"
-network_input = "test"
+playbook_input = ""
+chain_input = ""
+network_input = ""
 extra_args_input = ""
-
+# TODO get rid of hard coded values and just do flags to pass
 # TODO -y input flag
 
 # prompt user because no hard coded
