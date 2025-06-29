@@ -4,23 +4,17 @@ import os
 
 # The purpose of this file and directory.yaml is to run chain wide operations rather than server specific operations
 
-playbook_input = ""
-chain_input = ""
-network_input = ""
-extra_args_input = ""
 # TODO get rid of hard coded values and just do flags to pass
 # TODO -y input flag
 
-# prompt user because no hard coded
-if playbook_input is None and chain_input is None and network_input is None: 
-    # Required. Accepts string input without the .yml. Example input would be: "upgrade"
-    playbook_input = input("Please enter the playbook which you would like to run as a directory command: ")
+# Required. Accepts string input without the .yml. Example input would be: "upgrade"
+playbook_input = input("Please enter the playbook which you would like to run as a directory command: ")
 
-    # Required. Accepts string input of filenames found in vars without the .yml. Example input would be: "babylon"
-    chain_input = input("Please enter the chains to take action on: ")
+# Required. Accepts string input of filenames found in vars without the .yml. Example input would be: "babylon"
+chain_input = input("Please enter the chains to take action on: ")
 
-    # Required. Accepts string input of filenames found in vars. Example input would be: "mainnet"
-    network_input = input(f"Please enter the network of the {chain_input} to take action on: ")
+# Required. Accepts string input of filenames found in vars. Example input would be: "mainnet"
+network_input = input(f"Please enter the network of the {chain_input} to take action on: ")
 
 # error checking whether hard coded or user input
 if not os.path.exists(f"{playbook_input}.yml"):
