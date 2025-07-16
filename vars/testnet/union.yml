@@ -2,9 +2,9 @@ chain: union
 folder: '.union10'
 daemon: uniond10
 chain_id: union-testnet-10
-node_version: 'v1.1.1-rc1.alpha1' TODO
+node_version: 'v1.1.2-rc1.alpha1'
 # repo: 'https://github.com/unionlabs/union'
-binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.1.1-rc1.alpha1/uniond-release-x86_64-linux"
+binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.2.0-rc1alpha1/uniond-release-x86_64-linux"
 binary_processing: default
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/union/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/union-testnet/addrbook.json'
