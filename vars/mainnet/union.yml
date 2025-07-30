@@ -11,4 +11,4 @@ seeds: '069c0c92dba1fc5ad9a226183a01c6fae62cebdc@157.180.39.65:26656'
 custom_port_prefix: 144
 minimum_gas_price: '0muno'
 
-upgrade_folder: v1.0.0
+# upgrade_folder: v1.0.0
