@@ -1,0 +1,14 @@
+chain: union
+folder: '.union'
+daemon: uniond
+chain_id: union-1
+node_version: 'v1.0.0-rc3.alpha1'
+# repo: 'https://github.com/unionlabs/union'
+binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.0.0-rc3.alpha1/uniond-release-x86_64-linux"
+binary_processing: default
+genesis: 'https://rpc.rpc-node.union-testnet-10.union.build/genesis'
+seeds: '069c0c92dba1fc5ad9a226183a01c6fae62cebdc@157.180.39.65:26656'
+custom_port_prefix: 144
+minimum_gas_price: '0muno'
+
+upgrade_folder: v1.0.0
