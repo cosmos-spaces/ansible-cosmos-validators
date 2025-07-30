@@ -21,3 +21,10 @@ upgrade_folder: v8
 #     line: 'private_peer_ids = "CosmosSpaces"'
 #   - regexp: '^addr_book_strict ='
 #     line: 'addr_book_strict = false'
+
+# Snapshot
+snapshot_hour: "*/6"
+snapshot_minute: 15
+wasm: outside
+
+# Rosetta configuration has a duplicate address key where the <custom_port_prefix>80 is correct
