@@ -17,3 +17,4 @@ upgrade_folder: 'v2.17'
 snapshot_hour: "*/6"
 snapshot_minute: 15
 wasm: outside
+# Snapshot script seems to mess with genesis file so I added a download of the genesis file and mv at the end
