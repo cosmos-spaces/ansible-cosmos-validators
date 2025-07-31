@@ -19,4 +19,4 @@ minimum_gas_price: '0muno'
 # Upgrade v 1.1
 node_version: 1.1.1-rc1.alpha1
 binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.1.1-rc1.alpha1/uniond-release-x86_64-linux"
-upgrade_folder: v1.1
+upgrade_folder: v1.1.0
