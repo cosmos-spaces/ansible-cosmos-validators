@@ -11,3 +11,9 @@ custom_port_prefix: 111
 minimum_gas_price: '0.018ibc/2C962DAB9F57FE0921435426AE75196009FAA1981BF86991203C8411F8980FDB,0.018ibc/B3504E092456BA618CC28AC671A71FB08C6CA0FD0BE7C8A5B5A3E2DD933CC9E4'
 
 upgrade_folder: 'v2.17'
+
+
+# Snapshot
+snapshot_hour: "*/6"
+snapshot_minute: 15
+wasm: outside

@@ -27,4 +27,4 @@ snapshot_hour: "*/6"
 snapshot_minute: 15
 wasm: outside
 
-# Rosetta configuration has a duplicate address key where the <custom_port_prefix>80 is correct
+# app.toml Rosetta configuration has a duplicate address key where the <custom_port_prefix>80 is correct
