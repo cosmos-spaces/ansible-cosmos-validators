@@ -8,7 +8,7 @@ binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.0.0-rc
 binary_processing: default
 genesis: 'https://rpc.rpc-node.union-testnet-10.union.build/genesis'
 # seeds: '069c0c92dba1fc5ad9a226183a01c6fae62cebdc@157.180.39.65:26656'
-seeds: '"20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:24656"'
+seeds: '20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:24656'
 custom_port_prefix: 144
 minimum_gas_price: '0muno'
 
