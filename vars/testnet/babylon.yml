@@ -9,7 +9,7 @@ seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:2065
 addrbook_file: "https://snapshots.polkachu.com/testnet-addrbook/babylon/addrbook.json"
 snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/babylon/babylon_752037.tar.lz4'
 minimum_gas_price: "0.002ubbn"
-custom_port_prefix: 134
+custom_port_prefix: 136
 indexer: "kv"
 enablegrpc: true
 
