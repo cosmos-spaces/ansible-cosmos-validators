@@ -13,11 +13,11 @@ custom_port_prefix: 144
 minimum_gas_price: '0muno'
 
 # Genesis
-node_version: 'v1.0.0-rc3.alpha1'
-binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.0.0-rc3.alpha1/uniond-release-x86_64-linux"
+binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.2.2-rc2.alpha1/uniond-release-x86_64-linux"
 
 # Upgrade v 1.1
 # node_version: 1.1.1-rc1.alpha1
 # binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.1.1-rc1.alpha1/uniond-release-x86_64-linux"
 # snapshot_url: 'https://snapshots.polkachu.com/snapshots/union/union_2207639.tar.lz4'
-# upgrade_folder: v1.1.0
+
+upgrade_folder: v1.2.0
