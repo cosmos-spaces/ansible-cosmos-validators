@@ -10,7 +10,7 @@ genesis: 'https://snapshots.polkachu.com/genesis/union/genesis.json'
 # seeds: '069c0c92dba1fc5ad9a226183a01c6fae62cebdc@157.180.39.65:26656'
 seeds: '20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:24656'
 custom_port_prefix: 144
-minimum_gas_price: '0muno'
+minimum_gas_price: '0au'
 
 # Upgrade v 1.2
 node_version: v1.2.2-rc2.alpha1
