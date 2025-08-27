@@ -17,3 +17,7 @@ node_version: v1.2.2-rc2.alpha1
 binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.2.2-rc2.alpha1/uniond-release-x86_64-linux"
 
 upgrade_folder: v1.2.0
+
+config_parameters:
+  - regexp: "^timeout_commit ="
+    line: 'timeout_commit = "5s"'
