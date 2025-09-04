@@ -14,7 +14,7 @@ minimum_gas_price: '0au'
 
 # Upgrade v 1.2
 node_version: v1.2.2-rc2.alpha1
-binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.2.2-rc2.alpha1/uniond-release-x86_64-linux"
+binary: "https://github.com/unionlabs/union/releases/download/uniond%2Fv1.2.2/uniond-release-x86_64-linux"
 
 upgrade_folder: v1.2.0
 
