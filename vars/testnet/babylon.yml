@@ -15,8 +15,6 @@ enablegrpc: true
 
 make_overwrite: 'BABYLON_BUILD_OPTIONS=testnet make install'
 
-upgrade_folder: v23
-
 config_parameters:
   - regexp: '^timeout_commit ='
     line: 'timeout_commit = "9200ms"'
