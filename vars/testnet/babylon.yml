@@ -1,13 +1,13 @@
 chain: babylon
 folder: .babylond
 daemon: babylond
-chain_id: bbn-test-5
-node_version: v3.0.0-rc.3
+chain_id: bbn-test-6
+node_version: v2.3.1
 repo: "https://github.com/babylonlabs-io/babylon"
-genesis: "https://raw.githubusercontent.com/babylonlabs-io/networks/refs/heads/main/bbn-test-5/network-artifacts/genesis.json"
+genesis: "https://raw.githubusercontent.com/babylonlabs-io/networks/refs/heads/main/bbn-test-6/network-artifacts/genesis.json"
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656"
-addrbook_file: "https://snapshots.polkachu.com/testnet-addrbook/babylon/addrbook.json"
-snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/babylon/babylon_752037.tar.lz4'
+addrbook_file: "https://snapshots.polkachu.com/testnet-addrbook/babylon/addrbook.json
+snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/babylon/babylon_24985.tar.lz4'
 minimum_gas_price: "0.002ubbn"
 custom_port_prefix: 136
 indexer: "kv"
@@ -15,11 +15,11 @@ enablegrpc: true
 
 make_overwrite: 'BABYLON_BUILD_OPTIONS=testnet make install'
 
-upgrade_folder: v3rc3
+upgrade_folder: v23
 
 config_parameters:
   - regexp: '^timeout_commit ='
-    line: 'timeout_commit = "10s"'
+    line: 'timeout_commit = "9200ms"'
 app_parameters:
   - regexp: '^network ='
     line: 'network = "signet"'
