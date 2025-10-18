@@ -9,6 +9,6 @@ addrbook_file: 'https://snapshots.polkachu.com/addrbook/intento/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:31156'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/intento/intento_1292655.tar.lz4'
 custom_port_prefix: 145
-minimum_gas_price: '0.001uintento'
+minimum_gas_price: '0.001uinto'
 
 upgrade_folder: v1.0.4
