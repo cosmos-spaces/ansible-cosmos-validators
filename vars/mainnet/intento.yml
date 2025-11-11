@@ -2,13 +2,13 @@ chain: intento
 folder: '.intento'
 daemon: intentod
 chain_id:  intento-1
-node_version: 'v1.0.4'
+node_version: 'v1.0.7'
 repo: https://github.com/trstlabs/intento
 genesis: 'https://snapshots.polkachu.com/genesis/intento/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/intento/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:31156'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/intento/intento_1292655.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/intento/intento_3527997.tar.lz4'
 custom_port_prefix: 145
 minimum_gas_price: '0.001uinto'
 
-upgrade_folder: v1.0.4
+upgrade_folder: v1.0.5
