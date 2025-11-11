@@ -102,3 +102,11 @@ groups:
         annotations:
           title: Babylon Missed Finality Provider Votes
           description: 'Network: {{ $labels.network }} - {{ $labels.address }} has missed {{ $value }} finality provider votes on {{ $labels.chain_id }}.'
+      - alert: CosmosWatcherServiceDown
+        expr: absent(cosmos_validator_watcher_block_height)
+        for: 5m
+        labels:
+          severity: critical
+          service: cosmos
+        annotations:
+          description: 'A cosmos watcher service is down'
