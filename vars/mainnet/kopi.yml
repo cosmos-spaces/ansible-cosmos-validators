@@ -1,0 +1,38 @@
+chain: kopi
+folder: ".kopid"
+daemon: kopid
+chain_id: luwak-1
+node_version: "v22"
+repo: "https://github.com/kopi-money/kopi.git"
+genesis: "https://snapshots.polkachu.com/genesis/kopi/genesis.json"
+addrbook_file: "https://raw.githubusercontent.com/CoinHuntersTR/props/refs/heads/main/kopi/addrbook.json"
+seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:27656"
+snapshot_url: "https://snapshots.polkachu.com/snapshots/kopi/kopi_11900290.tar.lz4"
+custom_port_prefix: 142
+upgrade_folder: "v22"
+minimum_gas_price: "0ukopi"
+
+config_parameters:
+  - regexp: "^timeout_propose ="
+    line: 'timeout_propose = "300ms"'
+  - regexp: "^timeout_propose_delta ="
+    line: 'timeout_propose_delta = "50ms"'
+  - regexp: "^timeout_prevote ="
+    line: 'timeout_prevote = "100ms"'
+  - regexp: "^timeout_prevote_delta ="
+    line: 'timeout_prevote_delta = "50ms"'
+  - regexp: "^timeout_precommit ="
+    line: 'timeout_precommit = "100ms"'
+  - regexp: "^timeout_precommit_delta ="
+    line: 'timeout_precommit_delta = "50ms"'
+  - regexp: "^timeout_commit ="
+    line: 'timeout_commit = "500ms"'
+  - regexp: "^create_empty_blocks ="
+    line: "create_empty_blocks = true"
+  - regexp: "^create_empty_blocks_interval ="
+    line: 'create_empty_blocks_interval = "15s"'
+  - regexp: "^timeout_broadcast_tx_commit ="
+    line: 'timeout_broadcast_tx_commit = "151s"'
+  - regexp: "^skip_timeout_commit ="
+    line: "skip_timeout_commit = false"
+

@@ -2,13 +2,13 @@ chain: passage
 folder: '.passage'
 daemon: passage
 chain_id: passage-2
-node_version: 'v2.5.0'
+node_version: 'v2.6.0'
 repo: https://github.com/envadiv/Passage3D.git
 genesis: 'https://snapshots.polkachu.com/genesis/passage/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/passage/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:15656'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/passage/passage_13266413.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/passage/passage_16119054.tar.lz4'
 custom_port_prefix: 113
 minimum_gas_price: '12.5upasg'
 
-upgrade_folder: v2.5.0
+upgrade_folder: v2.6.0

@@ -1,63 +1,61 @@
 #!/bin/bash
 
-{% if type == 'test' or type == 'testrelay'  %}
-{% set snapshot_folder = "testnet-snapshots" %}
-{% set wasm_folder = "testnet-wasm" %}
-{% set addrbook_folder = "testnet-addrbook" %}
-{% else %}
-{% set snapshot_folder = "snapshots" %}
-{% set wasm_folder = "wasm" %}
-{% set addrbook_folder = "addrbook" %}
-{% endif %}
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+
+date=$(date '+%Y-%m-%d %H:%M:%S')
+
+echo "$date [INFO] Starting snapshot process"
 
 # prune node
-sudo service {{ cosmovisor_service_name }} stop
+echo "Stopping {{ cosmovisor_service_name }} service..."
+sudo systemctl stop {{ cosmovisor_service_name }}
 sleep 5
-{{ user_dir }}/go/bin/cosmprund prune ~/{{ folder }}/data
-sleep 5
-
-# Make sure the service is running
-sudo service {{ cosmovisor_service_name }} start
-sleep 10
+echo "Prunning data..."
+{{ user_dir }}/go/bin/cosmprund prune {{ user_dir }}/{{ folder }}/data
 
 # Get block height
-BLOCK_HEIGHT=$(curl -s http://localhost:{{ custom_port_prefix }}57/status | jq -r .result.sync_info.latest_block_height)
-
-# Stop service
-sudo service {{ cosmovisor_service_name }} stop
+BLOCK_HEIGHT=$(cosmprund db-info {{ user_dir }}/{{ folder }}/data | jq -r .last_block_height)
 
 # Compress the folder
-FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
-WASM_FILENAME='{{ chain }}_wasmonly.tar.lz4'
+echo "Compressing data..."
+#FILENAME=$(echo {{ chain }}_${BLOCK_HEIGHT}.tar.lz4)
+FILENAME={{ chain }}_latest.tar.lz4
+WASM_FILENAME={{ chain }}_wasmonly.tar.lz4
 cd {{ user_dir }}/{{ folder }}
 
 {% if wasm is defined and wasm == "outside" %}
-tar --exclude=wasm/wasm/cache -cvf - data wasm | lz4 > "{{ user_dir }}/$FILENAME"
-tar --exclude=wasm/wasm/cache -cvf - wasm | lz4 > "{{ user_dir }}/$WASM_FILENAME"
+tar --exclude=wasm/wasm/cache -cf - data wasm | lz4 > {{ snapshot_dir }}/$FILENAME
+tar --exclude=wasm/wasm/cache -cf - wasm | lz4 > {{ snapshot_dir }}/$WASM_FILENAME
 
 {% elif wasm is defined and wasm == "inside" %}
-tar --exclude=data/wasm/cache -cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
+tar --exclude=data/wasm/cache -cf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 cd {{ user_dir }}/{{ folder }}/data
-tar --exclude=wasm/cache -cvf - wasm | lz4 > "{{ user_dir }}/$WASM_FILENAME"
+tar --exclude=wasm/cache -cf - wasm | lz4 > {{ snapshot_dir }}/$WASM_FILENAME
 
 {% else %}
-tar -cvf - data | lz4 > "{{ user_dir }}/$FILENAME"
+tar -cf - data | lz4 > {{ snapshot_dir }}/$FILENAME
 {% endif %}
+
+# Create metadata file
+echo "### Snapshot Metadata for {{ chain }}" > {{ snapshot_dir }}/metadata.txt
+echo "FILENAME: $FILENAME" >> {{ snapshot_dir }}/metadata.txt
+echo "CREATED ON: $date UTC" >> {{ snapshot_dir }}/metadata.txt
+echo "BLOCK_HEIGHT: $BLOCK_HEIGHT" >> {{ snapshot_dir }}/metadata.txt
 
 # Restart the service
-sudo service {{ cosmovisor_service_name }} start
+sudo systemctl start {{ cosmovisor_service_name }}
 
 # Transfer the file and then remove the file
-cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $FILENAME "s3://{{snapshot_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
-rm $FILENAME
+echo "Uploading tar files..."
+rclone copy {{ snapshot_dir }}/$FILENAME {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
+rclone copy {{ snapshot_dir }}/metadata.txt {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
+#rclone --exclude $FILENAME delete {{ snapshot_endpoint }}/{{ network }}/{{ chain }}/
+echo "Cleaning up..."
+rm {{ snapshot_dir }}/$FILENAME
+rm {{ snapshot_dir }}/metadata.txt
 
 {% if wasm is defined %}
-cd {{ user_dir }}/
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp $WASM_FILENAME "s3://{{wasm_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}
-rm $WASM_FILENAME
+rclone copy {{ snapshot_dir }}/$WASM_FILENAME {{ snapshot_endpoint }}/{{ network }}/wasm/{{ chain }}/
+#rclone --exclude $WASM_FILENAME delete {{ snapshot_endpoint }}/{{ network }}/wasm/{{ chain }}/
+rm {{ snapshot_dir }}/$WASM_FILENAME
 {% endif %}
-
-# Transfer the addrbook
-cd {{ user_dir }}/{{ folder }}/config
-aws s3 --endpoint="{{ snapshot_endpoint }}" --acl="public-read" cp addrbook.json "s3://{{addrbook_folder}}/{{ chain }}/" --profile={{ snapshot_profile }}

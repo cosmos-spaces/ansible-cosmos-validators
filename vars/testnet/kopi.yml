@@ -1,0 +1,28 @@
+chain: kopi
+folder: '.kopid'
+daemon: kopid
+chain_id: kopi-test-6
+node_version: 'v0.6.5.2'
+repo: 'https://github.com/kopi-money/kopi.git'
+genesis: 'https://data.kopi.money/genesis-test-6.json'
+seeds: '7427da3a793f0c7f08f4034215b6f310e214fb28@95.217.154.60:26656'
+snapshot_url: 'https://snapshots.spacestake.tech/testnet-snapshots/kopi/latest.tar.lz4'
+custom_port_prefix: 141
+upgrade_folder: v0.6.5.2
+minimum_gas_price: '0ukopi'
+
+config_parameters:
+  - regexp: '^timeout_propose ='
+    line: 'timeout_propose = "300ms"'
+  - regexp: '^timeout_propose_delta ='
+    line: 'timeout_propose_delta = "50ms"'
+  - regexp: '^timeout_prevote ='
+    line: 'timeout_prevote = 100ms'
+  - regexp: '^timeout_prevote_delta ='
+    line: 'timeout_prevote_delta = "50ms"'
+  - regexp: '^timeout_precommit ='
+    line: 'timeout_precommit = 100ms'
+  - regexp: '^timeout_precommit_delta ='
+    line: 'timeout_precommit_delta = "50ms"'
+  - regexp: '^timeout_commit ='
+    line: 'timeout_commit = 500ms'

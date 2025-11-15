@@ -62,3 +62,4 @@
     url: 'http://localhost:{{ custom_port_prefix }}57/abci_info'
     method: GET
     status_code: 200
+  ignore_errors: true

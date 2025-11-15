@@ -4,6 +4,12 @@
     var: hostvars[inventory_hostname]
   tags: debug
 
+- name: Check if binary is installed
+  command: which {{ user_dir }}/go/bin/{{ daemon }}
+  changed_when: false
+  register: binary_installed
+  ignore_errors: true
+
 - name: Install from source
   become: false
   block:
@@ -33,12 +39,9 @@
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
       when: make_overwrite is defined
-  when: binary is undefined
-
-- name: Check if binary is installed
-  command: which {{ user_dir }}/go/bin/{{ daemon }}
-  changed_when: false
-  register: binary_installed
+  when: 
+    - binary is undefined
+    - binary_installed.rc not in [ 0 ]
 
 - name: download pre-installed binary
   when: 

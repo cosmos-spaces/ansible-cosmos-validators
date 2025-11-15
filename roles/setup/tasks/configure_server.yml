@@ -16,7 +16,6 @@
     - unzip
     - wget
     - curl
-    - netcat
     - bash-completion
     - fio
     - screen

@@ -75,6 +75,15 @@
   loop: '{{ pruning_relayer | dict2items }}'
   when: type is defined and type == 'relayer'
 
+- name: Adjust pruning setting for archive
+  lineinfile:
+    path: '{{ user_dir }}/{{ folder }}/config/app.toml'
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }}'
+    insertafter: "These are applied if and only if the pruning strategy is custom."
+  loop: '{{ pruning_archive | dict2items }}'
+  when: type is defined and type == 'archive'
+
 - name: Adjust pruning setting for sentry
   lineinfile:
     path: '{{ user_dir }}/{{ folder }}/config/app.toml'
@@ -97,7 +106,7 @@
     regexp: 'pex = true'
     line: 'pex = false'
     state: present
-  when: type == 'validator'
+  when: type == 'validator' or type == 'archive'
 
 - name: Enable RPC port for relayer (Firewall will still manage the access to this port)
   lineinfile:

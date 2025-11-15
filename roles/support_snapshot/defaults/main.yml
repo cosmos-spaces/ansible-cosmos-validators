@@ -1,1 +1,4 @@
-snapshot_endpoint: { { snapshot_url } }
+snapshot_endpoint: cf-r2:snapshots
+snapshot_dir: '{{ user_dir }}/{{ folder }}/snapshot'
+snapshot_minute: '0'
+snapshot_hour: '*/12'

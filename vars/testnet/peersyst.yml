@@ -1,0 +1,23 @@
+chain: peersyst
+folder: '.exrpd'
+daemon: exrpd
+chain_id: "xrplevm_1449000-1"
+node_version: 'v7.0.0'
+repo: 'https://github.com/xrplevm/node'
+# binary: "https://github.com/xrplevm/node/releases/download/v7.0.0/node_7.0.0_Linux_amd64.tar.gz"
+# binary_processing: default
+genesis: 'https://snapshots.polkachu.com/testnet-genesis/xrp/genesis.json'
+seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:30056'
+# peers: '220fd4c99b38be4c2cffda0883dcb999f021ac32@evm-poa-validator-0.peersyst.tech:26656,da71733c1bb240cfdc79e59217e86d51aa2a5544@evm-poa-validator-1.peersyst.tech:26656,86b5634d5779956b61d0ad3b3f42d3053613eace@evm-poa-validator-2.peersyst.tech:26656,75c2d2f6a0ecc6554a5f22d6ef81198db112b329@evm-poa-validator-3.peersyst.tech:26656'
+snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/xrp/xrp_1228019.tar.lz4'
+custom_port_prefix: 140
+minimum_gas_price: '0axrp'
+upgrade_folder: v7
+
+# config_parameters:
+#   - regexp: '^unconditional_peer_ids ='
+#     line: 'unconditional_peer_ids = "CosmosSpaces"'
+#   - regexp: '^private_peer_ids ='
+#     line: 'private_peer_ids = "CosmosSpaces"'
+#   - regexp: '^addr_book_strict ='
+#     line: 'addr_book_strict = false'

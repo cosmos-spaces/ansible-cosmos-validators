@@ -31,3 +31,5 @@ new_port=$((highest_port + 1))
 
 echo "Highest custom_port_prefix found: $highest_port"
 echo "Next available custom_port_prefix: $new_port"
+
+# TODO convert to python and go through all branches in a repository

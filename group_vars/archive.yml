@@ -1,0 +1,4 @@
+enablegrpc: true
+indexer: kv
+user_dir: "/archive/{{ network }}"
+service_prefix: "{{ chain }}-archive"

@@ -7,7 +7,7 @@ repo: https://github.com/comdex-official/comdex.git
 genesis: 'https://snapshots.polkachu.com/genesis/comdex/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/comdex/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:13156'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/comdex/comdex_13922138.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/comdex/comdex_19680274.tar.lz4'
 custom_port_prefix: 110
 minimum_gas_price: '0.025ucmdx'
 enable_priv_validator_laddr: false

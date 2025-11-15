@@ -1,10 +1,10 @@
 - name: Write new entry to prom-cosmos.yml group
   blockinfile:
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}-{{ chain_id }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}-{{ service_prefix }}-{{ chain_id }}"
     backup: true
     block: |
-      # {{ chain | upper }} on {{ hostvars[item].server_hostname }}
+      # {{ service_prefix | upper }} on {{ hostvars[item].server_hostname }}
       - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
         labels:
           instance: {{ hostvars[item].server_hostname }}
@@ -17,10 +17,10 @@
 - name: Write new entry to prom-cosmos.yml single server
   blockinfile:
     path: "/etc/prometheus/{{ cosmos_prom_file }}.yml"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}-{{ chain_id }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ hostvars[item].server_hostname }}-{{ service_prefix }}-{{ chain_id }}"
     backup: true
     block: |
-      # {{ chain | upper }} on {{ hostvars[item].server_hostname }}
+      # {{ service_prefix | upper }} on {{ hostvars[item].server_hostname }}
       - targets: ['{{ hostvars[item].ansible_host }}:{{ custom_port_prefix }}61']
         labels:
           instance: {{ hostvars[item].server_hostname }}

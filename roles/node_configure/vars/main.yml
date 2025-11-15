@@ -27,3 +27,5 @@ pruning_relayer:
   'pruning-keep-every = "': 'pruning-keep-every = "50000"'
   'pruning-interval = "': 'pruning-interval = "43"'
   'snapshot-interval = ': 'snapshot-interval = 0'
+pruning_archive:
+  'pruning = "': 'pruning = "nothing"'
