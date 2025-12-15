@@ -2,7 +2,7 @@ chain: neutron
 folder: '.neutrond'
 daemon: neutrond
 chain_id: neutron-1
-node_version: 'v6.0.1'
+node_version: 'v9.1.0'
 repo: https://github.com/neutron-org/neutron
 genesis: 'https://snapshots.polkachu.com/genesis/neutron/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/neutron/addrbook.json'
@@ -11,7 +11,7 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/neutron/neutron_38098793
 custom_port_prefix: 121
 minimum_gas_price: '0.01untrn'
 
-upgrade_folder: v6.0.1
+upgrade_folder: v9.1.0
 
 
 # Snapshot
