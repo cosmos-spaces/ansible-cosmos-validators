@@ -2,14 +2,14 @@ chain: lava
 folder: '.lava'
 daemon: lavad
 chain_id: lava-mainnet-1
-node_version: 'v5.3.0'
+node_version: 'v5.5.1'
 repo: 'https://github.com/lavanet/lava'
 genesis: 'https://storage.googleapis.com/lavanet-public-asssets/tge/genesis.json'
 addrbook_file: 'https://snapshots.kjnodes.com/lava/addrbook.json'
 seeds: '400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@lava.rpc.kjnodes.com:14459'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/lava/lava_2829786.tar.lz4'
 custom_port_prefix: 117
-upgrade_folder: v5.2.0
+upgrade_folder: v5.5.1
 minimum_gas_price: '0.000000001ulava'
 
 make_overwrite: 'LAVA_BINARY=lavad make install'
