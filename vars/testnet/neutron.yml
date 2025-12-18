@@ -1,16 +1,15 @@
-#Mainnet temporarily
 chain: neutron
 folder: '.neutron'
 daemon: neutrond
 chain_id: pion-1
-node_version: 'v7.0.0-rc0'
+node_version: 'v9.1.0'
 repo: https://github.com/neutron-org/neutron
 genesis: 'https://snapshots.polkachu.com/testnet-genesis/neutron/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/testnet-addrbook/neutron/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:19156'
-snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/neutron/neutron_28851428.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/testnet-snapshots/neutron/neutron_41906799.tar.lz4'
 custom_port_prefix: 121
 
 minimum_gas_price: '0.01untrn'
 
-upgrade_folder: v7.0.0-rc0
+upgrade_folder: v9.1.0
