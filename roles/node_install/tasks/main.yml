@@ -4,26 +4,17 @@
     var: hostvars[inventory_hostname]
   tags: debug
 
-- name: Get installed binary version
+- name: Get installed {{ daemon }} version
   command: "{{ user_dir }}/go/bin/{{ daemon }} version"
   register: binary_installed_version
   changed_when: false
   failed_when: false
 
-- name: Check if binary version matches desired version
-  assert:
-    that:
-      - binary_installed_version.stdout == node_version
-    fail_msg: >
-      Installed binary version ({{ binary_installed_version.stdout | default('not installed') }})
-      does not match desired version ({{ node_version }})
-    success_msg: >
-      {{ daemon }} version {{ node_version }} is correctly installed
-
-- name: Determine if binary install is needed
+- name: Determine if {{ daemon }} install is needed
   set_fact:
     binary_install_needed: >-
-      {{ binary_installed_version.stdout | default('') != node_version }}
+      {{ binary_installed_version.rc != 0 or
+         binary_installed_version.stdout | != node_version }}
 
 - name: Install from source
   become: false
