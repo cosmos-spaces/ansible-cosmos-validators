@@ -4,11 +4,26 @@
     var: hostvars[inventory_hostname]
   tags: debug
 
-- name: Check if binary is installed
-  command: which {{ user_dir }}/go/bin/{{ daemon }}
+- name: Get installed binary version
+  command: "{{ user_dir }}/go/bin/{{ daemon }} version"
+  register: binary_installed_version
   changed_when: false
-  register: binary_installed
-  ignore_errors: true
+  failed_when: false
+
+- name: Check if binary version matches desired version
+  assert:
+    that:
+      - binary_installed_version.stdout == node_version
+    fail_msg: >
+      Installed binary version ({{ binary_installed_version.stdout | default('not installed') }})
+      does not match desired version ({{ node_version }})
+    success_msg: >
+      {{ daemon }} version {{ node_version }} is correctly installed
+
+- name: Determine if binary install is needed
+  set_fact:
+    binary_install_needed: >-
+      {{ binary_installed_version.stdout | default('') != node_version }}
 
 - name: Install from source
   become: false
@@ -41,12 +56,12 @@
       when: make_overwrite is defined
   when: 
     - binary is undefined
-    - binary_installed.rc not in [ 0 ]
+    - binary_install_needed
 
 - name: download pre-installed binary
   when: 
     - binary is defined
-    - binary_installed.rc not in [ 0 ]
+    - binary_install_needed
   block:
     - name: Install from binary zipped
       include_tasks: binary_zip.yml
