@@ -1,5 +1,5 @@
 chain: neutron
-folder: '.neutron'
+folder: '.neutrond'
 daemon: neutrond
 chain_id: pion-1
 node_version: 'v9.1.0'
