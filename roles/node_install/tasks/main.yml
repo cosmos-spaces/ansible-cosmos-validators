@@ -22,7 +22,7 @@
     - name: Clone node repo
       git:
         repo: '{{ repo }}'
-        dest: '{{ user_dir }}/{{ folder }}'
+        dest: '{{ user_dir }}/src/{{ chain }}'
         version: '{{ node_version }}'
         update: yes
         force: yes
@@ -31,7 +31,7 @@
     - name: Install node
       command: make install
       args:
-        chdir: '{{ user_dir }}/{{ folder }}'
+        chdir: '{{ user_dir }}/src/{{ chain }}'
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
@@ -40,7 +40,7 @@
     - name: Install node make_overwrite
       shell:
         cmd: '{{ make_overwrite }}'
-        chdir: '{{ user_dir }}/{{ folder }}'
+        chdir: '{{ user_dir }}/src/{{ chain }}'
       environment:
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
