@@ -14,7 +14,7 @@
   set_fact:
     binary_install_needed: >-
       {{ binary_installed_version.rc != 0 or
-         binary_installed_version.stdout != node_version }}
+         binary_installed_version['stdout_lines'][0] != node_version }}
 
 - name: Install from source
   become: false
