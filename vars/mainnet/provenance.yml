@@ -2,7 +2,7 @@ chain: provenance
 folder: '.provenanced'
 daemon: provenanced
 chain_id: pio-mainnet-1
-node_version: 'v1.26.0'
+node_version: 'v1.27.0'
 repo: https://github.com/provenance-io/provenance.git
 genesis: 'https://snapshots.polkachu.com/genesis/provenance/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/provenance/addrbook.json'
@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/provenance/provenance_24
 custom_port_prefix: 140
 minimum_gas_price: '1905nhash'
 
-upgrade_folder: 'bouvardia'
+upgrade_folder: 'carnation'
