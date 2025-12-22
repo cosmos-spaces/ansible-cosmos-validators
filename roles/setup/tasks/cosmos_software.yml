@@ -21,7 +21,9 @@
     GOPATH: '/home/{{ ansible_user }}/go'
   tags:
     - cosmovisor
-  when: type != 'horcrux'
+  when: 
+    - type != 'horcrux'
+    - type != 'bastion'
 
 - name: Change go folder permission
   file:
