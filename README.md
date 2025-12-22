@@ -14,6 +14,9 @@ This repository secures cloud provider servers, installs and configures CometBFT
 Run the desired playbook with the following arguments:
 
 ```bash
+# Install dependencies
+ansible-galaxy collection install -r requirements.yml
+
 # Node Setup
 ansible-playbook setup.yml -e "target=<mainnet|testnet|horcrux_cluster>" -e "ssh_port=<non_standard_ssh_port>"
 
