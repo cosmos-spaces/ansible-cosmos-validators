@@ -21,3 +21,5 @@
             labels:
               instance: {{ hostvars[item].server_hostname }}
       loop: "{{ lookup('inventory_hostnames', target, wantlist=True) }}"
+  tags:
+    - monitoring
