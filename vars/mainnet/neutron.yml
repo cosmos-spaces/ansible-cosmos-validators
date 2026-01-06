@@ -7,7 +7,7 @@ repo: https://github.com/neutron-org/neutron
 genesis: 'https://snapshots.polkachu.com/genesis/neutron/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/neutron/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:19156'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/neutron/neutron_43190442.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/neutron/neutron_43987280.tar.lz4'
 custom_port_prefix: 121
 minimum_gas_price: '0.01untrn'
 
