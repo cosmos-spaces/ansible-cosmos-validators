@@ -4,7 +4,7 @@ daemon: terrad
 chain_id: phoenix-1
 node_version: 'v2.18.0'
 repo: https://github.com/phoenix-directive/core
-genesis: 'https://rpc.rpc-node.union-testnet-10.union.build/genesis'
+genesis: 'https://snapshots.polkachu.com/genesis/terra/genesis.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11756'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/terra/terra_19120281.tar.lz4'
 custom_port_prefix: 111

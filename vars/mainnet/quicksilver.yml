@@ -7,7 +7,7 @@ repo: 'https://github.com/ingenuity-build/quicksilver'
 genesis: 'https://snapshots.polkachu.com/genesis/quicksilver/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/quicksilver/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11156'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/quicksilver/quicksilver_11205424.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/quicksilver/quicksilver_16309217.tar.lz4'
 custom_port_prefix: 129
 minimum_gas_price: '0.0025uqck'
 
