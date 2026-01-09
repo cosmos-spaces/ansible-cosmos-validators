@@ -5,7 +5,7 @@ node_exporter_version: '1.9.1'
 promtail_version: '2.9.8'
 
 # go
-go_version: '1.24.2'
+go_version: '1.23.12'
 
 # cosmovisor
 cosmovisor_version: 'v1.7.1'
