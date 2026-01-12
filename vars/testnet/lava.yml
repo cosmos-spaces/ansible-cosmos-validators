@@ -1,6 +1,6 @@
 chain: lavatestnet
 folder: '.lavatestnet'
-daemon: lavadtestnet
+daemon: lavad
 chain_id: lava-testnet-2
 node_version: 'v5.4.0'
 repo: 'https://github.com/lavanet/lava'
