@@ -7,7 +7,7 @@ repo: "https://github.com/babylonlabs-io/babylon.git"
 genesis: "https://snapshots.polkachu.com/genesis/babylon/genesis.json"
 seeds: "ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:20656"
 peers: "f0d280c08608400cac0ccc3d64d67c63fabc8bcc@91.134.70.52:55706"
-snapshot_url: "https://snapshots.polkachu.com/snapshots/babylon/babylon_2329565.tar.lz4"
+snapshot_url: "https://snapshots.polkachu.com/snapshots/babylon/babylon_2398223.tar.lz4"
 addrbook_file: "https://snapshots.polkachu.com/addrbook/babylon/addrbook.json"
 minimum_gas_price: "0.002ubbn"
 custom_port_prefix: 136
