@@ -2,7 +2,7 @@ chain: quicksilver
 folder: '.quicksilverd'
 daemon: quicksilverd
 chain_id: quicksilver-2
-node_version: 'v1.8.1'
+node_version: 'v1.10.0'
 repo: 'https://github.com/ingenuity-build/quicksilver'
 genesis: 'https://snapshots.polkachu.com/genesis/quicksilver/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/quicksilver/addrbook.json'
@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/quicksilver/quicksilver_
 custom_port_prefix: 129
 minimum_gas_price: '0.0025uqck'
 
-upgrade_folder: v1.8.1
+upgrade_folder: v1.10.0
