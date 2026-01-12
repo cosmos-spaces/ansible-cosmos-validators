@@ -29,6 +29,7 @@ config_parameters:
     line: 'timeout_commit = "9200ms"'
 
 # on chain init, it prompts for bls key input
+# for RPC pass these -e "custom_init_params=--no-bls-password" -e "custom_start_params=--no-bls-password"
 
 # Snapshot
 snapshot_hour: "*/6"
