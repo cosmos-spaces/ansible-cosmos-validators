@@ -7,6 +7,6 @@ repo: https://github.com/ComposableFi/composable-cosmos
 genesis: 'https://snapshots.polkachu.com/genesis/picasso/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/picasso/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:22256'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/picasso/picasso_6093518.tar.lz4' #important: download also a wasm folder
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/picasso/picasso_14511266.tar.lz4' #important: download also a wasm folder
 custom_port_prefix: 118
 minimum_gas_price: '0stake' #to recheck
