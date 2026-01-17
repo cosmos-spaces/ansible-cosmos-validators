@@ -55,7 +55,7 @@
 - name: Open horcrux priv_validator_laddr ports
   ufw:
     rule: allow
-    port: 22110:22130
+    port: 22110:22160
     proto: tcp
     src: '{{ private_network_cidr }}'
     comment: 'Horcrux Ports'
