@@ -2,7 +2,7 @@ chain: noble
 folder: '.noble'
 daemon: nobled
 chain_id: noble-1
-node_version: 'v10.1.2'
+node_version: 'v11.2.0'
 repo: https://github.com/strangelove-ventures/noble
 genesis: 'https://snapshots.polkachu.com/genesis/noble/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/noble/addrbook.json'
@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/noble/noble_37127486.tar
 custom_port_prefix: 131
 minimum_gas_price: '0.001uusdc'
 
-upgrade_folder: ember
+upgrade_folder: v11.2.0
