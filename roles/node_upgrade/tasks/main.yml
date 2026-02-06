@@ -29,10 +29,14 @@
         PATH: '{{ path }}'
         GOPATH: '{{ user_dir }}/go'
       when: make_overwrite is defined
+  tags:
+    - install_only
 
 - name: set binary install exit condition
   set_fact:
     binary_installed: false
+  tags:
+    - install_only
 
 - name: download pre-installed binary
   when: binary is defined
@@ -48,6 +52,8 @@
     - name: Install from binary
       include_tasks: binary_default.yml
       when: binary_processing == "default"
+  tags:
+    - install_only
 
 - name: Create new directory
   file:
