@@ -4,6 +4,8 @@ daemon: pocketd
 chain_id: pocket
 node_version: 'v0.1.31'
 repo: 'https://github.com/pokt-network/poktroll'
+binary: 'https://github.com/pokt-network/poktroll/releases/download/v0.1.31/pocket_darwin_amd64.tar.gz'
+binary_processing: default
 genesis: 'https://snapshots.polkachu.com/genesis/pocket/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/pocket/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:33456'
