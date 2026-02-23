@@ -2,7 +2,7 @@ chain: pocket
 folder: '.pocket'
 daemon: pocketd
 chain_id: pocket
-node_version: 'v0.1.31'
+node_version: 'v0.1.32'
 repo: 'https://github.com/pokt-network/poktroll'
 binary: 'https://github.com/pokt-network/poktroll/releases/download/v0.1.31/pocket_linux_amd64.tar.gz'
 binary_processing: default
@@ -13,4 +13,6 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/pocket/pocket_642573.tar
 custom_port_prefix: 146
 minimum_gas_price: '0.001upokt'
 
-upgrade_folder: 'v0.1.31'
+# make command is not working so i downloaded and built on the node https://docs.pocket.network/building-on-the-pocket-network/welcome-to-pokt-roll/users-and-explorers/account-management/pocketd-cli-installation#building-release-binaries-from-source
+
+upgrade_folder: 'v0.1.32'
