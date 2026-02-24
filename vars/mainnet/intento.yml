@@ -2,7 +2,7 @@ chain: intento
 folder: '.intento'
 daemon: intentod
 chain_id:  intento-1
-node_version: 'v1.1.0'
+node_version: 'v1.1.0-hotfix.12'
 repo: https://github.com/trstlabs/intento
 genesis: 'https://snapshots.polkachu.com/genesis/intento/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/intento/addrbook.json'
