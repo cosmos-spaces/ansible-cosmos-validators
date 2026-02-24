@@ -14,5 +14,5 @@ custom_port_prefix: 146
 minimum_gas_price: '0.001upokt'
 
 # make command is not working so i downloaded and built on the node https://docs.pocket.network/building-on-the-pocket-network/welcome-to-pokt-roll/users-and-explorers/account-management/pocketd-cli-installation#building-release-binaries-from-source
-
+make_cmd: ignite_pocketd_build
 upgrade_folder: 'v0.1.32'
