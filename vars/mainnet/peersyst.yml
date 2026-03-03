@@ -2,7 +2,7 @@ chain: peersyst
 folder: '.exrpd'
 daemon: exrpd
 chain_id: "xrplevm_1440000-1"
-node_version: 'v8.0.0'
+node_version: 'v10.0.2'
 repo: 'https://github.com/xrplevm/node'
 # binary: "https://github.com/xrplevm/node/releases/download/v8.0.0/node_8.0.0_Linux_amd64.tar.gz"
 # binary_processing: default
@@ -12,7 +12,7 @@ seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:30056'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/xrp/xrp_1460227.tar.lz4'
 custom_port_prefix: 143
 minimum_gas_price: '0axrp'
-upgrade_folder: v8
+upgrade_folder: v10.0.0
 
 # config_parameters:
 #   - regexp: '^unconditional_peer_ids ='
