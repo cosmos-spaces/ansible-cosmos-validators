@@ -4,7 +4,7 @@ daemon: exrpd
 chain_id: "xrplevm_1440000-1"
 node_version: 'v10.0.2'
 repo: 'https://github.com/xrplevm/node'
-# binary: "https://github.com/xrplevm/node/releases/download/v8.0.0/node_8.0.0_Linux_amd64.tar.gz"
+# binary: "https://github.com/xrplevm/node/releases/download/v10.0.2/node_8.0.0_Linux_amd64.tar.gz"
 # binary_processing: default
 genesis: 'https://snapshots.polkachu.com/genesis/xrp/genesis.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:30056'
