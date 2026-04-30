@@ -2,13 +2,13 @@ chain: stargaze
 folder: '.starsd'
 daemon: starsd
 chain_id: stargaze-1
-node_version: 'v17.0.0'
+node_version: 'v18.0.0'
 repo: https://github.com/public-awesome/stargaze
 genesis: 'https://snapshots.polkachu.com/genesis/stargaze/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/stargaze/addrbook.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:13756'
-snapshot_url: 'https://snapshots.polkachu.com/snapshots/stargaze/stargaze_19312147.tar.lz4'
+snapshot_url: 'https://snapshots.polkachu.com/snapshots/stargaze/stargaze_32438888.tar.lz4'
 custom_port_prefix: 123
 minimum_gas_price: '0ustars'
 
-upgrade_folder: 'v17'
+upgrade_folder: 'v18'
