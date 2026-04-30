@@ -11,4 +11,4 @@ snapshot_url: 'https://snapshots.polkachu.com/snapshots/jackal/jackal_17759492.t
 custom_port_prefix: 147
 minimum_gas_price: '400ujkl'
 
-upgrade_folder: v6_6_4
+upgrade_folder: v500
