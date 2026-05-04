@@ -13,7 +13,7 @@ custom_port_prefix: 136
 indexer: "kv"
 enablegrpc: true
 
-upgrade_folder: v4.2
+upgrade_folder: v4.3
 
 make_overwrite: 'BABYLON_BUILD_OPTIONS=testnet make install'
 
