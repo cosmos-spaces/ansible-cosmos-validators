@@ -1,0 +1,62 @@
+---
+- name: Gather systemd service facts
+  service_facts:
+  register: service_facts_result
+  failed_when: false
+
+- name: Determine expected cosmovisor service unit name
+  set_fact:
+    chain_service_unit: '{{ cosmovisor_service_name }}.service'
+    known_services: "{{ ansible_facts.services | default({}) }}"
+
+- name: Determine presence/enabled/running state
+  set_fact:
+    chain_service_present: '{{ chain_service_unit in known_services }}'
+
+- name: Determine enabled/running state (service present)
+  set_fact:
+    chain_service_enabled: "{{ known_services[chain_service_unit].status == 'enabled' }}"
+    chain_service_running: "{{ known_services[chain_service_unit].state == 'running' }}"
+  when: chain_service_present
+
+- name: Default enabled/running state (service absent)
+  set_fact:
+    chain_service_enabled: false
+    chain_service_running: false
+  when: not chain_service_present
+
+- name: Determine upgrade eligibility
+  set_fact:
+    chain_upgrade_eligible: '{{ chain_service_present and chain_service_enabled and chain_service_running }}'
+
+- name: Get installed {{ daemon }} version
+  command: '{{ user_dir }}/go/bin/{{ daemon }} version'
+  register: installed_daemon_version
+  changed_when: false
+  failed_when: false
+  when: chain_upgrade_eligible
+
+- name: Determine if already on target version
+  set_fact:
+    already_up_to_date: >-
+      {{ chain_upgrade_eligible and
+         installed_daemon_version.rc == 0 and
+         installed_daemon_version['stdout_lines'][0] == node_version }}
+  when: chain_upgrade_eligible
+
+- name: Default already_up_to_date (not eligible)
+  set_fact:
+    already_up_to_date: false
+  when: not chain_upgrade_eligible
+
+- name: Report {{ chain }} service check for {{ inventory_hostname }}
+  debug:
+    msg:
+      - "chain: {{ chain }} ({{ network }})"
+      - "type: {{ type | default('undefined') }}"
+      - "service: {{ chain_service_unit }}"
+      - "service facts gathered: {{ not service_facts_result.failed | default(false) }}"
+      - "present: {{ chain_service_present }}, enabled: {{ chain_service_enabled }}, running: {{ chain_service_running }}"
+      - "eligible for upgrade: {{ chain_upgrade_eligible }}"
+      - "already up to date: {{ already_up_to_date }}"
+      - "current version: {{ installed_daemon_version.stdout_lines[0] | default('n/a') }}, target version: {{ node_version }}"

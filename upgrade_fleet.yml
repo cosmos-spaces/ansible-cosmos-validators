@@ -1,0 +1,74 @@
+---
+# Fleet-wide chain upgrade with presence/enabled/running verification.
+#
+# For Cosmos-SDK/cosmovisor chains only (see README). Non-Cosmos chains
+# (e.g. monad_testnet) are not supported here and must be upgraded manually.
+#
+# Usage:
+#   ansible-playbook upgrade_fleet.yml -e chain=<chain>
+#   ansible-playbook upgrade_fleet.yml -e chain=<chain> -e dry_run=true
+#   ansible-playbook upgrade_fleet.yml -e chain=<chain> -e auto_confirm=true
+#   ansible-playbook upgrade_fleet.yml -e chain=<chain> -e upgrade_serial='[1,5,"100%"]'
+#
+# Do NOT pass -e network=... : each host resolves its own network (and thus
+# its own vars/<network>/<chain>.yml) from inventory. Overriding it globally
+# risks applying the wrong network's version to a host.
+
+- name: Verify chain presence across the fleet
+  hosts: "{{ target | default('mainnet,testnet,testnet_vals,relayer,archive,snapshot') }}"
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - '{{ var_file }}'
+  pre_tasks:
+    - name: Require chain to be specified
+      assert:
+        that: chain is defined
+        fail_msg: 'Pass -e chain=<chain>. Do not pass -e network=... (resolved per host from inventory).'
+  roles:
+    - node_service_check
+  post_tasks:
+    - name: Confirm before applying
+      pause:
+        prompt: "Reviewed the service-check output above. Type 'yes' to upgrade {{ chain }} on the eligible hosts listed"
+      register: op_confirm
+      run_once: true
+      when: not (auto_confirm | default(false) | bool)
+
+    - name: Abort if not confirmed
+      assert:
+        that: "op_confirm.user_input | default('yes') == 'yes'"
+        fail_msg: 'Aborted by operator.'
+      run_once: true
+      when: not (auto_confirm | default(false) | bool)
+
+- name: Apply chain upgrade to verified hosts
+  hosts: "{{ target | default('mainnet,testnet,testnet_vals,relayer,archive,snapshot') }}"
+  serial: "{{ upgrade_serial | default([1, '100%']) }}"
+  max_fail_percentage: 0
+  any_errors_fatal: true
+  gather_facts: false
+  vars_files:
+    - '{{ var_file }}'
+  tasks:
+    - name: Skip host (not eligible, already up to date, or dry run)
+      meta: end_host
+      when: >-
+        not chain_upgrade_eligible or already_up_to_date or
+        (dry_run | default(false) | bool)
+
+    - name: Run node_upgrade role
+      include_role:
+        name: node_upgrade
+
+    - name: Verify installed binary matches target version
+      command: '{{ user_dir }}/{{ folder }}/cosmovisor/current/bin/{{ daemon }} version'
+      register: post_upgrade_version
+      changed_when: false
+
+    - name: Assert version matches expected
+      assert:
+        that: "node_version in post_upgrade_version.stdout"
+        fail_msg: >-
+          Post-upgrade version mismatch on {{ inventory_hostname }}:
+          expected {{ node_version }}, got {{ post_upgrade_version.stdout }}
