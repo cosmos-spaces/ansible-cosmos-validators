@@ -1,0 +1,98 @@
+---
+- name: Gather systemd service facts
+  service_facts:
+  register: service_facts_result
+  failed_when: false
+
+- name: Determine expected cosmovisor service unit name
+  set_fact:
+    chain_service_unit: '{{ cosmovisor_service_name }}.service'
+    known_services: "{{ ansible_facts.services | default({}) }}"
+
+- name: Determine presence/enabled/running state
+  set_fact:
+    chain_service_present: '{{ chain_service_unit in known_services }}'
+
+- name: Determine enabled/running state (service present)
+  set_fact:
+    chain_service_enabled: "{{ known_services[chain_service_unit].status == 'enabled' }}"
+    chain_service_running: "{{ known_services[chain_service_unit].state == 'running' }}"
+  when: chain_service_present
+
+- name: Default enabled/running state (service absent)
+  set_fact:
+    chain_service_enabled: false
+    chain_service_running: false
+  when: not chain_service_present
+
+- name: Determine service-state eligibility
+  set_fact:
+    chain_service_eligible: '{{ chain_service_present and chain_service_enabled and chain_service_running }}'
+
+# Confirms the vars file we loaded (chain_id) actually matches what's live
+# on this host, independent of *why* it might not - wrong network resolved
+# for this host, a stale directory.yaml entry, wrong -e target=, etc. Catches
+# the same class of mistake regardless of cause, rather than guessing at one
+# specific cause (e.g. an operator passing -e network= by mistake).
+- name: Query live RPC status to verify running chain-id
+  uri:
+    url: 'http://localhost:{{ custom_port_prefix }}57/status'
+    method: GET
+    return_content: true
+  register: rpc_status
+  failed_when: false
+  when: chain_service_eligible
+
+- name: Determine if running chain-id matches expected vars
+  set_fact:
+    chain_id_verified: >-
+      {{ rpc_status.status | default(0) == 200 and
+         (rpc_status.json.result.node_info.network | default('')) == chain_id }}
+  when: chain_service_eligible
+
+- name: Default chain_id_verified (not service-eligible)
+  set_fact:
+    chain_id_verified: false
+  when: not chain_service_eligible
+
+- name: Determine upgrade eligibility
+  set_fact:
+    chain_upgrade_eligible: '{{ chain_service_eligible and chain_id_verified }}'
+
+- name: Get running daemon version
+  # Reads the binary cosmovisor's "current" symlink actually points to for
+  # this chain's home folder - not {{ user_dir }}/go/bin/{{ daemon }}, which
+  # is a shared build-output path that any other build for this daemon name
+  # (e.g. a different network's instance on the same host) can silently
+  # overwrite, making it unreliable for detecting what's actually running.
+  command: '{{ user_dir }}/{{ folder }}/cosmovisor/current/bin/{{ daemon }} version'
+  register: installed_daemon_version
+  changed_when: false
+  failed_when: false
+  when: chain_upgrade_eligible
+
+- name: Determine if already on target version
+  set_fact:
+    already_up_to_date: >-
+      {{ chain_upgrade_eligible and
+         installed_daemon_version.rc == 0 and
+         installed_daemon_version['stdout_lines'][0] == node_version }}
+  when: chain_upgrade_eligible
+
+- name: Default already_up_to_date (not eligible)
+  set_fact:
+    already_up_to_date: false
+  when: not chain_upgrade_eligible
+
+- name: Report {{ chain }} service check for {{ inventory_hostname }}
+  debug:
+    msg:
+      - "chain: {{ chain }} ({{ network }})"
+      - "type: {{ type | default('undefined') }}"
+      - "service: {{ chain_service_unit }}"
+      - "service facts gathered: {{ not service_facts_result.failed | default(false) }}"
+      - "present: {{ chain_service_present }}, enabled: {{ chain_service_enabled }}, running: {{ chain_service_running }}"
+      - "chain-id verified: {{ chain_id_verified }} (expected {{ chain_id }}, RPC reported {{ rpc_status.json.result.node_info.network | default('n/a') }})"
+      - "eligible for upgrade: {{ chain_upgrade_eligible }}"
+      - "already up to date: {{ already_up_to_date }}"
+      - "current version: {{ installed_daemon_version.stdout_lines[0] | default('n/a') }}, target version: {{ node_version }}"
