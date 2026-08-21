@@ -25,9 +25,39 @@
     chain_service_running: false
   when: not chain_service_present
 
+- name: Determine service-state eligibility
+  set_fact:
+    chain_service_eligible: '{{ chain_service_present and chain_service_enabled and chain_service_running }}'
+
+# Confirms the vars file we loaded (chain_id) actually matches what's live
+# on this host, independent of *why* it might not - wrong network resolved
+# for this host, a stale directory.yaml entry, wrong -e target=, etc. Catches
+# the same class of mistake regardless of cause, rather than guessing at one
+# specific cause (e.g. an operator passing -e network= by mistake).
+- name: Query live RPC status to verify running chain-id
+  uri:
+    url: 'http://localhost:{{ custom_port_prefix }}57/status'
+    method: GET
+    return_content: true
+  register: rpc_status
+  failed_when: false
+  when: chain_service_eligible
+
+- name: Determine if running chain-id matches expected vars
+  set_fact:
+    chain_id_verified: >-
+      {{ rpc_status.status | default(0) == 200 and
+         (rpc_status.json.result.node_info.network | default('')) == chain_id }}
+  when: chain_service_eligible
+
+- name: Default chain_id_verified (not service-eligible)
+  set_fact:
+    chain_id_verified: false
+  when: not chain_service_eligible
+
 - name: Determine upgrade eligibility
   set_fact:
-    chain_upgrade_eligible: '{{ chain_service_present and chain_service_enabled and chain_service_running }}'
+    chain_upgrade_eligible: '{{ chain_service_eligible and chain_id_verified }}'
 
 - name: Get running daemon version
   # Reads the binary cosmovisor's "current" symlink actually points to for
@@ -62,6 +92,7 @@
       - "service: {{ chain_service_unit }}"
       - "service facts gathered: {{ not service_facts_result.failed | default(false) }}"
       - "present: {{ chain_service_present }}, enabled: {{ chain_service_enabled }}, running: {{ chain_service_running }}"
+      - "chain-id verified: {{ chain_id_verified }} (expected {{ chain_id }}, RPC reported {{ rpc_status.json.result.node_info.network | default('n/a') }})"
       - "eligible for upgrade: {{ chain_upgrade_eligible }}"
       - "already up to date: {{ already_up_to_date }}"
       - "current version: {{ installed_daemon_version.stdout_lines[0] | default('n/a') }}, target version: {{ node_version }}"
