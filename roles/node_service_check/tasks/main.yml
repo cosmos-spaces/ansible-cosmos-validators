@@ -29,7 +29,7 @@
   set_fact:
     chain_upgrade_eligible: '{{ chain_service_present and chain_service_enabled and chain_service_running }}'
 
-- name: Get running {{ daemon }} version
+- name: Get running daemon version
   # Reads the binary cosmovisor's "current" symlink actually points to for
   # this chain's home folder - not {{ user_dir }}/go/bin/{{ daemon }}, which
   # is a shared build-output path that any other build for this daemon name
