@@ -15,9 +15,8 @@
 # risks applying the wrong network's version to a host.
 
 - name: Verify chain presence across the fleet
-  hosts: "{{ target | default('mainnet,testnet,testnet_vals,relayer,archive,snapshot') }}"
+  hosts: "{{ target | default('mainnet,testnet,relayer,archive,snapshot') }}"
   gather_facts: false
-  any_errors_fatal: true
   vars_files:
     - '{{ var_file }}'
   pre_tasks:
@@ -35,15 +34,19 @@
       run_once: true
       when: not (auto_confirm | default(false) | bool)
 
-    - name: Abort if not confirmed
-      assert:
-        that: "op_confirm.user_input | default('yes') == 'yes'"
-        fail_msg: 'Aborted by operator.'
+    # Broadcast the single confirmation answer to every host's own facts so
+    # Play 2 can gate on it per-host, without any_errors_fatal (which would
+    # also abort on unrelated per-host failures like an SSH timeout).
+    - name: Record confirmation for every host
+      set_fact:
+        operator_confirmed: "{{ auto_confirm | default(false) | bool or op_confirm.user_input | default('yes') == 'yes' }}"
+      delegate_to: '{{ item }}'
+      delegate_facts: true
+      loop: '{{ ansible_play_hosts }}'
       run_once: true
-      when: not (auto_confirm | default(false) | bool)
 
 - name: Apply chain upgrade to verified hosts
-  hosts: "{{ target | default('mainnet,testnet,testnet_vals,relayer,archive,snapshot') }}"
+  hosts: "{{ target | default('mainnet,testnet,relayer,archive,snapshot') }}"
   serial: "{{ upgrade_serial | default([1, '100%']) }}"
   max_fail_percentage: 0
   any_errors_fatal: true
@@ -51,6 +54,11 @@
   vars_files:
     - '{{ var_file }}'
   tasks:
+    - name: Abort (operator declined confirmation)
+      meta: end_play
+      run_once: true
+      when: not (hostvars[inventory_hostname].operator_confirmed | default(false))
+
     - name: Skip host (not eligible, already up to date, or dry run)
       meta: end_host
       when: >-
