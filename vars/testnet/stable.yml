@@ -1,0 +1,14 @@
+chain: stable
+folder: '.stabled'
+daemon: stabled
+chain_id: stabletestnet_2201-1
+node_version: 'v1.8.0-rc0'
+binary: 'https://stable-data-dist.s3.us-east-1.amazonaws.com/testnet/binary/stabled-1.8.0-rc0-linux-amd64-testnet.tar.gz'
+binary_processing: targz
+genesis: 'https://stable-data-dist.s3.us-east-1.amazonaws.com/testnet/configuration/genesis.zip'
+genesis_processing: zip
+seeds: '8c2ede57b763c2976253f880a27c6f85756e1f1b@seed1.testnet.stable.xyz:56656'
+snapshot_url: 'https://stable-data-dist.s3.us-east-1.amazonaws.com/testnet/snapshots/snapshot.tar.lz4'
+custom_port_prefix: 148
+
+upgrade_folder: 'v1.8.0-rc1'
