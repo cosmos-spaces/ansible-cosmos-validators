@@ -1,0 +1,48 @@
+# sapphire.gno.land testnet validator
+# Source: https://github.com/gnolang/gno/blob/9ab5198acac68016341655c82290ecaff5591edb/misc/deployments/sapphire.gno.land/VALIDATOR.md
+# NOTE: gno is not a cosmos-sdk chain. It ships `gnoland` (no `init --home` /
+# cosmovisor flow), and config.toml uses nested cometbft sections. The standard
+# node_* roles need gno-specific handling; the values below are the authoritative
+# chain parameters from the doc above.
+
+
+# !!!! DOES NOT WORK FROM PLAYBOOKS !!!!
+chain: gno
+folder: 'gnoland-data'
+daemon: gnoland
+chain_id: sapphire-1
+
+# Built from the `chain/sapphire` branch (a branch, not a release tag).
+node_version: 'chain/sapphire'
+repo: 'https://github.com/gnolang/gno.git'
+make_overwrite: 'make -C gno.land install.gnoland install.gnokey'
+
+# Plain genesis.json from the chain/sapphire release page.
+genesis: 'https://github.com/gnolang/gno/releases/download/chain/sapphire/genesis.json'
+genesis_sha256: 'd511e0e5b767d4e53f5c1afeeea1bc61d2c7b2118146c820f1f3e4296f67498e'
+
+# Chain-wide persistent peers - must match exactly (p2p.persistent_peers).
+peers: 'g10xll77gz6yzg43v9mdalj8360ng6sunt2vvvhf@seed-1.sapphire.testnets.gno.land:26656,g1gw2d7qsmrg06p204ty2qs8ygzd32t2c7p46te0@seed-2.sapphire.testnets.gno.land:26656'
+
+custom_port_prefix: 149
+public_rpc: 'https://rpc.sapphire.testnets.gno.land'
+
+# Start flags (gnoland start). --skip-genesis-sig-verification is REQUIRED:
+# some genesis txs carry intentionally-invalid signatures.
+custom_start_params: '--chainid sapphire-1 --genesis genesis.json --skip-genesis-sig-verification'
+
+# Chain-wide config that must match exactly (set via `gnoland config set`):
+#   application.prune_strategy           = syncable
+#   consensus.timeout_commit             = 3s
+#   consensus.peer_gossip_sleep_duration = 10ms
+#   p2p.flush_throttle_timeout           = 10ms
+# Advised:
+#   mempool.size                         = 10000
+#   p2p.max_num_outbound_peers           = 40
+# Per-node: moniker, p2p.external_address (your public host:26656), p2p.pex = true
+
+# Validator registration (candidate -> GovDAO vote):
+#   realm:   gno.land/r/gnops/valopers  (func Register, signed by operator key)
+#   faucet:  https://sapphire.testnets.gno.land/faucet
+#   valset:  https://sapphire.testnets.gno.land/r/sys/validators/v3
+#   list:    https://sapphire.testnets.gno.land/r/gnops/valopers

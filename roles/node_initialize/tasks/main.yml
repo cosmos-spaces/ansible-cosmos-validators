@@ -67,29 +67,16 @@
   command: '{{ user_dir }}/go/bin/{{ daemon }} config chain-id {{ chain_id }} --home {{ user_dir }}/{{ folder }}'
   ignore_errors: true
 
-- name: Add sync_info alias command
-  lineinfile:
+- name: Add service management aliases
+  blockinfile:
     path: '{{ user_dir }}/.bash_aliases'
-    line: "alias sync_info_{{ service_prefix }}='curl -s http://localhost:{{ custom_port_prefix }}57/status | jq .result.sync_info'"
-    regexp: "^alias sync_info_{{ service_prefix }}='curl -s http:\\/\\/localhost:{{ custom_port_prefix }}57\\/status \\| jq .result.sync_info'$"
-    state: present
-    insertafter: EOF
     create: True
-
-- name: Add logs alias command
-  lineinfile:
-    path: '{{ user_dir }}/.bash_aliases'
-    line: "alias logs_{{ service_prefix }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'"
-    regexp: "^alias logs_{{ service_prefix }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'$"
-    state: present
-    insertafter: EOF
-    create: True
-
-- name: Add restart alias command
-  lineinfile:
-    path: '{{ user_dir }}/.bash_aliases'
-    line: "alias restart_{{ service_prefix }}='sudo systemctl restart {{ cosmovisor_service_name }}'"
-    regexp: "^alias restart_{{ service_prefix }}='sudo systemctl restart {{ cosmovisor_service_name }}'$"
-    state: present
-    insertafter: EOF
-    create: True
+    marker: "# {mark} {{ cosmovisor_service_name }} aliases"
+    block: |
+      # --- {{ service_prefix }} {{ chain }} ---
+      alias logs_{{ service_prefix }}='journalctl -f -u {{ cosmovisor_service_name }} --no-hostname -o cat'
+      alias restart_{{ service_prefix }}='sudo systemctl restart {{ cosmovisor_service_name }}'
+      alias stop_{{ service_prefix }}='sudo systemctl stop {{ cosmovisor_service_name }}'
+      alias start_{{ service_prefix }}='sudo systemctl start {{ cosmovisor_service_name }}'
+      alias status_{{ service_prefix }}='systemctl status {{ cosmovisor_service_name }} --no-pager'
+      alias sync_info_{{ service_prefix }}='curl -s http://localhost:{{ custom_port_prefix }}57/status | jq .result.sync_info'
