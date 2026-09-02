@@ -11,6 +11,10 @@
     dest: '{{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz'
     mode: '0644'
 
+- name: Verify downloaded archive integrity before touching live data
+  command: 'lz4 -t {{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz'
+  changed_when: false
+
 - name: Stop node process
   become: true
   systemd:
@@ -31,7 +35,9 @@
     state: absent
 
 - name: Extract snapshot
-  shell: 'lz4 -c -d {{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz | tar -x -C {{ user_dir }}/{{ folder }}'
+  shell: 'set -o pipefail; lz4 -c -d {{ user_dir }}/{{ folder }}/snapshot-{{ chain }}.tar.gz | tar -x -C {{ user_dir }}/{{ folder }}'
+  args:
+    executable: /bin/bash
 
 - name: Move priv_validator_state.json back
   command: 'mv {{ user_dir }}/{{ folder }}/priv_validator_state.json {{ user_dir }}/{{ folder }}/data/'
