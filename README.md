@@ -199,11 +199,66 @@ horcrux create-ed25519-shards --chain-id <chain> --key-file /path/to/priv_valida
 For more information, refer to the [documentation](https://github.com/strangelove-ventures/horcrux/blob/main/docs/migrating.md).
 
 
+## Chain Upgrades
+
+### Single node — `upgrade.yml`
+
+```bash
+ansible-playbook upgrade.yml -e "target=<host-or-group>" -e "chain=<chain>"
+```
+
+Builds `node_version` from source (or installs a pre-built `binary`) and places it for
+cosmovisor. If `upgrade_folder` is set in `vars/<network>/<chain>.yml` the binary is staged
+under `cosmovisor/upgrades/<upgrade_folder>/bin/` and left for cosmovisor to switch to at the
+on-chain halt height; otherwise it is copied to `cosmovisor/genesis/bin/` and the service is
+restarted immediately.
+
+### Fleet — `upgrade_fleet.yml`
+
+Cosmos-SDK/cosmovisor chains only. Non-cosmovisor chains (e.g. `monad_testnet`) are upgraded
+manually. Runs across every host group by default; both plays share the operator confirmation
+and a canary-first `serial`.
+
+**Do not pass `-e network=...`** — each host resolves its own network (and its
+`vars/<network>/<chain>.yml`) from inventory. A global override risks applying the wrong
+network's version to a host. A host whose resolved network has no vars file for the chain is
+reported and skipped, not fatal.
+
+Two modes:
+
+| Mode | Flag | When | What it does | Eligibility |
+| ---- | ---- | ---- | ------------ | ----------- |
+| STAGE | *(default)* | Ahead of the upgrade height | Runs `node_upgrade` to build/place the binary; verifies the staged (or, with no `upgrade_folder`, the running) binary reports `node_version`. Leaves the switch to cosmovisor. | `cosmovisor-<chain>` unit present + enabled + running, and live RPC reports the expected `chain_id` |
+| LATE | `-e late=true` | Halt height already passed and nodes are halted / crash-looping on the old binary because cosmovisor never flipped `cosmovisor/current` | Builds nothing. Per host: stop unit → repoint `cosmovisor/current` → `upgrades/<upgrade_folder>` → copy `data/upgrade-info.json` into that dir → start → wait for RPC → assert running version | On-disk only (no RPC): staged binary present and reports `node_version`, `data/upgrade-info.json` `.name` matches, `current` not already switched |
+
+```bash
+# STAGE (normal)
+ansible-playbook upgrade_fleet.yml -e chain=<chain>
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e dry_run=true
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e auto_confirm=true
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e upgrade_serial='[1,5,"100%"]'
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e target=mainnet   # limit host groups
+
+# LATE (recovery)
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e late=true -e dry_run=true
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e late=true
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e late=true -e upgrade_name=v28        # on-chain plan name != upgrade_folder dir
+ansible-playbook upgrade_fleet.yml -e chain=<chain> -e late=true -e rpc_wait_timeout=600    # slow first-boot store migration
+```
+
+Extra vars: `late` (bool, default `false`), `upgrade_name` (LATE, default `upgrade_folder`),
+`rpc_wait_timeout` (LATE, seconds, default `180`), `dry_run`, `auto_confirm`, `upgrade_serial`.
+
+Staging before the halt height lets cosmovisor switch cleanly; LATE mode is only for when
+that window was missed.
+
 ## Playbooks
 
 | Playbook                       | Description                                                                                      |
 | ------------------------------ | ------------------------------------------------------------------------------------------------ |
 | `main.yml`| The main playbook to set up a node |
+| `upgrade.yml` | Upgrade a single node / group to `node_version` (stage for cosmovisor or restart) |
+| `upgrade_fleet.yml` | Fleet-wide cosmovisor upgrade with verification; STAGE (default) and LATE (`-e late=true`) modes |
 | `node_alertmanager.yml` | Installs and configures alert manager |
 | `node_tenderduty.yml` | Install Tenderduty |
 | `setup.yml`| Secure the server with ssh config changes and firewall rules, and install dependencies |

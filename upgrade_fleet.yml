@@ -1,20 +1,11 @@
 ---
-# Fleet-wide chain upgrade with presence/enabled/running verification.
+# Fleet-wide cosmovisor chain upgrade. Cosmos-SDK/cosmovisor chains only.
+# STAGE mode (default) and LATE recovery mode (-e late=true) are documented in
+# the README ("Chain Upgrades").
 #
-# For Cosmos-SDK/cosmovisor chains only (see README). Non-Cosmos chains
-# (e.g. monad_testnet) are not supported here and must be upgraded manually.
-#
-# Usage:
-#   ansible-playbook upgrade_fleet.yml -e chain=<chain>
-#   ansible-playbook upgrade_fleet.yml -e chain=<chain> -e dry_run=true
-#   ansible-playbook upgrade_fleet.yml -e chain=<chain> -e auto_confirm=true
-#   ansible-playbook upgrade_fleet.yml -e chain=<chain> -e upgrade_serial='[1,5,"100%"]'
-#
-# Do NOT pass -e network=... : each host resolves its own network (and thus
-# its own vars/<network>/<chain>.yml) from inventory. Overriding it globally
-# risks applying the wrong network's version to a host.
+# Never pass -e network=... : each host resolves its own network from inventory.
 
-- name: Verify chain presence across the fleet
+- name: Verify chain readiness across the fleet
   hosts: "{{ target | default('mainnet,testnet,relayer,archive,snapshot') }}"
   gather_facts: false
   pre_tasks:
@@ -23,11 +14,8 @@
         that: chain is defined
         fail_msg: 'Pass -e chain=<chain>. Do not pass -e network=... (resolved per host from inventory).'
 
-    # Not every chain is deployed on every network (e.g. some chains have no
-    # vars/testnet/<chain>.yml). include_vars fails per-host rather than the
-    # play-level vars_files failing the whole play, so a host whose resolved
-    # network has no vars file for this chain is just reported as not
-    # configured, instead of crashing on undefined chain vars.
+    # Per-host include_vars (not play-level vars_files): a host whose resolved
+    # network has no vars file for this chain is reported, not fatal.
     - name: Load chain vars for this host's resolved network
       set_fact:
         chain_vars_missing: false
@@ -36,14 +24,78 @@
       rescue:
         - set_fact:
             chain_vars_missing: true
+
+    - name: Normalise mode flag
+      set_fact:
+        late_mode: "{{ late | default(false) | bool }}"
+
   roles:
+    # STAGE: live-node + chain-id checks. Skipped in LATE mode (node not serving).
     - role: node_service_check
-      when: not chain_vars_missing
-  post_tasks:
-    - name: Report chain not configured for this host's network
-      debug:
-        msg: "No {{ chain }} vars for network={{ network }} on {{ inventory_hostname }} - not eligible."
-      when: chain_vars_missing
+      when: not chain_vars_missing and not late_mode
+
+  tasks:
+    # LATE: eligibility from on-disk state only (staged binary + upgrade-info.json).
+    - name: LATE mode staged-upgrade checks
+      when: not chain_vars_missing and late_mode
+      block:
+        - name: Require upgrade_folder to be set for this chain
+          assert:
+            that: upgrade_folder is defined
+            fail_msg: >-
+              {{ chain }} has no upgrade_folder in vars/{{ network }}/{{ chain }}.yml -
+              nothing to flip to in late mode.
+
+        - name: Resolve expected on-chain upgrade name
+          set_fact:
+            expected_upgrade_name: "{{ upgrade_name | default(upgrade_folder) }}"
+
+        - name: Stat staged upgrade binary
+          stat:
+            path: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }}'
+          register: staged_bin
+
+        - name: Read data/upgrade-info.json
+          slurp:
+            src: '{{ user_dir }}/{{ folder }}/data/upgrade-info.json'
+          register: upgrade_info_raw
+          failed_when: false
+
+        - name: Read current cosmovisor symlink target
+          command: 'readlink {{ user_dir }}/{{ folder }}/cosmovisor/current'
+          register: current_link
+          changed_when: false
+          failed_when: false
+
+        - name: Get staged binary version
+          command: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version'
+          register: staged_version
+          changed_when: false
+          failed_when: false
+          when: staged_bin.stat.exists
+
+        - name: Parse upgrade-info.json
+          set_fact:
+            upgrade_info: >-
+              {{ (upgrade_info_raw.content | b64decode | from_json)
+                 if (upgrade_info_raw.content is defined) else {} }}
+
+        - name: Determine LATE eligibility
+          set_fact:
+            staged_bin_version_ok: >-
+              {{ staged_bin.stat.exists and staged_version.rc | default(1) == 0 and
+                 node_version in (staged_version.stdout | default('')) }}
+            upgrade_info_matches: >-
+              {{ (upgrade_info.name | default('')) == expected_upgrade_name }}
+            already_switched: >-
+              {{ (current_link.stdout | default('') | basename) == upgrade_folder }}
+
+        - name: Determine LATE upgrade eligibility
+          set_fact:
+            chain_upgrade_eligible: >-
+              {{ staged_bin.stat.exists and staged_bin_version_ok and
+                 upgrade_info_matches and not already_switched }}
+            already_up_to_date: '{{ already_switched }}'
 
     - name: Default eligibility facts when chain vars are missing
       set_fact:
@@ -51,19 +103,39 @@
         already_up_to_date: false
       when: chain_vars_missing
 
+    - name: Report chain not configured for this host's network
+      debug:
+        msg: "No {{ chain }} vars for network={{ network }} on {{ inventory_hostname }} - not eligible."
+      when: chain_vars_missing
+
+    - name: Report LATE staged-upgrade check
+      debug:
+        msg:
+          - "chain: {{ chain }} ({{ network }})  type: {{ type | default('undefined') }}  mode: late"
+          - "expected upgrade name: {{ expected_upgrade_name | default('n/a') }}"
+          - "data/upgrade-info.json: {{ upgrade_info.name | default('MISSING') }} (height {{ upgrade_info.height | default('n/a') }})"
+          - "staged binary present: {{ staged_bin.stat.exists | default(false) }}, version ok: {{ staged_bin_version_ok | default(false) }} (target {{ node_version }})"
+          - "current -> {{ current_link.stdout | default('n/a') }}"
+          - "already switched: {{ already_switched | default(false) }}"
+          - "eligible: {{ chain_upgrade_eligible | default(false) }}"
+      when: not chain_vars_missing and late_mode
+
     - name: Confirm before applying
       pause:
-        prompt: "Reviewed the service-check output above. Type 'yes' to upgrade {{ chain }} on the eligible hosts listed"
+        prompt: >-
+          {{ 'Reviewed the check output above. Type ''yes'' to flip cosmovisor/current to '
+             + (upgrade_folder | default('?')) + ' and restart ' + chain + ' on the eligible hosts'
+             if late_mode
+             else 'Reviewed the service-check output above. Type ''yes'' to upgrade '
+             + chain + ' on the eligible hosts listed' }}
       register: op_confirm
       run_once: true
       when: >-
         not (auto_confirm | default(false) | bool) and
         not (dry_run | default(false) | bool)
 
-    # Broadcast the single confirmation answer to every host's own facts so
-    # Play 2 can gate on it per-host, without any_errors_fatal (which would
-    # also abort on unrelated per-host failures like an SSH timeout).
-    # dry_run implies confirmed too - nothing will change in Play 2 either way.
+    # Broadcast the one confirmation answer to every host so Play 2 gates per-host
+    # (avoids any_errors_fatal aborting on unrelated SSH failures). dry_run implies yes.
     - name: Record confirmation for every host
       set_fact:
         operator_confirmed: >-
@@ -82,10 +154,7 @@
   any_errors_fatal: true
   gather_facts: false
   tasks:
-    # See Play 1 for why this isn't a play-level vars_files: not every chain
-    # has a vars file for every network. chain_upgrade_eligible already came
-    # back false from Play 1 for such hosts, so they end_host below - this
-    # just has to not crash while loading vars for them first.
+    # Per-host include_vars again (see Play 1); ineligible hosts end_host below.
     - block:
         - include_vars: '{{ var_file }}'
       rescue:
@@ -103,18 +172,97 @@
         not chain_upgrade_eligible or already_up_to_date or
         (dry_run | default(false) | bool)
 
-    - name: Run node_upgrade role
+    # -------- STAGE mode --------
+    - name: Stage upgrade (build/place binary)
       include_role:
         name: node_upgrade
+      when: not (late | default(false) | bool)
 
-    - name: Verify installed binary matches target version
-      command: '{{ user_dir }}/{{ folder }}/cosmovisor/current/bin/{{ daemon }} version'
-      register: post_upgrade_version
+    - name: Verify staged binary matches target version
+      command: >-
+        {{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version
+      register: staged_check
       changed_when: false
+      when: not (late | default(false) | bool) and upgrade_folder is defined
 
-    - name: Assert version matches expected
+    - name: Verify running binary matches target version (no upgrade_folder)
+      command: '{{ user_dir }}/{{ folder }}/cosmovisor/current/bin/{{ daemon }} version'
+      register: running_check
+      changed_when: false
+      when: not (late | default(false) | bool) and upgrade_folder is not defined
+
+    - name: Assert STAGE version matches expected
       assert:
-        that: "node_version in post_upgrade_version.stdout"
+        that: >-
+          node_version in
+          (staged_check.stdout | default(running_check.stdout) | default(''))
         fail_msg: >-
-          Post-upgrade version mismatch on {{ inventory_hostname }}:
-          expected {{ node_version }}, got {{ post_upgrade_version.stdout }}
+          STAGE version mismatch on {{ inventory_hostname }}: expected {{ node_version }},
+          got {{ staged_check.stdout | default(running_check.stdout) | default('n/a') }}
+      when: not (late | default(false) | bool)
+
+    # -------- LATE mode --------
+    - name: LATE - apply staged upgrade
+      when: late | default(false) | bool
+      block:
+        - name: Stop cosmovisor service
+          become: true
+          systemd:
+            name: '{{ cosmovisor_service_name }}'
+            state: stopped
+
+        - name: Point cosmovisor/current at the staged upgrade
+          file:
+            src: 'upgrades/{{ upgrade_folder }}'
+            dest: '{{ user_dir }}/{{ folder }}/cosmovisor/current'
+            state: link
+            force: true
+
+        - name: Record the applied upgrade (prevents re-trigger on next boot)
+          copy:
+            src: '{{ user_dir }}/{{ folder }}/data/upgrade-info.json'
+            dest: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/upgrade-info.json'
+            remote_src: true
+            mode: '0644'
+
+        - name: Start cosmovisor service
+          become: true
+          systemd:
+            name: '{{ cosmovisor_service_name }}'
+            state: started
+            daemon_reload: true
+            enabled: true
+
+        - name: Wait for RPC to come up
+          wait_for:
+            port: '{{ custom_port_prefix }}57'
+            host: 127.0.0.1
+            timeout: "{{ rpc_wait_timeout | default(180) }}"
+
+        - name: Verify running binary matches target version
+          command: '{{ user_dir }}/{{ folder }}/cosmovisor/current/bin/{{ daemon }} version'
+          register: post_activate_version
+          changed_when: false
+
+        - name: Assert LATE version matches expected
+          assert:
+            that: "node_version in post_activate_version.stdout"
+            fail_msg: >-
+              LATE version mismatch on {{ inventory_hostname }}:
+              expected {{ node_version }}, got {{ post_activate_version.stdout }}
+
+        - name: Query post-activation sync status
+          uri:
+            url: 'http://127.0.0.1:{{ custom_port_prefix }}57/status'
+            method: GET
+            return_content: true
+          register: post_status
+          failed_when: false
+
+        - name: Report post-activation state
+          debug:
+            msg: >-
+              {{ inventory_hostname }}: {{ post_activate_version.stdout_lines[0] | default('?') }},
+              chain-id {{ post_status.json.result.node_info.network | default('n/a') }},
+              height {{ post_status.json.result.sync_info.latest_block_height | default('n/a') }},
+              catching_up {{ post_status.json.result.sync_info.catching_up | default('n/a') }}
