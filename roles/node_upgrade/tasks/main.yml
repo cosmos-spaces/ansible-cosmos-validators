@@ -99,12 +99,18 @@
     enabled: yes
   when: upgrade_folder is not defined
 
+# Only the restart path (no upgrade_folder) needs a liveness check. When
+# upgrade_folder is set the binary is merely staged for cosmovisor to pick up
+# at the halt height - the node is not (re)started here, and may legitimately
+# be halted, so probing RPC would always fail.
 - name: Pause for 10 seconds
   pause:
     seconds: 10
+  when: upgrade_folder is not defined
 
 - name: Ensure it is running
   uri:
     url: 'http://localhost:{{ custom_port_prefix }}57/abci_info'
     method: GET
     status_code: 200
+  when: upgrade_folder is not defined

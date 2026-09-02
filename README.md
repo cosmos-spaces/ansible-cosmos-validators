@@ -229,7 +229,7 @@ Two modes:
 | Mode | Flag | When | What it does | Eligibility |
 | ---- | ---- | ---- | ------------ | ----------- |
 | STAGE | *(default)* | Ahead of the upgrade height | Runs `node_upgrade` to build/place the binary; verifies the staged (or, with no `upgrade_folder`, the running) binary reports `node_version`. Leaves the switch to cosmovisor. | `cosmovisor-<chain>` unit present + enabled + running, and live RPC reports the expected `chain_id` |
-| LATE | `-e late=true` | Halt height already passed and nodes are halted / crash-looping on the old binary because cosmovisor never flipped `cosmovisor/current` | Builds nothing. Per host: stop unit → repoint `cosmovisor/current` → `upgrades/<upgrade_folder>` → copy `data/upgrade-info.json` into that dir → start → wait for RPC → assert running version | On-disk only (no RPC): staged binary present and reports `node_version`, `data/upgrade-info.json` `.name` matches, `current` not already switched |
+| LATE | `-e late=true` | Halt height already passed and nodes are halted / crash-looping on the old binary because cosmovisor never flipped `cosmovisor/current` | Per host: build/stage the binary if it isn't already staged → stop unit → repoint `cosmovisor/current` → `upgrades/<upgrade_folder>` → copy `data/upgrade-info.json` into that dir → start → wait for RPC → assert running version | On-disk only (no RPC): `data/upgrade-info.json` `.name` matches the expected upgrade and `current` not already switched. The staged binary is built in Play 2 if absent, so a node that was never staged is still eligible. |
 
 ```bash
 # STAGE (normal)
@@ -250,7 +250,9 @@ Extra vars: `late` (bool, default `false`), `upgrade_name` (LATE, default `upgra
 `rpc_wait_timeout` (LATE, seconds, default `180`), `dry_run`, `auto_confirm`, `upgrade_serial`.
 
 Staging before the halt height lets cosmovisor switch cleanly; LATE mode is only for when
-that window was missed.
+that window was missed. LATE mode builds from source on each eligible host that isn't already
+staged (same as `upgrade.yml`), so a full `make install` runs per host — canary with
+`-e upgrade_serial='[1,"100%"]'` and expect the first host to take a few minutes.
 
 ## Playbooks
 

@@ -82,7 +82,7 @@
 
         - name: Determine LATE eligibility
           set_fact:
-            staged_bin_version_ok: >-
+            staged_bin_ok: >-
               {{ staged_bin.stat.exists and staged_version.rc | default(1) == 0 and
                  node_version in (staged_version.stdout | default('')) }}
             upgrade_info_matches: >-
@@ -90,11 +90,14 @@
             already_switched: >-
               {{ (current_link.stdout | default('') | basename) == upgrade_folder }}
 
+        # The binary being staged is NOT required - if it is missing, Play 2
+        # builds it (node_upgrade) before flipping. Eligibility is just: this
+        # host halted for the expected upgrade, and not switched already.
         - name: Determine LATE upgrade eligibility
           set_fact:
+            needs_stage: '{{ not staged_bin_ok }}'
             chain_upgrade_eligible: >-
-              {{ staged_bin.stat.exists and staged_bin_version_ok and
-                 upgrade_info_matches and not already_switched }}
+              {{ upgrade_info_matches and not already_switched }}
             already_up_to_date: '{{ already_switched }}'
 
     - name: Default eligibility facts when chain vars are missing
@@ -114,7 +117,7 @@
           - "chain: {{ chain }} ({{ network }})  type: {{ type | default('undefined') }}  mode: late"
           - "expected upgrade name: {{ expected_upgrade_name | default('n/a') }}"
           - "data/upgrade-info.json: {{ upgrade_info.name | default('MISSING') }} (height {{ upgrade_info.height | default('n/a') }})"
-          - "staged binary present: {{ staged_bin.stat.exists | default(false) }}, version ok: {{ staged_bin_version_ok | default(false) }} (target {{ node_version }})"
+          - "staged binary ok: {{ staged_bin_ok | default(false) }} (target {{ node_version }}){{ ' - will build in Play 2' if (needs_stage | default(false)) else '' }}"
           - "current -> {{ current_link.stdout | default('n/a') }}"
           - "already switched: {{ already_switched | default(false) }}"
           - "eligible: {{ chain_upgrade_eligible | default(false) }}"
@@ -205,6 +208,24 @@
     - name: LATE - apply staged upgrade
       when: late | default(false) | bool
       block:
+        - name: Build/stage the target binary (missing on this host)
+          include_role:
+            name: node_upgrade
+          when: needs_stage | default(true)
+
+        - name: Re-verify staged binary matches target version
+          command: >-
+            {{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}/bin/{{ daemon }} version
+          register: staged_recheck
+          changed_when: false
+
+        - name: Assert staged binary is the target version
+          assert:
+            that: "node_version in staged_recheck.stdout"
+            fail_msg: >-
+              Staged binary on {{ inventory_hostname }} is {{ staged_recheck.stdout }},
+              expected {{ node_version }} - not flipping current.
+
         - name: Stop cosmovisor service
           become: true
           systemd:
