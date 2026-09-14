@@ -4,6 +4,8 @@ daemon: terrad
 chain_id: phoenix-1
 node_version: 'v2.21.0'
 repo: https://github.com/phoenix-directive/core
+binary: "https://github.com/phoenix-directive/core/releases/download/v2.21.0/terra_v2.21.0_Linux_x86_64.tar.gz"
+binary_processing: targz
 genesis: 'https://snapshots.polkachu.com/genesis/terra/genesis.json'
 seeds: 'ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:11756'
 snapshot_url: 'https://snapshots.polkachu.com/snapshots/terra/terra_19239761.tar.lz4'
