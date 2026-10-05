@@ -76,7 +76,7 @@
     already_up_to_date: >-
       {{ chain_upgrade_eligible and
          installed_daemon_version.rc == 0 and
-         installed_daemon_version['stdout_lines'][0] == node_version }}
+         (installed_daemon_version['stdout_lines'][0] | regex_replace('^v', '')) == (node_version | regex_replace('^v', '')) }}
   when: chain_upgrade_eligible
 
 - name: Default already_up_to_date (not eligible)

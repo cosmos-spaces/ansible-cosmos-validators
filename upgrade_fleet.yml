@@ -84,7 +84,7 @@
           set_fact:
             staged_bin_ok: >-
               {{ staged_bin.stat.exists and staged_version.rc | default(1) == 0 and
-                 node_version in (staged_version.stdout | default('')) }}
+                 (node_version | regex_replace('^v', '')) in (staged_version.stdout | default('')) }}
             upgrade_info_matches: >-
               {{ (upgrade_info.name | default('')) == expected_upgrade_name }}
             already_switched: >-
@@ -197,7 +197,7 @@
     - name: Assert STAGE version matches expected
       assert:
         that: >-
-          node_version in
+          (node_version | regex_replace('^v', '')) in
           (staged_check.stdout | default(running_check.stdout) | default(''))
         fail_msg: >-
           STAGE version mismatch on {{ inventory_hostname }}: expected {{ node_version }},
@@ -221,7 +221,7 @@
 
         - name: Assert staged binary is the target version
           assert:
-            that: "node_version in staged_recheck.stdout"
+            that: "(node_version | regex_replace('^v', '')) in staged_recheck.stdout"
             fail_msg: >-
               Staged binary on {{ inventory_hostname }} is {{ staged_recheck.stdout }},
               expected {{ node_version }} - not flipping current.
@@ -267,7 +267,7 @@
 
         - name: Assert LATE version matches expected
           assert:
-            that: "node_version in post_activate_version.stdout"
+            that: "(node_version | regex_replace('^v', '')) in post_activate_version.stdout"
             fail_msg: >-
               LATE version mismatch on {{ inventory_hostname }}:
               expected {{ node_version }}, got {{ post_activate_version.stdout }}
