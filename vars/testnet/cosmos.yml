@@ -5,8 +5,6 @@ chain_id: provider
 node_version: 'v29.0.0-rc0'
 repo: https://github.com/cosmos/gaia
 genesis: 'https://snapshots.kjnodes.com/cosmoshub-testnet/genesis.json'
-binary: 'https://hub-security-binary-distribution.s3.us-east-2.amazonaws.com/v28.2.0/gaiad-linux-amd64.tar.gz'
-binary_processing: targz
 addrbook_file: 'https://snapshots.kjnodes.com/cosmoshub-testnet/addrbook.json'
 seeds: '3f472746f46493309650e5a033076689996c8881@cosmoshub-testnet.rpc.kjnodes.com:13459'
 snapshot_url: 'https://snapshots.kjnodes.com/cosmoshub-testnet/snapshot_latest.tar.lz4'
