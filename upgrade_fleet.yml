@@ -123,6 +123,33 @@
           - "eligible: {{ chain_upgrade_eligible | default(false) }}"
       when: not chain_vars_missing and late_mode
 
+    # ansible_play_hosts drops unreachable hosts; ansible_play_hosts_all keeps them.
+    - name: Build fleet upgrade plan
+      set_fact:
+        plan_upgrade: >-
+          {% set out = [] %}{% for h in ansible_play_hosts %}{% if (hostvars[h].chain_upgrade_eligible | default(false) | bool)
+          and not (hostvars[h].already_up_to_date | default(false) | bool) %}{% set _ = out.append(h) %}{% endif %}{% endfor %}{{ out }}
+        plan_up_to_date: >-
+          {% set out = [] %}{% for h in ansible_play_hosts %}{% if hostvars[h].already_up_to_date | default(false) | bool
+          %}{% set _ = out.append(h) %}{% endif %}{% endfor %}{{ out }}
+        plan_no_vars: >-
+          {% set out = [] %}{% for h in ansible_play_hosts %}{% if hostvars[h].chain_vars_missing | default(false) | bool
+          %}{% set _ = out.append(h) %}{% endif %}{% endfor %}{{ out }}
+        plan_unreachable: '{{ ansible_play_hosts_all | difference(ansible_play_hosts) }}'
+      run_once: true
+
+    - name: Report fleet upgrade plan
+      debug:
+        msg:
+          - "FLEET UPGRADE PLAN: {{ chain }} ({{ 'late' if late_mode else 'stage' }} mode){{ '  [DRY RUN - nothing will change]' if (dry_run | default(false) | bool) else '' }}"
+          - "WILL UPGRADE ({{ plan_upgrade | length }}): {{ (plan_upgrade[0] ~ ' (canary)' ~ ((', then ' ~ (plan_upgrade[1:] | join(', '))) if plan_upgrade | length > 1 else ''))
+               if plan_upgrade | length > 0 else 'none' }}{{ '  [batches per upgrade_serial=' ~ upgrade_serial ~ ']' if upgrade_serial is defined else '' }}"
+          - "already up to date: {{ plan_up_to_date | join(', ') or 'none' }}"
+          - "not eligible: {{ ansible_play_hosts | difference(plan_upgrade + plan_up_to_date + plan_no_vars) | join(', ') or 'none' }}"
+          - "no {{ chain }} vars for host's network: {{ plan_no_vars | join(', ') or 'none' }}"
+          - "UNREACHABLE (not checked): {{ plan_unreachable | join(', ') or 'none' }}"
+      run_once: true
+
     - name: Confirm before applying
       pause:
         prompt: >-
@@ -135,7 +162,8 @@
       run_once: true
       when: >-
         not (auto_confirm | default(false) | bool) and
-        not (dry_run | default(false) | bool)
+        not (dry_run | default(false) | bool) and
+        plan_upgrade | length > 0
 
     # Broadcast the one confirmation answer to every host so Play 2 gates per-host
     # (avoids any_errors_fatal aborting on unrelated SSH failures). dry_run implies yes.
@@ -150,8 +178,17 @@
       loop: '{{ ansible_play_hosts }}'
       run_once: true
 
+    # Play 2 runs only on the planned hosts, in plan order, so the serial canary
+    # is the first *eligible* host rather than the first inventory host.
+    - name: Assign planned hosts to the upgrade run
+      add_host:
+        name: '{{ item }}'
+        groups: fleet_upgrade_targets
+      loop: '{{ plan_upgrade }}'
+      run_once: true
+
 - name: Apply chain upgrade to verified hosts
-  hosts: "{{ target | default('mainnet,testnet,relayer,archive,snapshot') }}"
+  hosts: fleet_upgrade_targets
   serial: "{{ upgrade_serial | default([1, '100%']) }}"
   max_fail_percentage: 0
   any_errors_fatal: true
