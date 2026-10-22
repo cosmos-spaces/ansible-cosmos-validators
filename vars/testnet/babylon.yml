@@ -2,7 +2,7 @@ chain: babylon
 folder: .babylond
 daemon: babylond
 chain_id: bbn-test-6
-node_version: v4.5.0
+node_version: v4.6.0
 repo: "https://github.com/babylonlabs-io/babylon"
 # binary: "https://drive.google.com/uc?export=download&confirm=t&id=1WULEKfzWWUeIiG9QHKrAedN8zEZ2iIPr"
 # binary_processing: targz
@@ -15,7 +15,7 @@ custom_port_prefix: 136
 indexer: "kv"
 enablegrpc: true
 
-upgrade_folder: v4.5
+upgrade_folder: v4.6
 
 make_overwrite: 'BABYLON_BUILD_OPTIONS=testnet make install'
 
