@@ -2,9 +2,9 @@ chain: pocket
 folder: '.pocket'
 daemon: pocketd
 chain_id: pocket
-node_version: 'v0.1.35'
+node_version: 'v0.1.36'
 repo: 'https://github.com/pokt-network/poktroll'
-binary: 'https://github.com/pokt-network/poktroll/releases/download/v0.1.31/pocket_linux_amd64.tar.gz'
+binary: 'https://github.com/pokt-network/poktroll/releases/download/v0.1.36/pocket_linux_amd64.tar.gz'
 binary_processing: default
 genesis: 'https://snapshots.polkachu.com/genesis/pocket/genesis.json'
 addrbook_file: 'https://snapshots.polkachu.com/addrbook/pocket/addrbook.json'
@@ -15,4 +15,4 @@ minimum_gas_price: '0.001upokt'
 
 # make command is not working so i downloaded and built on the node https://docs.pocket.network/building-on-the-pocket-network/welcome-to-pokt-roll/users-and-explorers/account-management/pocketd-cli-installation#building-release-binaries-from-source
 make_cmd: ignite_pocketd_build
-upgrade_folder: 'v0.1.35'
+upgrade_folder: 'v0.1.36'
