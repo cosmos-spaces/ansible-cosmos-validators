@@ -271,7 +271,7 @@
 
         - name: Point cosmovisor/current at the staged upgrade
           file:
-            src: 'upgrades/{{ upgrade_folder }}'
+            src: '{{ user_dir }}/{{ folder }}/cosmovisor/upgrades/{{ upgrade_folder }}'
             dest: '{{ user_dir }}/{{ folder }}/cosmovisor/current'
             state: link
             force: true
