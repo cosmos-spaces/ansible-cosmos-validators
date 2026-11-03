@@ -71,12 +71,16 @@
   failed_when: false
   when: chain_upgrade_eligible
 
+# ">=" not "==": a host already running a newer release than node_version
+# (stale vars) must not be "upgraded" - that would overwrite the upgrade
+# folder with an older build.
 - name: Determine if already on target version
   set_fact:
     already_up_to_date: >-
       {{ chain_upgrade_eligible and
          installed_daemon_version.rc == 0 and
-         (installed_daemon_version['stdout_lines'][0] | regex_replace('^v', '')) == (node_version | regex_replace('^v', '')) }}
+         (installed_daemon_version['stdout_lines'][0] | regex_replace('^v', ''))
+           is version(node_version | regex_replace('^v', ''), '>=') }}
   when: chain_upgrade_eligible
 
 - name: Default already_up_to_date (not eligible)
