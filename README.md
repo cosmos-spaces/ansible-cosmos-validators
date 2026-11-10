@@ -254,6 +254,34 @@ that window was missed. LATE mode builds from source on each eligible host that 
 staged (same as `upgrade.yml`), so a full `make install` runs per host — canary with
 `-e upgrade_serial='[1,"100%"]'` and expect the first host to take a few minutes.
 
+## OS Patching — `patch_node.yml`
+
+```bash
+ansible-playbook patch_node.yml -e target=<host|group> -e dry_run=true   # report pending updates only
+ansible-playbook patch_node.yml -e target=<host|group>
+ansible-playbook patch_node.yml -e target=<host|group> -e reboot=false
+ansible-playbook patch_node.yml -e target=<host|group> -e patch_serial='[1,3,"100%"]'
+```
+
+Applies apt updates within the host's current Ubuntu release (never `do-release-upgrade`; the
+release codename is asserted unchanged). Play 1 reports pending updates per host and asks for one
+confirmation; Play 2 patches in serial batches (canary first, stop on any failure), reboots only
+where `/var/run/reboot-required` exists, then verifies every watched service (`cosmovisor-*`,
+horcrux, tenderduty, price feeder, node_exporter, promtail, nginx, alertmanager, prometheus) that
+was running beforehand is active again and still active after `settle_seconds`, then waits for each
+chain's RPC (port read from its `config.toml`) to report `catching_up: false` before the next host.
+It also records a baseline before patching and, after the reboot, fails if anything that was healthy
+before is not: ufw active, clock NTP-synchronised, no newly failed systemd units, and each chain that
+had peers has peers again.
+Bastion hosts are skipped unless `-e include_bastion=true` (it is usually the controller). A host
+with a watched service running but not enabled fails before patching, since it would not come back.
+
+Extra vars: `dry_run`, `auto_confirm`, `reboot` (default `true`), `patch_serial` (default
+`[1, "100%"]`), `apt_upgrade` (default `dist`; `yes` for plain upgrade), `autoremove` (default
+`false`), `reboot_timeout` (default `900`), `settle_seconds` (default `60`),
+`catch_up_timeout` (default `900`), `include_bastion` (default `false`),
+`patch_watch_services_regex`.
+
 ## Playbooks
 
 | Playbook                       | Description                                                                                      |
@@ -261,6 +289,7 @@ staged (same as `upgrade.yml`), so a full `make install` runs per host — canar
 | `main.yml`| The main playbook to set up a node |
 | `upgrade.yml` | Upgrade a single node / group to `node_version` (stage for cosmovisor or restart) |
 | `upgrade_fleet.yml` | Fleet-wide cosmovisor upgrade with verification; STAGE (default) and LATE (`-e late=true`) modes |
+| `patch_node.yml` | OS patch upgrade (apt, same release) with rolling reboot and service verification |
 | `node_alertmanager.yml` | Installs and configures alert manager |
 | `node_tenderduty.yml` | Install Tenderduty |
 | `setup.yml`| Secure the server with ssh config changes and firewall rules, and install dependencies |

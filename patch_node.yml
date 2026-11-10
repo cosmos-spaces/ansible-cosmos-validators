@@ -1,0 +1,327 @@
+---
+# OS patch upgrade (apt) within the host's current Ubuntu release. Never runs
+# do-release-upgrade; asserts the release codename is unchanged afterwards.
+#
+# Play 1 refreshes apt and reports pending updates for every host, then asks for
+# one confirmation. Play 2 patches hosts in serial batches (canary first), reboots
+# only where /var/run/reboot-required exists, and verifies that every watched
+# service that was running before is running (and stays running) afterwards.
+#
+#   ansible-playbook patch_node.yml -e target=<host|group>
+#   ansible-playbook patch_node.yml -e target=<host|group> -e dry_run=true
+#   ansible-playbook patch_node.yml -e target=<host|group> -e reboot=false
+#   ansible-playbook patch_node.yml -e target=<host|group> -e patch_serial='[1,3,"100%"]'
+
+- name: Plan OS patch upgrade
+  hosts: '{{ target }}'
+  become: true
+  gather_facts: true
+  tasks:
+    # SSH is only allowed from the bastion, so it is usually the Ansible
+    # controller; rebooting it mid-run would cut off every later host.
+    - name: Skip bastion hosts unless explicitly included
+      meta: end_host
+      when: type | default('') == 'bastion' and not (include_bastion | default(false) | bool)
+
+    - name: Refresh apt cache
+      apt:
+        update_cache: true
+        lock_timeout: 300
+      changed_when: false
+
+    - name: List upgradable packages
+      command: apt list --upgradable
+      register: upgradable_raw
+      changed_when: false
+
+    - name: Check whether a reboot is already pending
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_pending_before
+
+    - name: Record patch plan facts
+      set_fact:
+        pending_packages: >-
+          {{ upgradable_raw.stdout_lines | select('search', '\[upgradable from') |
+             map('regex_replace', '/.*$', '') | list }}
+        os_release_before: '{{ ansible_distribution_release }}'
+
+    - name: Report pending updates for {{ inventory_hostname }}
+      debug:
+        msg:
+          - "{{ ansible_distribution }} {{ ansible_distribution_version }} ({{ ansible_distribution_release }}), kernel {{ ansible_kernel }}"
+          - "pending updates ({{ pending_packages | length }}): {{ pending_packages | join(', ') or 'none' }}"
+          - "reboot already pending: {{ reboot_pending_before.stat.exists }}"
+
+    - name: Build fleet patch plan
+      set_fact:
+        plan_patch: >-
+          {% set out = [] %}{% for h in ansible_play_hosts %}{% if (hostvars[h].pending_packages | default([]) | length > 0)
+          or (hostvars[h].reboot_pending_before.stat.exists | default(false)) %}{% set _ = out.append(h) %}{% endif %}{% endfor %}{{ out }}
+        plan_unreachable: '{{ ansible_play_hosts_all | difference(ansible_play_hosts) }}'
+      run_once: true
+
+    - name: Report fleet patch plan
+      debug:
+        msg:
+          - "OS PATCH PLAN{{ '  [DRY RUN - nothing will change]' if (dry_run | default(false) | bool) else '' }}"
+          - "WILL PATCH ({{ plan_patch | length }}): {{ plan_patch | join(', ') or 'none' }}  [batches per patch_serial={{ patch_serial | default([1, '100%']) }}]"
+          - "reboot when required: {{ reboot | default(true) | bool }}"
+          - "nothing to do: {{ ansible_play_hosts | difference(plan_patch) | join(', ') or 'none' }}"
+          - "UNREACHABLE (not checked): {{ plan_unreachable | join(', ') or 'none' }}"
+      run_once: true
+
+    - name: Confirm before applying
+      pause:
+        prompt: >-
+          Reviewed the plan above. Type 'yes' to apply OS patches{{ ' and reboot where required'
+          if (reboot | default(true) | bool) else '' }} on the hosts listed
+      register: op_confirm
+      run_once: true
+      when: >-
+        not (auto_confirm | default(false) | bool) and
+        not (dry_run | default(false) | bool) and
+        plan_patch | length > 0
+
+    - name: Assign confirmed hosts to the patch run
+      add_host:
+        name: '{{ item }}'
+        groups: patch_targets
+      loop: '{{ plan_patch }}'
+      run_once: true
+      when: >-
+        not (dry_run | default(false) | bool) and
+        (auto_confirm | default(false) | bool or op_confirm.user_input | default('') == 'yes')
+
+- name: Apply OS patches
+  hosts: patch_targets
+  become: true
+  gather_facts: false
+  serial: "{{ patch_serial | default([1, '100%']) }}"
+  max_fail_percentage: 0
+  any_errors_fatal: true
+  vars:
+    # Services that must come back after patching (only those running beforehand are checked).
+    watch_services_regex: "{{ patch_watch_services_regex | default('^(cosmovisor-|horcrux|tenderduty|price[-_]feeder|node_exporter|promtail|nginx|alertmanager|prometheus)') }}"
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+    # List only: don't let needrestart bounce chain services mid-upgrade.
+    NEEDRESTART_MODE: l
+  tasks:
+    - name: Capture running services before patching
+      service_facts:
+
+    - name: Record watched services
+      set_fact:
+        watched_services: >-
+          {{ ansible_facts.services | dict2items |
+             selectattr('key', 'search', watch_services_regex) |
+             selectattr('value.state', 'equalto', 'running') |
+             map(attribute='key') | list }}
+
+    - name: Report watched services
+      debug:
+        msg: "Will verify after patching: {{ watched_services | join(', ') or 'none' }}"
+
+    - name: Refuse to reboot when a watched service is running but not enabled
+      assert:
+        that: not_enabled | length == 0
+        fail_msg: >-
+          {{ inventory_hostname }}: {{ not_enabled | join(', ') }} running but not enabled -
+          would not come back after reboot. Enable it or run with -e reboot=false.
+      vars:
+        not_enabled: >-
+          {{ watched_services | reject('in', ansible_facts.services | dict2items |
+             selectattr('value.status', 'equalto', 'enabled') | map(attribute='key') | list) | list }}
+      when: reboot | default(true) | bool
+
+    # Resolve each chain's RPC port from its home config.toml so we can wait for
+    # catch-up after reboot (service "active" alone doesn't mean synced).
+    - name: Find RPC address for each cosmovisor service
+      shell: |
+        set -o pipefail
+        home=$(systemctl show -p Environment {{ item }} | grep -o 'DAEMON_HOME=[^ ]*' | cut -d= -f2)
+        awk '/^\[rpc\]/{f=1;next} /^\[/{f=0} f&&/^laddr/{print; exit}' "$home/config/config.toml" \
+          | grep -oE '[0-9]+"?$' | tr -d '"'
+      args:
+        executable: /bin/bash
+      register: rpc_ports
+      changed_when: false
+      failed_when: false
+      loop: "{{ watched_services | select('search', '^cosmovisor-') | list }}"
+
+    - name: Record chain RPC ports
+      set_fact:
+        chain_rpc_ports: >-
+          {{ rpc_ports.results | default([]) | selectattr('stdout', 'match', '^[0-9]+$') |
+             map(attribute='stdout') | list }}
+
+    # ---- Baseline: post-patch checks only enforce what was healthy before ----
+    - name: Baseline - firewall status
+      command: ufw status
+      register: ufw_before
+      changed_when: false
+      failed_when: false
+
+    - name: Baseline - clock sync status
+      command: timedatectl show -p NTPSynchronized --value
+      register: ntp_before
+      changed_when: false
+      failed_when: false
+
+    - name: Baseline - failed systemd units
+      shell: systemctl list-units --state=failed --no-legend --plain | awk '{print $1}'
+      register: failed_before
+      changed_when: false
+
+    - name: Baseline - peer count per chain
+      uri:
+        url: 'http://127.0.0.1:{{ item }}/net_info'
+        return_content: true
+      register: peers_before
+      failed_when: false
+      loop: '{{ chain_rpc_ports }}'
+
+    - name: Record baseline
+      set_fact:
+        ufw_was_active: "{{ 'Status: active' in ufw_before.stdout | default('') }}"
+        ntp_was_synced: "{{ ntp_before.stdout | default('') == 'yes' }}"
+        failed_units_before: '{{ failed_before.stdout_lines }}'
+        chains_with_peers: >-
+          {% set out = [] %}{% for r in peers_before.results | default([]) %}{% if
+          (r.json.result.n_peers | default(0) | int) > 0 %}{% set _ = out.append(r.item) %}{% endif %}{% endfor %}{{ out }}
+
+    - name: Report baseline
+      debug:
+        msg:
+          - "ufw active: {{ ufw_was_active }}, clock synced: {{ ntp_was_synced }}"
+          - "already-failed units (ignored): {{ failed_units_before | join(', ') or 'none' }}"
+          - "chain RPC ports with peers: {{ chains_with_peers | join(', ') or 'none' }}"
+
+    - name: Apply package upgrades
+      apt:
+        # dist: within the same release, so kernel/security updates that pull new
+        # packages are not "kept back". Use -e apt_upgrade=yes for a plain upgrade.
+        upgrade: "{{ apt_upgrade | default('dist') }}"
+        update_cache: true
+        lock_timeout: 300
+      register: apt_result
+
+    - name: Check whether a reboot is required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot host
+      reboot:
+        msg: 'Rebooting for OS patches (ansible patch_node.yml)'
+        reboot_timeout: "{{ reboot_timeout | default(900) }}"
+      when: reboot_required.stat.exists and (reboot | default(true) | bool)
+
+    - name: Report reboot skipped
+      debug:
+        msg: "{{ inventory_hostname }}: reboot required but skipped (reboot=false)."
+      when: reboot_required.stat.exists and not (reboot | default(true) | bool)
+
+    - name: Re-read OS facts
+      setup:
+        gather_subset: [min]
+
+    - name: Assert OS release unchanged
+      assert:
+        that: ansible_distribution_release == os_release_before
+        fail_msg: >-
+          Release changed on {{ inventory_hostname }}: {{ os_release_before }} ->
+          {{ ansible_distribution_release }}. Stopping.
+
+    - name: Wait for watched services to be active
+      command: 'systemctl is-active {{ item }}'
+      register: svc_active
+      changed_when: false
+      until: svc_active.stdout == 'active'
+      retries: 30
+      delay: 10
+      loop: '{{ watched_services }}'
+
+    # Catches crash-looping units that flicker 'active' between restarts.
+    - name: Let services settle
+      pause:
+        seconds: "{{ settle_seconds | default(60) }}"
+      when: watched_services | length > 0
+
+    - name: Re-check watched services are still active
+      command: 'systemctl is-active {{ item }}'
+      register: svc_still_active
+      changed_when: false
+      failed_when: svc_still_active.stdout != 'active'
+      loop: '{{ watched_services }}'
+
+    - name: Wait for each chain to catch up before moving to the next host
+      uri:
+        url: 'http://127.0.0.1:{{ item }}/status'
+        return_content: true
+      register: chain_status
+      until: >-
+        chain_status.status | default(0) == 200 and
+        not (chain_status.json.result.sync_info.catching_up | default(true) | bool)
+      retries: "{{ ((catch_up_timeout | default(900) | int) / 15) | int }}"
+      delay: 15
+      loop: '{{ chain_rpc_ports }}'
+
+    # ---- Post-patch health checks (against baseline) ----
+    - name: Verify firewall is still active
+      command: ufw status
+      register: ufw_after
+      changed_when: false
+      failed_when: "'Status: active' not in ufw_after.stdout"
+      when: ufw_was_active
+
+    - name: Verify clock is synchronised
+      command: timedatectl show -p NTPSynchronized --value
+      register: ntp_after
+      changed_when: false
+      until: ntp_after.stdout == 'yes'
+      retries: 18
+      delay: 10
+      when: ntp_was_synced
+
+    - name: Check for newly failed systemd units
+      shell: systemctl list-units --state=failed --no-legend --plain | awk '{print $1}'
+      register: failed_after
+      changed_when: false
+
+    - name: Assert no new failed units
+      assert:
+        that: new_failed | length == 0
+        fail_msg: >-
+          {{ inventory_hostname }}: units failed after patching: {{ new_failed | join(', ') }}
+          (check with: systemctl status <unit>)
+      vars:
+        new_failed: '{{ failed_after.stdout_lines | difference(failed_units_before) }}'
+
+    - name: Verify each chain has peers again
+      uri:
+        url: 'http://127.0.0.1:{{ item }}/net_info'
+        return_content: true
+      register: peers_after
+      until: >-
+        peers_after.status | default(0) == 200 and
+        (peers_after.json.result.n_peers | default('0') | int) > 0
+      retries: 12
+      delay: 10
+      loop: '{{ chains_with_peers }}'
+
+    - name: Remove unused packages (old kernels)
+      apt:
+        autoremove: true
+        lock_timeout: 300
+      when: autoremove | default(false) | bool
+
+    - name: Report patch result
+      debug:
+        msg:
+          - "{{ inventory_hostname }}: {{ ansible_distribution }} {{ ansible_distribution_version }}, kernel {{ ansible_kernel }}"
+          - "packages changed: {{ apt_result.changed }}, rebooted: {{ reboot_required.stat.exists and (reboot | default(true) | bool) }}"
+          - "services verified: {{ watched_services | join(', ') or 'none' }}"
+          - "firewall: {{ 'active' if ufw_was_active else 'not checked (inactive before)' }}, clock: {{ 'synced' if ntp_was_synced else 'not checked (unsynced before)' }}"
+          - "peers per chain RPC port: {{ dict(chains_with_peers | zip(peers_after.results | default([]) | map(attribute='json') | map(attribute='result') | map(attribute='n_peers'))) if chains_with_peers else 'n/a' }}"
